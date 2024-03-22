@@ -8,3 +8,6 @@ final Map<String, WidgetBuilder> routes = {
   LoginScreen.routeName : (context) => LoginScreen(),
   SplashScreen.routeName : (context) => SplashScreen(),
 };
+class Routes {
+  static String homeScreem = '/home_screen';
+}
