@@ -2,8 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:melody/melody/core/constants/color_palatte.dart';
 import 'package:melody/melody/core/helper/assets_helper.dart';
 import 'package:melody/melody/core/helper/text_styles.dart';
+import 'package:melody/melody/core/models/composer/composer.dart';
 import 'package:melody/melody/core/models/music/music.dart';
 import 'package:get/get.dart';
+import 'package:melody/melody/presentations/screens/Home/item_screen.dart';
+import 'package:melody/melody/presentations/screens/Discovery/discovery_screen.dart';
+import 'package:melody/melody/presentations/screens/Home/widgets/composer_item.dart';
 import '../../../core/models/music/music.dart';
 import 'widgets/music_item.dart';
 
@@ -23,35 +27,26 @@ class _HomeScreenState extends State<HomeScreen>
     const Music(
         artist: 'Mozart',
         id: 1,
-        name: 'Symphony ',
-        image: AssetHelper.imgArtist),
-    const Music(
-        artist: 'Mozart',
-        id: 1,
-        name: 'Symphony ',
-        image: AssetHelper.imgArtist),
-    const Music(
-        artist: 'Mozart',
-        id: 1,
         name: 'Symphony',
         image: AssetHelper.imgArtist),
     const Music(
         artist: 'Mozart',
         id: 1,
-        name: 'Symphony ',
+        name: 'Son tung',
         image: AssetHelper.imgArtist),
     const Music(
-        artist: 'Mozart',
+        artist: 'Dinh Dai Duong',
         id: 1,
         name: 'Symphony ',
         image: AssetHelper.imgArtist),
-    const Music(
-        artist: 'Mozart',
-        id: 1,
-        name: 'Symphony ',
-        image: AssetHelper.imgArtist),
-    const Music(
-        artist: 'Mozart',
+  ];
+  List<Composer> composer = [
+    const Composer(
+        music: 'Mozart', id: 1, name: 'Symphony', image: AssetHelper.imgArtist),
+    const Composer(
+        music: 'Mozart', id: 1, name: 'Son tung', image: AssetHelper.imgArtist),
+    const Composer(
+        music: 'Dinh Dai Duong',
         id: 1,
         name: 'Symphony ',
         image: AssetHelper.imgArtist),
@@ -136,7 +131,7 @@ class _HomeScreenState extends State<HomeScreen>
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.centerLeft,
           end: Alignment.centerRight,
@@ -173,18 +168,22 @@ class _HomeScreenState extends State<HomeScreen>
                 style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
                 decoration: InputDecoration(
                   filled: true,
-                  hintStyle: TextStyle(color: Color(0xffFFFFFF)),
-                  fillColor: Color(0xff656565),
+                  hintStyle: TextStyle(color: Color.fromARGB(255, 0, 0, 0)),
+                  fillColor: Color(0xffFFFFFF),
                   border: OutlineInputBorder(
                     borderSide: BorderSide.none,
                     borderRadius: BorderRadius.circular(20),
                   ),
                   hintText: 'Search Song, Composer, Instrument',
-                  prefixIconColor: Color(0xffffffff),
+                  prefixIconColor: Color.fromARGB(255, 0, 0, 0),
                   prefixIcon: Icon(Icons.search),
                 ),
               ),
               SizedBox(height: 20),
+              MusicSection(
+                title: 'Popular Songs',
+                albums: albums, // Pass your list of popular songs here
+              ),
               Expanded(
                 child: GridView.builder(
                   shrinkWrap: true,
@@ -202,6 +201,27 @@ class _HomeScreenState extends State<HomeScreen>
                   },
                 ),
               ),
+              MusicSection(
+                title: 'Composer',
+                albums: albums, // Pass your list of popular songs here
+              ),
+              Expanded(
+                child: GridView.builder(
+                  shrinkWrap: true,
+                  itemCount: searchComposer(composer, searchValue).length,
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 3,
+                    crossAxisSpacing: 10,
+                    mainAxisSpacing: 10,
+                    childAspectRatio: 5 / 6,
+                  ),
+                  itemBuilder: (context, index) {
+                    return ComposerItem(
+                      composer: searchComposer(composer, searchValue)[index],
+                    );
+                  },
+                ),
+              ),
             ],
           ),
         ),
@@ -213,6 +233,13 @@ class _HomeScreenState extends State<HomeScreen>
     return albums
         .where((element) =>
             element.name.contains(value) || element.artist.contains(value))
+        .toList();
+  }
+
+  List<Composer> searchComposer(List<Composer> composer, String value) {
+    return composer
+        .where((element) =>
+            element.name.contains(value) || element.music.contains(value))
         .toList();
   }
 }

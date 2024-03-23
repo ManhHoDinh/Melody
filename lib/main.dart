@@ -1,9 +1,13 @@
 import 'dart:io';
+import 'package:get/get_navigation/src/root/get_material_app.dart';
+import 'package:get/get_navigation/src/routes/get_route.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:melody/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:melody/melody/core/helper/local_storage_helper.dart';
+import 'package:melody/melody/presentations/routes/app_router.dart';
+import 'package:melody/melody/presentations/screens/Discovery/discovery_screen.dart';
 import 'package:melody/melody/presentations/screens/Home/home_screen.dart';
 import 'package:melody/melody/presentations/screens/splash/splash_screen.dart';
 import 'navigation_home_screen.dart';
@@ -37,7 +41,7 @@ class MyApp extends StatelessWidget {
       systemNavigationBarDividerColor: Colors.transparent,
       systemNavigationBarIconBrightness: Brightness.dark,
     ));
-    return MaterialApp(
+    return GetMaterialApp(
       title: 'Flutter UI',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
@@ -45,7 +49,12 @@ class MyApp extends StatelessWidget {
         textTheme: AppTheme.textTheme,
         platform: TargetPlatform.iOS,
       ),
+        initialRoute: Routes.discovery,
       home: HomeScreen(),
+        getPages: [
+        GetPage(name: Routes.discovery, page: () => DiscoveryScreen()),
+       
+      ],
     );
   }
 }
