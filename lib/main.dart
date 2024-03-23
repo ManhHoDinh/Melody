@@ -4,7 +4,10 @@ import 'package:melody/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:melody/melody/core/helper/local_storage_helper.dart';
+import 'package:melody/melody/presentations/screens/playing/playlist_provider.dart';
+import 'package:melody/melody/presentations/screens/queue/queue.dart';
 import 'package:melody/melody/presentations/screens/splash/splash_screen.dart';
+import 'package:provider/provider.dart';
 import 'navigation_home_screen.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 
@@ -17,11 +20,14 @@ void main() async {
   await LocalStorageHelper.initLocalStorageHelper();
   WidgetsFlutterBinding.ensureInitialized();
   await FireBaseDataBase.initializeDB();
-  
+
   await SystemChrome.setPreferredOrientations(<DeviceOrientation>[
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown
-  ]).then((_) => runApp(MyApp()));
+  ]).then((_) => runApp(ChangeNotifierProvider(
+        create: (context) => PlaylistProvider(),
+        child: MyApp(),
+      )));
 }
 
 class MyApp extends StatelessWidget {
@@ -44,7 +50,7 @@ class MyApp extends StatelessWidget {
         textTheme: AppTheme.textTheme,
         platform: TargetPlatform.iOS,
       ),
-      home: SplashScreen(),
+      home: Queue(),
     );
   }
 }
