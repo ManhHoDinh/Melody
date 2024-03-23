@@ -4,6 +4,7 @@ import 'package:melody/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:melody/melody/core/helper/local_storage_helper.dart';
+import 'package:melody/melody/main.dart';
 import 'package:melody/melody/presentations/screens/splash/splash_screen.dart';
 import 'navigation_home_screen.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
@@ -44,7 +45,7 @@ class MyApp extends StatelessWidget {
         textTheme: AppTheme.textTheme,
         platform: TargetPlatform.iOS,
       ),
-      home: SplashScreen(),
+      home: melodyApp(),
     );
   }
 }

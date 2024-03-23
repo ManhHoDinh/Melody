@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:melody/melody/core/constants/color_palatte.dart';
 import 'package:melody/melody/core/constants/dimension_constants.dart';
 import 'package:melody/melody/core/helper/text_styles.dart';
-import 'package:melody/melody/presentations/screens/account/sigg_up_screen.dart';
 import 'package:melody/melody/presentations/widgets/button_widget.dart';
 import 'package:melody/melody/presentations/widgets/input_widget.dart';
 
@@ -10,15 +9,15 @@ import '../../../core/helper/AuthFunctions.dart';
 import '../../../core/helper/assets_helper.dart';
 import '../../../core/helper/image_helper.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
-  static final String routeName = 'login_screen';
+class SignUpScreen extends StatefulWidget {
+  const SignUpScreen({super.key});
+  static final String routeName = 'sign_up_screen';
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<SignUpScreen> createState() => _SignUpScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _SignUpScreenState extends State<SignUpScreen> {
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
   bool _passwordVisible = false;
@@ -27,6 +26,9 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+      ),
       body: GestureDetector(
         onTap: () {
           FocusManager.instance.primaryFocus?.unfocus();
@@ -34,29 +36,23 @@ class _LoginScreenState extends State<LoginScreen> {
         child: SafeArea(
             child: SingleChildScrollView(
           child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 35, vertical: 20),
+            padding: const EdgeInsets.symmetric(horizontal: 35, vertical: 10),
             child: Form(
               key: formSignInKey,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(height: 20),
-                  Container(
-                    alignment: Alignment.center,
-                    child: ImageHelper.loadFromAsset(AssetHelper.logo,
-                        height: 150, width: 150),
-                  ),
-                  SizedBox(height: 20),
                   Container(
                     alignment: Alignment.center,
                     child: Text(
-                      "Login to continue",
+                      "Sign Up continue",
                       style: TextStyles.h2.copyWith(
                           color: ColorPalette.blackText,
                           fontWeight: FontWeight.bold),
                     ),
                   ),
                   SizedBox(height: 20),
+                  
                   InputWidget(
                       controller: _emailController,
                       labelText: 'Email',
@@ -66,9 +62,39 @@ class _LoginScreenState extends State<LoginScreen> {
                                 r"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")
                             .hasMatch(input!);
                         if (input.isEmpty) {
-                          return "Enter your email, please!";
+                          return "Vui lòng nhập email!";
                         } else if (!emailValid) {
-                          return "Email is invalid!";
+                          return "Email không tồn tại";
+                        }
+                      }),SizedBox(height: 20),
+                  
+                  InputWidget(
+                      controller: _emailController,
+                      labelText: 'Email',
+                      icon: AssetHelper.icoUser,
+                      validator: (input) {
+                        final bool emailValid = RegExp(
+                                r"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")
+                            .hasMatch(input!);
+                        if (input.isEmpty) {
+                          return "Vui lòng nhập email!";
+                        } else if (!emailValid) {
+                          return "Email không tồn tại";
+                        }
+                      }),SizedBox(height: 20),
+                  
+                  InputWidget(
+                      controller: _emailController,
+                      labelText: 'Email',
+                      icon: AssetHelper.icoUser,
+                      validator: (input) {
+                        final bool emailValid = RegExp(
+                                r"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")
+                            .hasMatch(input!);
+                        if (input.isEmpty) {
+                          return "Vui lòng nhập email!";
+                        } else if (!emailValid) {
+                          return "Email không tồn tại";
                         }
                       }),
                   SizedBox(
@@ -121,55 +147,6 @@ class _LoginScreenState extends State<LoginScreen> {
                   SizedBox(
                     height: 10,
                   ),
-                  Container(
-                    alignment: Alignment.centerRight,
-                    child: TextButton(
-                      onPressed: () {},
-                      child: Text("Forgot password?",
-                          textAlign: TextAlign.right,
-                          style: TextStyles.h5
-                              .copyWith(color: ColorPalette.primaryColor)),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  InkWell(
-                    borderRadius: kDefaultBorderRadius,
-                    onTap: () async {
-                      await AuthServices.siginWithGoogle(context);
-                    },
-                    splashColor: Colors.blueAccent,
-                    child: Container(
-                      alignment: Alignment.center,
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                          borderRadius: kDefaultBorderRadius,
-                          border: Border.all(color: Colors.black)),
-                      padding:
-                          const EdgeInsets.symmetric(vertical: kDefaultPadding),
-                      child: Row(
-                        children: [
-                          Container(
-                            child: ImageHelper.loadFromAsset(
-                                AssetHelper.icoGoogle,
-                                height: 24,
-                                width: 24),
-                            padding: const EdgeInsets.only(right: 30, left: 30),
-                          ),
-                          Text(
-                            "Login with Google",
-                            style: TextStyles.h5.copyWith(
-                                color: ColorPalette.blackText,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
                   ButtonWidget(
                     label: 'Login',
                     color: ColorPalette.primaryColor,
@@ -182,23 +159,6 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   SizedBox(
                     height: 20,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        "Are you new user?",
-                        style: TextStyles.h6.setColor(ColorPalette.grayText),
-                      ),
-                      TextButton(
-                          onPressed: () {
-                            Navigator.of(context)
-                                .pushNamed(SignUpScreen.routeName);
-                          },
-                          child: Text("Sign up",
-                              style: TextStyles.h6
-                                  .setColor(ColorPalette.grayText)))
-                    ],
                   ),
                 ],
               ),
