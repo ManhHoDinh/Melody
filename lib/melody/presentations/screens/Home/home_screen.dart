@@ -145,14 +145,23 @@ class _HomeScreenState extends State<HomeScreen>
           backgroundColor: Colors.transparent,
           title: Align(
             alignment: Alignment.centerLeft,
-            child: Padding(
-              padding: EdgeInsets.only(left: 16),
-              child: Text(
-                'Home',
-                style: TextStyle(fontSize: 25).whiteTextColor,
-              ),
+            child: Text(
+              'Home',
+              style: TextStyle(fontSize: 25).whiteTextColor,
             ),
           ),
+          actions: [
+            IconButton(
+              onPressed: () {
+                Get.toNamed(DiscoveryScreen.routeName);
+              },
+              icon: Icon(
+                Icons.account_circle,
+                color: ColorPalette.secondColor,
+                size: 40,
+              ),
+            ),
+          ],
         ),
         body: Container(
           padding: EdgeInsets.symmetric(horizontal: 16),

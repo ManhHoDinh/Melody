@@ -10,12 +10,14 @@ import '../../../core/helper/assets_helper.dart';
 class DiscoveryScreen extends StatefulWidget {
   const DiscoveryScreen({super.key});
   static const String routeName = 'composer_screen';
+
   @override
   State<DiscoveryScreen> createState() => _DiscoveryScreenState();
 }
 
 class _DiscoveryScreenState extends State<DiscoveryScreen> {
   TextEditingController searchController = TextEditingController();
+  bool isTextFieldVisible = false;
   String searchValue = '';
   List<Music> albums = [
     const Music(
@@ -50,14 +52,29 @@ class _DiscoveryScreenState extends State<DiscoveryScreen> {
         backgroundColor: Colors.transparent,
         appBar: AppBar(
           backgroundColor: Colors.transparent,
-          title: Text(
-            'Discovery',
-            style: TextStyle(fontSize: 20).whiteTextColor,
+          title: RichText(
+            text: const TextSpan(
+              text: 'Disc',
+              style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Color(0xff6D0B14)),
+              children: <TextSpan>[
+                TextSpan(
+                  text: 'very',
+                  style: TextStyle(fontSize: 20, color: Color(0xff4059F1)),
+                ),
+              ],
+            ),
           ),
           leading: IconButton(
-            onPressed: () {},
+            onPressed: () {
+              setState(() {
+                isTextFieldVisible = !isTextFieldVisible;
+              });
+            },
             icon: Icon(
-              Icons.arrow_back,
+              Icons.search,
               color: ColorPalette.secondColor,
             ),
           ),
@@ -107,25 +124,29 @@ class _DiscoveryScreenState extends State<DiscoveryScreen> {
           padding: EdgeInsets.symmetric(horizontal: 16),
           child: Column(
             children: [
-              TextField(
-                onChanged: (value) {
-                  setState(() {
-                    searchValue = value;
-                  });
-                },
-                controller: searchController,
-                style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
-                decoration: InputDecoration(
-                    filled: true,
-                    hintStyle: TextStyle(color: Color.fromARGB(255, 0, 0, 0)),
-                    fillColor: Color.fromARGB(255, 254, 254, 254),
-                    border: OutlineInputBorder(
-                        borderSide: BorderSide.none,
-                        borderRadius: BorderRadius.circular(20)),
-                    hintText: 'Search Song, Composer, Instrument',
-                    prefixIconColor: Color.fromARGB(255, 0, 0, 0),
-                    prefixIcon: Icon(Icons.search)),
-              ),
+              isTextFieldVisible
+                  ? TextField(
+                      onChanged: (value) {
+                        setState(() {
+                          searchValue = value;
+                        });
+                      },
+                      controller: searchController,
+                      style:
+                          TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
+                      decoration: InputDecoration(
+                          filled: true,
+                          hintStyle:
+                              TextStyle(color: Color.fromARGB(255, 0, 0, 0)),
+                          fillColor: Color.fromARGB(255, 254, 254, 254),
+                          border: OutlineInputBorder(
+                              borderSide: BorderSide.none,
+                              borderRadius: BorderRadius.circular(20)),
+                          hintText: 'Search Song, Composer, Instrument',
+                          prefixIconColor: Color.fromARGB(255, 0, 0, 0),
+                          prefixIcon: Icon(Icons.search)),
+                    )
+                  : Container(),
               SizedBox(
                 height: 20,
               ),
