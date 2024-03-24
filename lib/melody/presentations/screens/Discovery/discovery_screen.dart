@@ -223,7 +223,8 @@ class _DiscoveryScreenState extends State<DiscoveryScreen> {
   List<Music> searchAlbums(List<Music> albums, String value) {
     return albums
         .where((element) =>
-            element.name.contains(value) || element.artist.contains(value))
+            element.name.toLowerCase().contains(value.toLowerCase()) ||
+            element.artist.toLowerCase().contains(value.toLowerCase()))
         .toList();
   }
 }

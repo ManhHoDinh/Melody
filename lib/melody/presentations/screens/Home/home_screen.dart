@@ -241,14 +241,16 @@ class _HomeScreenState extends State<HomeScreen>
   List<Music> searchAlbums(List<Music> albums, String value) {
     return albums
         .where((element) =>
-            element.name.contains(value) || element.artist.contains(value))
+            element.name.toLowerCase().contains(value.toLowerCase()) ||
+            element.artist.toLowerCase().contains(value.toLowerCase()))
         .toList();
   }
 
   List<Composer> searchComposer(List<Composer> composer, String value) {
     return composer
         .where((element) =>
-            element.name.contains(value) || element.music.contains(value))
+            element.name.toLowerCase().contains(value.toLowerCase()) ||
+            element.music.toLowerCase().contains(value.toLowerCase()))
         .toList();
   }
 }
