@@ -22,7 +22,6 @@ UserModel _$UserModelFromJson(Map<String, dynamic> json) {
 mixin _$UserModel {
   String get Id => throw _privateConstructorUsedError;
   String get Name => throw _privateConstructorUsedError;
-  String get PhoneNumber => throw _privateConstructorUsedError;
   String get Email => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -36,7 +35,7 @@ abstract class $UserModelCopyWith<$Res> {
   factory $UserModelCopyWith(UserModel value, $Res Function(UserModel) then) =
       _$UserModelCopyWithImpl<$Res, UserModel>;
   @useResult
-  $Res call({String Id, String Name, String PhoneNumber, String Email});
+  $Res call({String Id, String Name, String Email});
 }
 
 /// @nodoc
@@ -54,7 +53,6 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
   $Res call({
     Object? Id = null,
     Object? Name = null,
-    Object? PhoneNumber = null,
     Object? Email = null,
   }) {
     return _then(_value.copyWith(
@@ -65,10 +63,6 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
       Name: null == Name
           ? _value.Name
           : Name // ignore: cast_nullable_to_non_nullable
-              as String,
-      PhoneNumber: null == PhoneNumber
-          ? _value.PhoneNumber
-          : PhoneNumber // ignore: cast_nullable_to_non_nullable
               as String,
       Email: null == Email
           ? _value.Email
@@ -86,7 +80,7 @@ abstract class _$$UserModelImplCopyWith<$Res>
       __$$UserModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String Id, String Name, String PhoneNumber, String Email});
+  $Res call({String Id, String Name, String Email});
 }
 
 /// @nodoc
@@ -102,7 +96,6 @@ class __$$UserModelImplCopyWithImpl<$Res>
   $Res call({
     Object? Id = null,
     Object? Name = null,
-    Object? PhoneNumber = null,
     Object? Email = null,
   }) {
     return _then(_$UserModelImpl(
@@ -113,10 +106,6 @@ class __$$UserModelImplCopyWithImpl<$Res>
       Name: null == Name
           ? _value.Name
           : Name // ignore: cast_nullable_to_non_nullable
-              as String,
-      PhoneNumber: null == PhoneNumber
-          ? _value.PhoneNumber
-          : PhoneNumber // ignore: cast_nullable_to_non_nullable
               as String,
       Email: null == Email
           ? _value.Email
@@ -130,10 +119,7 @@ class __$$UserModelImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$UserModelImpl with DiagnosticableTreeMixin implements _UserModel {
   const _$UserModelImpl(
-      {required this.Id,
-      required this.Name,
-      required this.PhoneNumber,
-      required this.Email});
+      {required this.Id, required this.Name, required this.Email});
 
   factory _$UserModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$UserModelImplFromJson(json);
@@ -143,13 +129,11 @@ class _$UserModelImpl with DiagnosticableTreeMixin implements _UserModel {
   @override
   final String Name;
   @override
-  final String PhoneNumber;
-  @override
   final String Email;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'UserModel(Id: $Id, Name: $Name, PhoneNumber: $PhoneNumber, Email: $Email)';
+    return 'UserModel(Id: $Id, Name: $Name, Email: $Email)';
   }
 
   @override
@@ -159,7 +143,6 @@ class _$UserModelImpl with DiagnosticableTreeMixin implements _UserModel {
       ..add(DiagnosticsProperty('type', 'UserModel'))
       ..add(DiagnosticsProperty('Id', Id))
       ..add(DiagnosticsProperty('Name', Name))
-      ..add(DiagnosticsProperty('PhoneNumber', PhoneNumber))
       ..add(DiagnosticsProperty('Email', Email));
   }
 
@@ -170,14 +153,12 @@ class _$UserModelImpl with DiagnosticableTreeMixin implements _UserModel {
             other is _$UserModelImpl &&
             (identical(other.Id, Id) || other.Id == Id) &&
             (identical(other.Name, Name) || other.Name == Name) &&
-            (identical(other.PhoneNumber, PhoneNumber) ||
-                other.PhoneNumber == PhoneNumber) &&
             (identical(other.Email, Email) || other.Email == Email));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, Id, Name, PhoneNumber, Email);
+  int get hashCode => Object.hash(runtimeType, Id, Name, Email);
 
   @JsonKey(ignore: true)
   @override
@@ -197,7 +178,6 @@ abstract class _UserModel implements UserModel {
   const factory _UserModel(
       {required final String Id,
       required final String Name,
-      required final String PhoneNumber,
       required final String Email}) = _$UserModelImpl;
 
   factory _UserModel.fromJson(Map<String, dynamic> json) =
@@ -207,8 +187,6 @@ abstract class _UserModel implements UserModel {
   String get Id;
   @override
   String get Name;
-  @override
-  String get PhoneNumber;
   @override
   String get Email;
   @override

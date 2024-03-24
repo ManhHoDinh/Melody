@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:melody/melody/core/helper/image_helper.dart';
 import 'package:melody/melody/core/helper/text_styles.dart';
 
 import '../../core/constants/color_palatte.dart';
@@ -48,7 +49,7 @@ class _InputWidgetState extends State<InputWidget> {
           ),
         ),
         prefixIcon: Container(
-          child: Image.asset(widget.icon),
+          child: ImageHelper.loadFromAsset(widget.icon, height: 20, width: 20),
           padding: const EdgeInsets.only(right: 20, left: 20),
         ),
         prefixIconConstraints: BoxConstraints(
@@ -64,7 +65,7 @@ class _InputWidgetState extends State<InputWidget> {
                 },
                 child: Image.asset(widget.suffixIcon!)
               )
-            : Image.asset(widget.icon, opacity: const AlwaysStoppedAnimation(0),),
+            : Image.asset(widget.icon,color: Colors.black,width: 20,height: 20, opacity: const AlwaysStoppedAnimation(0),),
         ),
         suffixIconConstraints: BoxConstraints(
           minWidth: 24,

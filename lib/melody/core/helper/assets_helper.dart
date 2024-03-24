@@ -11,8 +11,10 @@ class AssetHelper {
   //login screen:
   static const String icoLock = imgAssets + 'ico_lock.png';
   static const String icoUser = imgAssets + 'ico_user.png';
+  static const String icoEmail = imgAssets + 'icon_email.png';
   static const String logo = imgAssets + 'logo.png';
   //home
 
-  static const String checked = imgAssets + 'checked.png';
+  static const String checked = imgAssets + 'ico_checked.png';
+  static const String cancel = imgAssets + 'ico_checked.png';
 }

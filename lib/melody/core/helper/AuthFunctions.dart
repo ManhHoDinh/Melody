@@ -11,8 +11,8 @@ import '../../presentations/widgets/dialog.dart';
 
 class AuthServices {
   static UserModel? CurrentUser;
-  static signUpUser(String password, String name, String email, String phoneNo,
-      BuildContext buildContext) async {
+  static signUpUser({required String name, required String email,required String password,
+     required BuildContext buildContext}) async {
     try {
       UserCredential userCredential = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: email, password: password);
@@ -20,7 +20,6 @@ class AuthServices {
       UserModel user = UserModel(
         Id: uid,
         Name: name,
-        PhoneNumber: phoneNo,
         Email: email,
       );
       DocumentReference doc =
@@ -101,7 +100,6 @@ class AuthServices {
       AuthServices.CurrentUser = UserModel(
         Id: value['Id'],
         Name: value['Name'],
-        PhoneNumber: value['PhoneNumber'],
         Email: value['Email'],
       );
     });
