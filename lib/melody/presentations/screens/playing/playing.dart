@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:melody/melody/presentations/screens/playing/playlist_provider.dart';
 import 'package:melody/melody/presentations/screens/playing/widgets/neu_box.dart';
+import 'package:melody/melody/presentations/screens/queue/queue.dart';
 import 'package:provider/provider.dart';
 
 class Playing extends StatelessWidget {
@@ -41,7 +43,15 @@ class Playing extends StatelessWidget {
                     // title
                     Text("P L A Y I N G"),
                     // menu button
-                    IconButton(onPressed: () {}, icon: Icon(Icons.menu))
+                    IconButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const Queue()),
+                          );
+                        },
+                        icon: Icon(Icons.menu))
                   ],
                 ),
 
@@ -125,6 +135,9 @@ class Playing extends StatelessWidget {
                                 color: Colors.green,
                               )),
 
+                          // download icon
+                          IconButton(
+                              onPressed: () {}, icon: Icon(Icons.download)),
                           // end time
                           Text(formatTime(value.totalDuration))
                         ],
@@ -148,6 +161,7 @@ class Playing extends StatelessWidget {
                           value.seek(Duration(seconds: double.toInt()));
                         },
                         activeColor: Colors.green,
+                        inactiveColor: Colors.grey.shade400,
                       ),
                     )
                   ],

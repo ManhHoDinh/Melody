@@ -8,7 +8,7 @@ class NeuBox extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-          color: Colors.grey.shade300,
+          color: Colors.white,
           borderRadius: BorderRadius.circular(12),
           boxShadow: [
             // bottom right

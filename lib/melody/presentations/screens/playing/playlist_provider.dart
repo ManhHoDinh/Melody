@@ -1,12 +1,10 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:melody/melody/core/models/song/song.dart';
 import 'dart:math';
 
 class PlaylistProvider extends ChangeNotifier {
-  // Biến để lưu trữ thông tin của bài hát đang phát
-  Song? _currentSong;
-
   // playlist of songs
   final List<Song> _playlist = [
     Song(
@@ -35,6 +33,8 @@ class PlaylistProvider extends ChangeNotifier {
   // Repeat mode
   // RepeatMode _repeatMode = RepeatMode.none;
   bool _isRepeatOne = false;
+  // Biến để lưu trữ thông tin của bài hát đang phát
+  Song? _currentSong;
 
   // AUDIO PLAYER
 
@@ -63,38 +63,38 @@ class PlaylistProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  // reset playlist
+  void resetPlaylist() {
+    _playlist.clear();
+    _playlist.addAll(_originalPlaylist);
+    notifyListeners();
+  }
+
 // Toggle shuffle
-  void toggleShuffle() {
+  void toggleShuffle() async {
     isShuffle = !isShuffle;
     if (isShuffle) {
       // Save the index of the current song
       int currentIndex = _currentSongIndex ?? 0;
-
+      _currentSong = _originalPlaylist[currentIndex];
+      pause();
       // Shuffle the playlist
       shufflePlaylist();
-
-      // Find the index of the current song in the shuffled playlist
-      int shuffledIndex = _playlist.indexOf(_originalPlaylist[currentIndex]);
-
-      // Update the current song index to the shuffled index
-      currentSongIndex = shuffledIndex;
+      _currentSongIndex = _playlist.indexOf(_currentSong!);
+      print(_currentSongIndex);
+      resume();
     } else {
-      // If shuffling is turned off, restore the original playlist order
-      _playlist.clear();
-      _playlist.addAll(_originalPlaylist);
-
-      // Check if the current song index needs to be updated
-      if (_currentSongIndex != null) {
-        Song currentSong = _originalPlaylist[_currentSongIndex!];
-        int newCurrentIndex = _playlist.indexOf(currentSong);
-        if (newCurrentIndex != -1) {
-          // If the current song is found in the playlist, update the index
-          currentSongIndex = newCurrentIndex;
-        }
-      }
-
-      notifyListeners();
+      int currentIndex = _currentSongIndex ?? 0;
+      _currentSong = _playlist[currentIndex];
+      pause();
+      resetPlaylist();
+      _currentSongIndex = _playlist.indexOf(_currentSong!);
+      print(_currentSongIndex);
+      resume();
     }
+    isShuffle
+        ? Fluttertoast.showToast(msg: "Shuffle mode: ON")
+        : Fluttertoast.showToast(msg: "Shuffle mode: OFF");
   }
   // // toggle shuffle
   // void toggleShuffle() {
@@ -112,23 +112,10 @@ class PlaylistProvider extends ChangeNotifier {
   void toggleRepeat() {
     isRepeatOne = !isRepeatOne;
     print("Repeat one: " + isRepeatOne.toString());
+    isRepeatOne
+        ? Fluttertoast.showToast(msg: "Repeat mode: One")
+        : Fluttertoast.showToast(msg: "Repeat mode: All");
   }
-
-  // // Get next song index based on shuffle and repeat modes
-  // int getNextIndex() {
-  //   if (_isShuffle) {
-  //     // If shuffle is enabled, return a random index
-  //     return Random().nextInt(_playlist.length);
-  //   } else {
-  //     if (_isRepeatOne) {
-  //       // If repeat one, return the current song index
-  //       return _currentSongIndex!;
-  //     } else {
-  //       // If repeat all, loop back to the first song if it's the last one
-  //       return (_currentSongIndex! + 1) % _playlist.length;
-  //     }
-  //   }
-  // }
 
   // initially not playing
   bool _isPlaying = false;
