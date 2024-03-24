@@ -4,10 +4,13 @@ import 'package:melody/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:melody/melody/core/helper/local_storage_helper.dart';
+import 'package:melody/melody/presentations/routes/app_router.dart';
+import 'package:melody/melody/presentations/screens/album/all_album.dart';
+import 'package:melody/melody/presentations/screens/event/all_event_screen.dart';
 import 'package:melody/melody/presentations/screens/splash/splash_screen.dart';
 import 'navigation_home_screen.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
-
+import 'package:get/get.dart';
 import 'melody/core/models/firebase/firebase_request.dart';
 
 void main() async {
@@ -17,7 +20,7 @@ void main() async {
   await LocalStorageHelper.initLocalStorageHelper();
   WidgetsFlutterBinding.ensureInitialized();
   await FireBaseDataBase.initializeDB();
-  
+
   await SystemChrome.setPreferredOrientations(<DeviceOrientation>[
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown
@@ -36,7 +39,7 @@ class MyApp extends StatelessWidget {
       systemNavigationBarDividerColor: Colors.transparent,
       systemNavigationBarIconBrightness: Brightness.dark,
     ));
-    return MaterialApp(
+    return GetMaterialApp(
       title: 'Flutter UI',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
@@ -44,7 +47,11 @@ class MyApp extends StatelessWidget {
         textTheme: AppTheme.textTheme,
         platform: TargetPlatform.iOS,
       ),
-      home: SplashScreen(),
+      initialRoute: Routes.allEvent,
+      getPages: [
+        GetPage(name: Routes.allAlbum, page: () => AllAlbumScreen()),
+        GetPage(name: Routes.allEvent, page: () => AllEventScreen()),
+      ],
     );
   }
 }
