@@ -106,10 +106,24 @@ class Playing extends StatelessWidget {
                           Text(formatTime(value.currentDuration)),
 
                           // shuffle icon
-                          Icon(Icons.shuffle),
+                          IconButton(
+                              onPressed: value.toggleShuffle,
+                              icon: Icon(
+                                Icons.shuffle,
+                                color: value.isShuffle
+                                    ? Colors.green
+                                    : Colors.black,
+                              )),
 
                           // repeat icon
-                          Icon(Icons.repeat),
+                          IconButton(
+                              onPressed: value.toggleRepeat,
+                              icon: Icon(
+                                value.isRepeatOne
+                                    ? Icons.repeat_one
+                                    : Icons.repeat,
+                                color: Colors.green,
+                              )),
 
                           // end time
                           Text(formatTime(value.totalDuration))

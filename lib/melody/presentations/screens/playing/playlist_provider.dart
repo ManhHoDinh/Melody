@@ -1,8 +1,12 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:melody/melody/core/models/song/song.dart';
+import 'dart:math';
 
 class PlaylistProvider extends ChangeNotifier {
+  // Biến để lưu trữ thông tin của bài hát đang phát
+  Song? _currentSong;
+
   // playlist of songs
   final List<Song> _playlist = [
     Song(
@@ -22,7 +26,15 @@ class PlaylistProvider extends ChangeNotifier {
         audioPath: "audios/Canon In D Major - Johann Pachelbel.mp3"),
   ];
 
+  List<Song> _originalPlaylist = [];
+
   int? _currentSongIndex;
+  // Shuffle mode
+  bool _isShuffle = false;
+
+  // Repeat mode
+  // RepeatMode _repeatMode = RepeatMode.none;
+  bool _isRepeatOne = false;
 
   // AUDIO PLAYER
 
@@ -35,8 +47,88 @@ class PlaylistProvider extends ChangeNotifier {
 
   // constructor
   PlaylistProvider() {
+    _originalPlaylist.addAll(_playlist);
     listenToDuration();
   }
+
+  // shuffle playlist
+  void shufflePlaylist() {
+    _playlist.clear();
+    _playlist.addAll(List<Song>.from(_originalPlaylist)..shuffle());
+    print(playlist[0].songName +
+        "\n" +
+        playlist[1].songName +
+        "\n" +
+        playlist[2].songName);
+    notifyListeners();
+  }
+
+// Toggle shuffle
+  void toggleShuffle() {
+    isShuffle = !isShuffle;
+    if (isShuffle) {
+      // Save the index of the current song
+      int currentIndex = _currentSongIndex ?? 0;
+
+      // Shuffle the playlist
+      shufflePlaylist();
+
+      // Find the index of the current song in the shuffled playlist
+      int shuffledIndex = _playlist.indexOf(_originalPlaylist[currentIndex]);
+
+      // Update the current song index to the shuffled index
+      currentSongIndex = shuffledIndex;
+    } else {
+      // If shuffling is turned off, restore the original playlist order
+      _playlist.clear();
+      _playlist.addAll(_originalPlaylist);
+
+      // Check if the current song index needs to be updated
+      if (_currentSongIndex != null) {
+        Song currentSong = _originalPlaylist[_currentSongIndex!];
+        int newCurrentIndex = _playlist.indexOf(currentSong);
+        if (newCurrentIndex != -1) {
+          // If the current song is found in the playlist, update the index
+          currentSongIndex = newCurrentIndex;
+        }
+      }
+
+      notifyListeners();
+    }
+  }
+  // // toggle shuffle
+  // void toggleShuffle() {
+  //   isShuffle = !isShuffle;
+  //   if (isShuffle) {
+  //     shufflePlaylist();
+  //   } else {
+  //     _playlist.clear();
+  //     _playlist.addAll(_originalPlaylist);
+  //     notifyListeners();
+  //   }
+  // }
+
+  // Toggle repeat mode
+  void toggleRepeat() {
+    isRepeatOne = !isRepeatOne;
+    print("Repeat one: " + isRepeatOne.toString());
+  }
+
+  // // Get next song index based on shuffle and repeat modes
+  // int getNextIndex() {
+  //   if (_isShuffle) {
+  //     // If shuffle is enabled, return a random index
+  //     return Random().nextInt(_playlist.length);
+  //   } else {
+  //     if (_isRepeatOne) {
+  //       // If repeat one, return the current song index
+  //       return _currentSongIndex!;
+  //     } else {
+  //       // If repeat all, loop back to the first song if it's the last one
+  //       return (_currentSongIndex! + 1) % _playlist.length;
+  //     }
+  //   }
+  // }
 
   // initially not playing
   bool _isPlaying = false;
@@ -126,7 +218,12 @@ class PlaylistProvider extends ChangeNotifier {
 
     // listen for song completion
     _audioPlayer.onPlayerComplete.listen((event) {
-      playNextSong();
+      if (_isRepeatOne) {
+        // if repeat mode is on, repeat the current song
+        currentSongIndex = _currentSongIndex;
+      } else {
+        playNextSong();
+      }
     });
   }
 
@@ -139,6 +236,9 @@ class PlaylistProvider extends ChangeNotifier {
   bool get isPlaying => _isPlaying;
   Duration get currentDuration => _currentDuration;
   Duration get totalDuration => _totalDuration;
+  bool get isShuffle => _isShuffle;
+  // RepeatMode get repeatMode => _repeatMode;
+  bool get isRepeatOne => _isRepeatOne;
 
   // Setters
   set currentSongIndex(int? newIndex) {
@@ -150,6 +250,16 @@ class PlaylistProvider extends ChangeNotifier {
     }
 
     // update UI
+    notifyListeners();
+  }
+
+  set isShuffle(bool value) {
+    _isShuffle = value;
+    notifyListeners();
+  }
+
+  set isRepeatOne(bool value) {
+    _isRepeatOne = value;
     notifyListeners();
   }
 }

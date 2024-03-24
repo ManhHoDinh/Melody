@@ -10,7 +10,6 @@ import 'package:melody/melody/presentations/screens/splash/splash_screen.dart';
 import 'package:provider/provider.dart';
 import 'navigation_home_screen.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
-
 import 'melody/core/models/firebase/firebase_request.dart';
 
 void main() async {
