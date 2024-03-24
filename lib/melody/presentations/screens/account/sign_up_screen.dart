@@ -199,13 +199,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     color: ColorPalette.primaryColor,
                     textColor: Colors.white,
                     onTap: () async {
-                      if (formSignInKey.currentState!.validate()) {}
-                      await AuthServices.signUpUser(
+                      if (formSignInKey.currentState!.validate()) {
+                        await AuthServices.signUpUser(
                           name: _nameController.text,
                           email: _emailController.text,
                           password: _passwordController.text,
                           buildContext: context);
-                    },
+                      }
+                      },
                   ),
                   SizedBox(
                     height: 20,
