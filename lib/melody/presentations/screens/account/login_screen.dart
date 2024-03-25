@@ -197,7 +197,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           },
                           child: Text("Sign up",
                               style: TextStyles.h6
-                                  .setColor(ColorPalette.grayText)))
+                                  .setColor(ColorPalette.greenText)))
                     ],
                   ),
                 ],
