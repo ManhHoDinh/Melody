@@ -26,10 +26,7 @@ class DefaultFirebaseOptions {
       case TargetPlatform.android:
         return android;
       case TargetPlatform.iOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for ios - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return ios;
       case TargetPlatform.macOS:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for macos - '
@@ -53,10 +50,20 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyCljKqYrGAgx7_mgE9PuYg03tf9nI8SGTc',
-    appId: '1:683918464292:android:95393a0db7708208ba8fb1',
-    messagingSenderId: '683918464292',
-    projectId: 'windou',
-    storageBucket: 'windou.appspot.com',
+    apiKey: 'AIzaSyCKixigVMi36CCiiETtDPfsaYCggFsvSlU',
+    appId: '1:482788902102:android:21f228ee384a0cfe257577',
+    messagingSenderId: '482788902102',
+    projectId: 'melody-bf3aa',
+    storageBucket: 'melody-bf3aa.appspot.com',
+  );
+
+  static const FirebaseOptions ios = FirebaseOptions(
+    apiKey: 'AIzaSyC2J-MnpenEFLdKv0oDSvrBrS9ZYY7h3XI',
+    appId: '1:482788902102:ios:f9564fa1398e29a9257577',
+    messagingSenderId: '482788902102',
+    projectId: 'melody-bf3aa',
+    storageBucket: 'melody-bf3aa.appspot.com',
+    iosClientId: '482788902102-hfn866vem2ai0vcvulpq36ee8ec97isc.apps.googleusercontent.com',
+    iosBundleId: 'com.example.melody',
   );
 }

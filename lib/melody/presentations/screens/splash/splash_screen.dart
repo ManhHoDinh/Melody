@@ -18,14 +18,11 @@ class _SplashCreenState extends State<SplashScreen> {
     Size size = MediaQuery.of(context).size;
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Splash Screen"),
-        backgroundColor: Colors.white,
-        
-      ),
-        backgroundColor: Colors.white,
-        body: Center(
-          child: Text("Splash Screen")
+        body: Image.asset(
+          AssetHelper.splashImage,
+          width: size.width,
+          height: size.height,
+          fit: BoxFit.cover,
         ));
   }
 }
