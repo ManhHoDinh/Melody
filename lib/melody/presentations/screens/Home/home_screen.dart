@@ -3,11 +3,17 @@ import 'package:melody/melody/core/constants/color_palatte.dart';
 import 'package:melody/melody/core/helper/assets_helper.dart';
 import 'package:melody/melody/core/helper/text_styles.dart';
 import 'package:melody/melody/core/models/composer/composer.dart';
+import 'package:melody/melody/core/models/event/event.dart';
+import 'package:melody/melody/core/models/instrument/instrument.dart';
 import 'package:melody/melody/core/models/music/music.dart';
 import 'package:get/get.dart';
+import 'package:melody/melody/core/models/perfomer/perfomer.dart';
 import 'package:melody/melody/presentations/screens/Home/item_screen.dart';
 import 'package:melody/melody/presentations/screens/Discovery/discovery_screen.dart';
 import 'package:melody/melody/presentations/screens/Home/widgets/composer_item.dart';
+import 'package:melody/melody/presentations/screens/Home/widgets/event_item.dart';
+import 'package:melody/melody/presentations/screens/Home/widgets/instrument_item.dart';
+import 'package:melody/melody/presentations/screens/Home/widgets/perfomer_item.dart';
 import '../../../core/models/music/music.dart';
 import 'widgets/music_item.dart';
 
@@ -40,6 +46,11 @@ class _HomeScreenState extends State<HomeScreen>
         name: 'Symphony ',
         image: AssetHelper.imgArtist),
   ];
+  List<Instrument> instrument = [
+    const Instrument(id: 1, name: 'Pinano', image: AssetHelper.imgArtist),
+    const Instrument(id: 1, name: 'Violet', image: AssetHelper.imgArtist),
+    const Instrument(id: 1, name: 'Symphony ', image: AssetHelper.imgArtist),
+  ];
   List<Composer> composer = [
     const Composer(
         music: 'Mozart', id: 1, name: 'Symphony', image: AssetHelper.imgArtist),
@@ -50,6 +61,27 @@ class _HomeScreenState extends State<HomeScreen>
         id: 1,
         name: 'Symphony ',
         image: AssetHelper.imgArtist),
+  ];
+  List<Perfomer> perfomer = [
+    const Perfomer(
+        music: 'Mozart', id: 1, name: 'Symphony', image: AssetHelper.imgArtist),
+    const Perfomer(
+        music: 'Mozart', id: 1, name: 'Son tung', image: AssetHelper.imgArtist),
+    const Perfomer(
+        music: 'Dinh Dai Duong',
+        id: 1,
+        name: 'Symphony ',
+        image: AssetHelper.imgArtist),
+  ];
+  List<Event> event = [
+    Event(
+        startAt: DateTime.now(),
+        id: 1,
+        name: 'Symphony',
+        image: AssetHelper.imgArtist,
+        location: 'New York',
+        endAt: DateTime.now(),
+        description: 'This is a symphony event'),
   ];
   late AnimationController _animationController;
   late Animation<Alignment> _topAlignmentAnimation;
@@ -188,15 +220,15 @@ class _HomeScreenState extends State<HomeScreen>
                   prefixIcon: Icon(Icons.search),
                 ),
               ),
-              SizedBox(height: 20),
+              SizedBox(height: 10),
               MusicSection(
-                title: 'Popular Songs',
+                title: 'Instrument',
                 albums: albums, // Pass your list of popular songs here
               ),
               Expanded(
                 child: GridView.builder(
-                  shrinkWrap: true,
-                  itemCount: searchAlbums(albums, searchValue).length,
+                  physics: NeverScrollableScrollPhysics(),
+                  itemCount: searchInstrument(instrument, searchValue).length,
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 3,
                     crossAxisSpacing: 10,
@@ -204,19 +236,20 @@ class _HomeScreenState extends State<HomeScreen>
                     childAspectRatio: 5 / 6,
                   ),
                   itemBuilder: (context, index) {
-                    return MusicItem(
-                      music: searchAlbums(albums, searchValue)[index],
+                    return InstrumentItem(
+                      instrument:
+                          searchInstrument(instrument, searchValue)[index],
                     );
                   },
                 ),
               ),
               MusicSection(
                 title: 'Composer',
-                albums: albums, // Pass your list of popular songs here
+                albums: albums,
               ),
-              Expanded(
+              Flexible(
                 child: GridView.builder(
-                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
                   itemCount: searchComposer(composer, searchValue).length,
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 3,
@@ -231,6 +264,46 @@ class _HomeScreenState extends State<HomeScreen>
                   },
                 ),
               ),
+              MusicSection(
+                title: 'Perfomer',
+                albums: albums,
+              ),
+              Expanded(
+                child: GridView.builder(
+                  physics: NeverScrollableScrollPhysics(),
+                  itemCount: perfomer.length,
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 3,
+                    crossAxisSpacing: 10,
+                    mainAxisSpacing: 10,
+                    childAspectRatio: 5 / 6,
+                  ),
+                  itemBuilder: (context, index) {
+                    return PerfomerItem.PerformerItem(
+                      perfomer: perfomer[index],
+                    );
+                  },
+                ),
+              ),
+              MusicSection(
+                title: 'Event',
+                albums: albums,
+              ),
+              Expanded(
+                child: ListView.separated(
+                    scrollDirection: Axis.vertical,
+                    itemBuilder: ((context, index) {
+                      return EventItem(
+                        event: event[index],
+                      );
+                    }),
+                    separatorBuilder: ((context, index) {
+                      return SizedBox(
+                        height: 10,
+                      );
+                    }),
+                    itemCount: event.length),
+              )
             ],
           ),
         ),
@@ -238,16 +311,27 @@ class _HomeScreenState extends State<HomeScreen>
     );
   }
 
-  List<Music> searchAlbums(List<Music> albums, String value) {
-    return albums
+  List<Instrument> searchInstrument(List<Instrument> instrument, String value) {
+    return instrument
         .where((element) =>
-            element.name.toLowerCase().contains(value.toLowerCase()) ||
-            element.artist.toLowerCase().contains(value.toLowerCase()))
+            element.name.toLowerCase().contains(value.toLowerCase()))
         .toList();
   }
 
   List<Composer> searchComposer(List<Composer> composer, String value) {
     return composer
+        .where((element) =>
+            element.name.toLowerCase().contains(value.toLowerCase()) ||
+            element.music.toLowerCase().contains(value.toLowerCase()))
+        .toList();
+  }
+
+  List<Event> searchEvents(List<Event> events, String value) {
+    return events.where((element) => element.name.contains(value)).toList();
+  }
+
+  List<Perfomer> searchPerfomer(List<Perfomer> perfomer, String value) {
+    return perfomer
         .where((element) =>
             element.name.toLowerCase().contains(value.toLowerCase()) ||
             element.music.toLowerCase().contains(value.toLowerCase()))

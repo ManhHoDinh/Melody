@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:melody/melody/core/models/composer/composer.dart';
 import 'package:melody/melody/core/models/music/music.dart';
+import 'package:melody/melody/core/models/perfomer/perfomer.dart';
 
-class ComposerItem extends StatelessWidget {
-  final Composer composer;
-  const ComposerItem({super.key, required this.composer});
+class PerfomerItem extends StatelessWidget {
+  final Perfomer perfomer;
+  const PerfomerItem.PerformerItem({super.key, required this.perfomer});
 
   @override
   Widget build(BuildContext context) {
@@ -16,18 +17,21 @@ class ComposerItem extends StatelessWidget {
         children: [
           Flexible(
             child: Container(
-              width: double.infinity,
+              width: 80,
               height: 70,
               decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  image: DecorationImage(
-                      fit: BoxFit.fitWidth, image: AssetImage(composer.image))),
+                shape: BoxShape.circle,
+                image: DecorationImage(
+                  fit: BoxFit.cover,
+                  image: AssetImage(perfomer.image),
+                ),
+              ),
             ),
           ),
           Align(
             alignment: Alignment.center,
             child: Text(
-              composer.name,
+              perfomer.name,
               style: TextStyle(
                   fontWeight: FontWeight.w600,
                   fontSize: 14,
