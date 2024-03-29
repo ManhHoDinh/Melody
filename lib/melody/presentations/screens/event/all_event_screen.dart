@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:melody/melody/core/helper/text_styles.dart';
 import 'package:melody/melody/core/models/event/event.dart';
+import 'package:melody/melody/core/models/firebase/event_request.dart';
 
 import '../../../core/constants/color_palatte.dart';
 import '../../../core/helper/assets_helper.dart';
@@ -16,24 +17,7 @@ class AllEventScreen extends StatefulWidget {
 class _AllEventScreenState extends State<AllEventScreen> {
   TextEditingController searchController = TextEditingController();
   String searchValue = '';
-  List<Event> events = [
-    Event(
-        id: 1,
-        image: AssetHelper.test,
-        description: 'goodd',
-        name: 'binh',
-        startAt: DateTime.now(),
-        endAt: DateTime.now(),
-        location: 'QN'),
-    Event(
-        id: 1,
-        image: AssetHelper.test,
-        description: 'goodd',
-        name: 'binh',
-        startAt: DateTime.now(),
-        endAt: DateTime.now(),
-        location: 'QN')
-  ];
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -81,28 +65,36 @@ class _AllEventScreenState extends State<AllEventScreen> {
                 height: 20,
               ),
               Expanded(
-                child: ListView.separated(
-                    scrollDirection: Axis.vertical,
-                    itemBuilder: ((context, index) {
-                      return EventItem(
-                        event: events[index],
-                      );
+                child: StreamBuilder<List<Event>>(
+                    stream: EventRequest.search(searchValue),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        // While waiting for data, show a loading indicator
+                        return CircularProgressIndicator();
+                      } else if (snapshot.hasError) {
+                        // If there's an error with the stream, display an error message
+                        return Text('Error: ${snapshot.error}');
+                      } else {
+                        return ListView.separated(
+                            scrollDirection: Axis.vertical,
+                            itemBuilder: ((context, index) {
+                              return EventItem(
+                                event: snapshot.data![index],
+                              );
+                            }),
+                            separatorBuilder: ((context, index) {
+                              return SizedBox(
+                                height: 10,
+                              );
+                            }),
+                            itemCount: snapshot.data!.length);
+                      }
                     }),
-                    separatorBuilder: ((context, index) {
-                      return SizedBox(
-                        height: 10,
-                      );
-                    }),
-                    itemCount: events.length),
               )
             ],
           ),
         ),
       ),
     );
-  }
-
-  List<Event> searchEvents(List<Event> events, String value) {
-    return events.where((element) => element.name.contains(value)).toList();
   }
 }

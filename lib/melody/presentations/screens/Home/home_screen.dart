@@ -8,7 +8,7 @@ import '../../../core/helper/AuthFunctions.dart';
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
   static final String routeName = 'home_screen';
-  
+
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
@@ -20,22 +20,20 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         title: const Text('Home Screen'),
       ),
-      body:  Center(
-        child: GestureDetector(
-          onTap: () async{
-            await FirebaseAuth.instance.signOut();
-                       final GoogleSignIn googleSignIn = GoogleSignIn();
-      
-                        await googleSignIn.signOut();
-      
-                  AuthServices.CurrentUser = null;
-      
-                  Navigator.pushReplacementNamed(
-                      context, LoginScreen.routeName);
-          },
-          child: Text('Go to Login Screen'),
-        )
-      ),
+      body: Center(
+          child: GestureDetector(
+        onTap: () async {
+          await FirebaseAuth.instance.signOut();
+          final GoogleSignIn googleSignIn = GoogleSignIn();
+
+          await googleSignIn.signOut();
+
+          AuthServices.CurrentUser = null;
+
+          Navigator.pushReplacementNamed(context, LoginScreen.routeName);
+        },
+        child: Text('Go to Login Screen'),
+      )),
     );
   }
 }

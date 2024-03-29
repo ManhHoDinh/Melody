@@ -1,22 +1,28 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'album.dart';
+part of 'playlist.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$AlbumImpl _$$AlbumImplFromJson(Map<String, dynamic> json) => _$AlbumImpl(
+_$PlaylistImpl _$$PlaylistImplFromJson(Map<String, dynamic> json) =>
+    _$PlaylistImpl(
       name: json['name'] as String,
+      description: json['description'] as String? ?? "",
       id: json['id'] as String,
-      artist_id: json['artist_id'] as String,
+      songIds: (json['songIds'] as List<dynamic>?)
+              ?.map((e) => e as String)
+              .toList() ??
+          const [],
       image: json['image'] as String,
     );
 
-Map<String, dynamic> _$$AlbumImplToJson(_$AlbumImpl instance) =>
+Map<String, dynamic> _$$PlaylistImplToJson(_$PlaylistImpl instance) =>
     <String, dynamic>{
       'name': instance.name,
+      'description': instance.description,
       'id': instance.id,
-      'artist_id': instance.artist_id,
+      'songIds': instance.songIds,
       'image': instance.image,
     };

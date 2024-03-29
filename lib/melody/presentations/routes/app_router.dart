@@ -14,4 +14,5 @@ final Map<String, WidgetBuilder> routes = {
 class Routes {
   static String allAlbum = '/allAlbum';
   static String allEvent = '/allEvent';
+  static String createInstrument = '/createInstrument';
 }

@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import 'package:melody/melody/core/constants/color_palatte.dart';
 import 'package:melody/melody/core/helper/text_styles.dart';
 import 'package:melody/melody/core/helper/assets_helper.dart';
+import 'package:melody/melody/core/models/firebase/album_request.dart';
+import 'package:melody/melody/core/models/user/user.dart';
 import '../../../core/models/album/album.dart';
 import 'widgets/album_item.dart';
 
@@ -16,15 +18,7 @@ class AllAlbumScreen extends StatefulWidget {
 class _AllAlbumScreenState extends State<AllAlbumScreen> {
   TextEditingController searchController = TextEditingController();
   String searchValue = '';
-  List<Album> albums = [
-    Album(artist: 'Binh', id: 1, name: 'binh ne', image: AssetHelper.test),
-    Album(artist: 'Binh', id: 1, name: 'binh ne', image: AssetHelper.test),
-    Album(artist: 'Binh', id: 1, name: 'binh ne', image: AssetHelper.test),
-    Album(artist: 'Binh', id: 1, name: 'binh ne', image: AssetHelper.test),
-    Album(artist: 'Binh', id: 1, name: 'binh ne', image: AssetHelper.test),
-    Album(artist: 'Binh', id: 1, name: 'binh ne', image: AssetHelper.test),
-    Album(artist: 'Binh', id: 1, name: 'binh ne', image: AssetHelper.test),
-  ];
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -71,30 +65,36 @@ class _AllAlbumScreenState extends State<AllAlbumScreen> {
               SizedBox(
                 height: 20,
               ),
-              GridView.builder(
-                  shrinkWrap: true,
-                  itemCount: searchAlbums(albums, searchValue).length,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 3,
-                      crossAxisSpacing: 10,
-                      mainAxisSpacing: 10,
-                      childAspectRatio: 5 / 6),
-                  itemBuilder: ((context, index) {
-                    return AlbumItem(
-                      album: searchAlbums(albums, searchValue)[index],
-                    );
+              StreamBuilder<List<Album>>(
+                  stream: AlbumRequest.search(searchValue),
+                  builder: ((context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      // While waiting for data, show a loading indicator
+                      return CircularProgressIndicator();
+                    } else if (snapshot.hasError) {
+                      // If there's an error with the stream, display an error message
+                      return Text('Error: ${snapshot.error}');
+                    } else {
+                      return GridView.builder(
+                          shrinkWrap: true,
+                          itemCount: snapshot.data!.length,
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 3,
+                                  crossAxisSpacing: 10,
+                                  mainAxisSpacing: 10,
+                                  childAspectRatio: 5 / 6),
+                          itemBuilder: ((context, index) {
+                            return AlbumItem(
+                              album: snapshot.data![index],
+                            );
+                          }));
+                    }
                   }))
             ],
           ),
         ),
       ),
     );
-  }
-
-  List<Album> searchAlbums(List<Album> albums, String value) {
-    return albums
-        .where((element) =>
-            element.name.contains(value) || element.artist.contains(value))
-        .toList();
   }
 }
