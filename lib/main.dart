@@ -7,6 +7,7 @@ import 'package:melody/melody/core/helper/local_storage_helper.dart';
 import 'package:melody/melody/presentations/routes/app_router.dart';
 import 'package:melody/melody/presentations/screens/album/all_album.dart';
 import 'package:melody/melody/presentations/screens/event/all_event_screen.dart';
+import 'package:melody/melody/main.dart';
 import 'package:melody/melody/presentations/screens/splash/splash_screen.dart';
 import 'navigation_home_screen.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
@@ -48,6 +49,7 @@ class MyApp extends StatelessWidget {
         platform: TargetPlatform.iOS,
       ),
       initialRoute: Routes.allEvent,
+      home: melodyApp(),
       getPages: [
         GetPage(name: Routes.allAlbum, page: () => AllAlbumScreen()),
         GetPage(name: Routes.allEvent, page: () => AllEventScreen()),

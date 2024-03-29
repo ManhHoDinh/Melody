@@ -56,7 +56,8 @@ dependencies:
   flutter_svg: ^2.0.10+1
   firebase_auth: ^4.16.0
   cloud_firestore: ^4.14.0
-  
+  google_sign_in: ^6.1.6
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -77,8 +78,9 @@ flutter:
     - assets/design_course/
     - assets/fitness_app/
     - assets/hotel/
+    - assets/melody/
     - assets/introduction_animation/
-    
+
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
 
