@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "482788902102",
+    "project_id": "melody-bf3aa",
+    "storage_bucket": "melody-bf3aa.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:482788902102:android:21f228ee384a0cfe257577",
+        "android_client_info": {
+          "package_name": "com.example.melody"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "482788902102-n994onobm8ub2efi43hr561407ikivcj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.melody",
+            "certificate_hash": "0180dabc780945d4bdee341d9ec5431c1ad40af2"
+          }
+        },
+        {
+          "client_id": "482788902102-08o5r12cct487s4sb6sk3l8bq7mhvt4f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCKixigVMi36CCiiETtDPfsaYCggFsvSlU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "482788902102-08o5r12cct487s4sb6sk3l8bq7mhvt4f.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "482788902102-hfn866vem2ai0vcvulpq36ee8ec97isc.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.melody"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

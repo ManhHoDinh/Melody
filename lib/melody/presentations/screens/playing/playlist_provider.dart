@@ -6,23 +6,7 @@ import 'dart:math';
 
 class PlaylistProvider extends ChangeNotifier {
   // playlist of songs
-  final List<Song> _playlist = [
-    Song(
-        songName: "Fur Elise",
-        artistName: "Ludwig van Beethoven",
-        songImagePath: "assets/images/furelise.jpg",
-        audioPath: "audios/Fur Elise - Ludwig van Beethoven.mp3"),
-    Song(
-        songName: "Moonlight Sonata",
-        artistName: "Ludwig van Beethoven",
-        songImagePath: "assets/images/moonlightsonata.jpg",
-        audioPath: "audios/Moonlight Sonata - Ludwig van Beethoven.mp3"),
-    Song(
-        songName: "Canon In D Major",
-        artistName: "Johann Pachelbel",
-        songImagePath: "assets/images/canonind.jpg",
-        audioPath: "audios/Canon In D Major - Johann Pachelbel.mp3"),
-  ];
+  final List<Song> _playlist = [];
 
   List<Song> _originalPlaylist = [];
 

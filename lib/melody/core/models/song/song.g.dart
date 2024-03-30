@@ -7,6 +7,8 @@ part of 'song.dart';
 // **************************************************************************
 
 _$SongImpl _$$SongImplFromJson(Map<String, dynamic> json) => _$SongImpl(
+      songId: json['songId'] as String,
+      artistId: json['artistId'] as String,
       songName: json['songName'] as String,
       artistName: json['artistName'] as String,
       songImagePath: json['songImagePath'] as String,
@@ -15,6 +17,8 @@ _$SongImpl _$$SongImplFromJson(Map<String, dynamic> json) => _$SongImpl(
 
 Map<String, dynamic> _$$SongImplToJson(_$SongImpl instance) =>
     <String, dynamic>{
+      'songId': instance.songId,
+      'artistId': instance.artistId,
       'songName': instance.songName,
       'artistName': instance.artistName,
       'songImagePath': instance.songImagePath,
