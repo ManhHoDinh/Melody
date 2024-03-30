@@ -1,9 +1,13 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:melody/melody/core/helper/text_styles.dart';
 import 'package:melody/melody/core/models/music/music.dart';
 import 'package:melody/melody/presentations/screens/Discovery/item_screen.dart';
 import 'package:melody/melody/presentations/screens/Discovery/widgets/music_item.dart';
-
+import 'package:speech_to_text/speech_recognition_result.dart';
+import 'package:speech_to_text/speech_to_text.dart' as stt;
+import 'package:speech_to_text/speech_to_text.dart';
 import '../../../core/constants/color_palatte.dart';
 import '../../../core/helper/assets_helper.dart';
 
@@ -36,6 +40,17 @@ class _DiscoveryScreenState extends State<DiscoveryScreen> {
         name: 'Symphony ',
         image: AssetHelper.imgArtist),
   ];
+  void _openDialog() {
+    showDialog(
+      context: context,
+      builder: (context) => ListeningDialog(
+        onSpeechEnd: (spokenText) {
+          searchController.text = spokenText;
+          searchValue = spokenText;
+        },
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -135,16 +150,21 @@ class _DiscoveryScreenState extends State<DiscoveryScreen> {
                       style:
                           TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
                       decoration: InputDecoration(
-                          filled: true,
-                          hintStyle:
-                              TextStyle(color: Color.fromARGB(255, 0, 0, 0)),
-                          fillColor: Color.fromARGB(255, 254, 254, 254),
-                          border: OutlineInputBorder(
-                              borderSide: BorderSide.none,
-                              borderRadius: BorderRadius.circular(20)),
-                          hintText: 'Search Song, Composer, Instrument',
-                          prefixIconColor: Color.fromARGB(255, 0, 0, 0),
-                          prefixIcon: Icon(Icons.search)),
+                        filled: true,
+                        hintStyle:
+                            TextStyle(color: Color.fromARGB(255, 0, 0, 0)),
+                        fillColor: Color.fromARGB(255, 254, 254, 254),
+                        border: OutlineInputBorder(
+                            borderSide: BorderSide.none,
+                            borderRadius: BorderRadius.circular(20)),
+                        hintText: 'Search Song, Composer, Instrument',
+                        prefixIconColor: Color.fromARGB(255, 0, 0, 0),
+                        prefixIcon: Icon(Icons.search),
+                        suffixIcon: IconButton(
+                          icon: Icon(Icons.mic),
+                          onPressed: _openDialog,
+                        ),
+                      ),
                     )
                   : Container(),
               SizedBox(
@@ -226,5 +246,79 @@ class _DiscoveryScreenState extends State<DiscoveryScreen> {
             element.name.toLowerCase().contains(value.toLowerCase()) ||
             element.artist.toLowerCase().contains(value.toLowerCase()))
         .toList();
+  }
+}
+
+class ListeningDialog extends StatefulWidget {
+  final Function(String) onSpeechEnd;
+
+  ListeningDialog({required this.onSpeechEnd});
+  @override
+  _ListeningDialogState createState() => _ListeningDialogState();
+}
+
+class _ListeningDialogState extends State<ListeningDialog> {
+  final SpeechToText _speechToText = SpeechToText();
+  bool _speechEnabled = false;
+  String _wordSpoken = '';
+
+  @override
+  void initState() {
+    super.initState();
+    initSpeech();
+  }
+
+  void initSpeech() async {
+    _speechEnabled = await _speechToText.initialize();
+    setState(() {});
+  }
+
+  void _startListening() async {
+    await _speechToText.listen(onResult: _onSpeechResult);
+    setState(() {});
+  }
+
+  void _stopListening() async {
+    await _speechToText.stop();
+    if (widget.onSpeechEnd != null) {
+      widget.onSpeechEnd(_wordSpoken);
+    }
+    setState(() {});
+  }
+
+  void _onSpeechResult(SpeechRecognitionResult result) {
+    setState(() {
+      _wordSpoken = result.recognizedWords;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: Text('Listening...'),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            _speechToText.isListening
+                ? '$_wordSpoken'
+                : _speechEnabled
+                    ? 'Tap the microphone to start listening...'
+                    : 'Speech not available',
+          ),
+          Expanded(
+            child: Container(child: Text(_wordSpoken)),
+          ),
+        ],
+      ),
+      actions: [
+        IconButton(
+          icon: Icon(_speechToText.isNotListening ? Icons.mic_off : Icons.mic),
+          onPressed:
+              _speechToText.isNotListening ? _startListening : _stopListening,
+          tooltip: "Listen",
+        ),
+      ],
+    );
   }
 }
