@@ -51,6 +51,7 @@ class MyApp extends StatelessWidget {
       ),
       // initialRoute: Routes.createInstrument,
       home: melodyApp(),
+
       getPages: [
         GetPage(name: Routes.allAlbum, page: () => AllAlbumScreen()),
         GetPage(name: Routes.allEvent, page: () => AllEventScreen()),
