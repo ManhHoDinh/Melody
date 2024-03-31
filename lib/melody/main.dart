@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:melody/melody/presentations/routes/app_router.dart';
 import 'package:melody/melody/presentations/screens/Home/home_screen.dart';
+import 'package:melody/melody/presentations/screens/Home/navigation_home.dart';
 import 'package:melody/melody/presentations/screens/account/login_screen.dart';
 import 'package:melody/melody/presentations/screens/splash/splash_screen.dart';
 import 'core/constants/color_palatte.dart';
@@ -81,7 +82,7 @@ class _AuthenticationWrapperState extends State<AuthenticationWrapper> {
                         return SplashScreen();
                       } else {
                         // If the update is complete, navigate to the MainScreen
-                        return HomeScreen();
+                        return NavigationHome();
                       }
                     },
                   );
