@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:melody/melody/core/constants/color_palatte.dart';
 import 'package:melody/melody/core/helper/assets_helper.dart';
@@ -19,8 +18,9 @@ import '../../../core/models/music/music.dart';
 import 'widgets/music_item.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  const HomeScreen({super.key, this.animationController});
   static final String routeName = 'home_screen';
+  final AnimationController? animationController;
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
