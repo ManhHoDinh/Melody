@@ -1,18 +1,15 @@
 import 'dart:io';
-import 'package:get/get_navigation/src/root/get_material_app.dart';
-import 'package:get/get_navigation/src/routes/get_route.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:melody/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:melody/melody/core/helper/local_storage_helper.dart';
-import 'package:melody/melody/presentations/routes/app_router.dart';
-import 'package:melody/melody/presentations/screens/Discovery/discovery_screen.dart';
-import 'package:melody/melody/presentations/screens/Home/home_screen.dart';
+import 'package:melody/melody/presentations/screens/playing/playlist_provider.dart';
+import 'package:melody/melody/presentations/screens/queue/queue.dart';
 import 'package:melody/melody/presentations/screens/splash/splash_screen.dart';
+import 'package:provider/provider.dart';
 import 'navigation_home_screen.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
-
 import 'melody/core/models/firebase/firebase_request.dart';
 
 void main() async {
@@ -26,7 +23,10 @@ void main() async {
   await SystemChrome.setPreferredOrientations(<DeviceOrientation>[
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown
-  ]).then((_) => runApp(MyApp()));
+  ]).then((_) => runApp(ChangeNotifierProvider(
+        create: (context) => PlaylistProvider(),
+        child: MyApp(),
+      )));
 }
 
 class MyApp extends StatelessWidget {
@@ -41,7 +41,7 @@ class MyApp extends StatelessWidget {
       systemNavigationBarDividerColor: Colors.transparent,
       systemNavigationBarIconBrightness: Brightness.dark,
     ));
-    return GetMaterialApp(
+    return MaterialApp(
       title: 'Flutter UI',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
@@ -49,12 +49,7 @@ class MyApp extends StatelessWidget {
         textTheme: AppTheme.textTheme,
         platform: TargetPlatform.iOS,
       ),
-        initialRoute: Routes.discovery,
-      home: HomeScreen(),
-        getPages: [
-        GetPage(name: Routes.discovery, page: () => DiscoveryScreen()),
-       
-      ],
+      home: Queue(),
     );
   }
 }

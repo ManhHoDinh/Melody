@@ -10,6 +10,12 @@ final Map<String, WidgetBuilder> routes = {
   SplashScreen.routeName: (context) => SplashScreen(),
 };
 
+// class Routes {
+//     static String discovery = '/discovery';
+// }
+
+
 class Routes {
-    static String discovery = '/discovery';
+  static String playing = '/playing';
+  static String queue = '/queue';
 }
