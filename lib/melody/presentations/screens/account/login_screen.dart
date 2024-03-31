@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:melody/melody/core/constants/color_palatte.dart';
 import 'package:melody/melody/core/constants/dimension_constants.dart';
 import 'package:melody/melody/core/helper/text_styles.dart';
-import 'package:melody/melody/presentations/screens/account/sigg_up_screen.dart';
+import 'package:melody/melody/presentations/screens/account/sign_up_screen.dart';
 import 'package:melody/melody/presentations/widgets/button_widget.dart';
 import 'package:melody/melody/presentations/widgets/input_widget.dart';
 

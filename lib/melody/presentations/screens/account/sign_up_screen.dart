@@ -18,9 +18,14 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
+  TextEditingController _nameController = TextEditingController();
+  TextEditingController _confirmPasswordController = TextEditingController();
+
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
   bool _passwordVisible = false;
+  bool _confirmPasswordVisible = false;
+
   final formSignInKey = GlobalKey<FormState>();
 
   @override
@@ -42,64 +47,55 @@ class _SignUpScreenState extends State<SignUpScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  SizedBox(height: 20),
                   Container(
-                    alignment: Alignment.center,
                     child: Text(
-                      "Sign Up continue",
+                      "Getting started",
                       style: TextStyles.h2.copyWith(
                           color: ColorPalette.blackText,
                           fontWeight: FontWeight.bold),
                     ),
                   ),
                   SizedBox(height: 20),
-                  
+                  Container(
+                    child: Text(
+                      "Create an account to continue!",
+                      style:
+                          TextStyles.h5.copyWith(color: ColorPalette.grayText),
+                    ),
+                  ),
+                  SizedBox(height: 20),
+                  Container(
+                    alignment: Alignment.center,
+                    child: ImageHelper.loadFromAsset(AssetHelper.logo,
+                        height: 150, width: 150),
+                  ),
+                  SizedBox(height: 20),
                   InputWidget(
-                      controller: _emailController,
-                      labelText: 'Email',
+                      controller: _nameController,
+                      labelText: 'Name',
                       icon: AssetHelper.icoUser,
                       validator: (input) {
-                        final bool emailValid = RegExp(
-                                r"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")
-                            .hasMatch(input!);
-                        if (input.isEmpty) {
-                          return "Vui lòng nhập email!";
-                        } else if (!emailValid) {
-                          return "Email không tồn tại";
-                        }
-                      }),SizedBox(height: 20),
-                  
-                  InputWidget(
-                      controller: _emailController,
-                      labelText: 'Email',
-                      icon: AssetHelper.icoUser,
-                      validator: (input) {
-                        final bool emailValid = RegExp(
-                                r"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")
-                            .hasMatch(input!);
-                        if (input.isEmpty) {
-                          return "Vui lòng nhập email!";
-                        } else if (!emailValid) {
-                          return "Email không tồn tại";
-                        }
-                      }),SizedBox(height: 20),
-                  
-                  InputWidget(
-                      controller: _emailController,
-                      labelText: 'Email',
-                      icon: AssetHelper.icoUser,
-                      validator: (input) {
-                        final bool emailValid = RegExp(
-                                r"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")
-                            .hasMatch(input!);
-                        if (input.isEmpty) {
-                          return "Vui lòng nhập email!";
-                        } else if (!emailValid) {
-                          return "Email không tồn tại";
+                        if (input?.isEmpty ?? true) {
+                          return "Enter your name, please!";
                         }
                       }),
-                  SizedBox(
-                    height: 30,
-                  ),
+                  SizedBox(height: 20),
+                  InputWidget(
+                      controller: _emailController,
+                      labelText: 'Email',
+                      icon: AssetHelper.icoEmail,
+                      validator: (input) {
+                        final bool emailValid = RegExp(
+                                r"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")
+                            .hasMatch(input!);
+                        if (input.isEmpty) {
+                          return "Enter your email, please!";
+                        } else if (!emailValid) {
+                          return "Email is invalid!";
+                        }
+                      }),
+                  SizedBox(height: 20),
                   TextFormField(
                     validator: (input) {
                       if (input == "") {
@@ -145,16 +141,70 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                   ),
                   SizedBox(
-                    height: 10,
+                    height: 20,
+                  ),
+                  TextFormField(
+                    validator: (input) {
+                      if (input == "") {
+                        return "Enter your password, please!";
+                      } else if (input != null && input.length <= 6) {
+                        return "Password is too short!";
+                      } 
+                      else if(_confirmPasswordController.text != _passwordController.text){
+                        return "Password is not match!";
+                      }
+                      else
+                        return null;
+                      },
+                    obscureText: !_confirmPasswordVisible,
+                    controller: _confirmPasswordController,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: BorderSide(
+                          color: ColorPalette.bgTextFieldColor,
+                        ),
+                      ),
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                          // Based on passwordVisible state choose the icon
+                          _confirmPasswordVisible
+                              ? Icons.visibility
+                              : Icons.visibility_off,
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            _confirmPasswordVisible = !_confirmPasswordVisible;
+                          });
+                        },
+                      ),
+                      labelText: 'Confirm password',
+                      labelStyle: TextStyles.h6.setColor(ColorPalette.grayText),
+                      contentPadding: const EdgeInsets.only(bottom: 14),
+                      floatingLabelBehavior: FloatingLabelBehavior.never,
+                      prefixIcon: Container(
+                        child: Image.asset(AssetHelper.icoLock),
+                        padding: const EdgeInsets.only(right: 20, left: 20),
+                      ),
+                      prefixIconConstraints: BoxConstraints(
+                        minWidth: 24,
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 30,
                   ),
                   ButtonWidget(
-                    label: 'Login',
+                    label: 'Sign Up',
                     color: ColorPalette.primaryColor,
                     textColor: Colors.white,
                     onTap: () async {
                       if (formSignInKey.currentState!.validate()) {}
-                      await AuthServices.signinUser(_emailController.text,
-                          _passwordController.text, context);
+                      await AuthServices.signUpUser(
+                          name: _nameController.text,
+                          email: _emailController.text,
+                          password: _passwordController.text,
+                          buildContext: context);
                     },
                   ),
                   SizedBox(
