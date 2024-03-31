@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:melody/melody/core/models/user/user.dart';
 import 'package:melody/melody/presentations/screens/Home/home_screen.dart';
+import 'package:melody/melody/presentations/screens/Home/navigation_home.dart';
 
 import '../../presentations/widgets/dialog.dart';
 
@@ -65,7 +66,7 @@ class AuthServices {
                   );
                 })
             .whenComplete(
-                () => Navigator.of(context).pushNamed(HomeScreen.routeName));
+                () =>Navigator.of(context).pushNamedAndRemoveUntil(NavigationHome.routeName, (route) => false));
       }
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
@@ -133,7 +134,7 @@ class AuthServices {
               );
             },
           ).whenComplete(
-              () => Navigator.of(context).pushNamed(HomeScreen.routeName));
+              () => Navigator.of(context).pushNamedAndRemoveUntil(NavigationHome.routeName, (route) => false));
         }
       }
     } on FirebaseAuthException catch (e) {
