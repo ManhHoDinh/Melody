@@ -17,4 +17,13 @@ class AssetHelper {
 
   static const String checked = imgAssets + 'ico_checked.png';
   static const String cancel = imgAssets + 'ico_checked.png';
+  static const String icoTab1 = imgAssets + 'tab1.png';
+  static const String icoTab1s = imgAssets + 'tab1s.png';
+  static const String icoTab2 = imgAssets + 'tab2.png';
+  static const String icoTab2s = imgAssets + 'tab2s.png';
+  static const String icoTab3 = imgAssets + 'tab3.png';
+  static const String icoTab3s = imgAssets + 'tab3s.png';
+  static const String icoTab4 = imgAssets + 'tab4.png';
+  static const String icoTab4s = imgAssets + 'tab4s.png';
+  
 }
