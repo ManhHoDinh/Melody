@@ -31,16 +31,17 @@ class AssetHelper {
   static const String icoLineVertical = iconAssets + 'ico_line_vertical.png';
 
   //Assets in images
-  static const String imgAssets = 'assets/windou/';
+  static const String imgAssets = 'assets/melody/';
 
   //splash
   static const String splashImage = imgAssets + 'splashImage.png';
   static const String registerLogo = imgAssets + "register.png";
   static const String otpLogo = imgAssets + "otp.png";
-
+  static const String icoGoogle = imgAssets + "googleIcon.png";
   //staff
   static const String staff1 = imgAssets + 'staff_avt.png';
-
+  //login screen:
+  static const String logo = imgAssets + 'logo.png';
   //home
   static const String avatar = 'assets/images/avatar.png';
   static const String imgArtist = 'assets/images/test_img.png';
@@ -60,3 +61,4 @@ class AssetHelper {
 
   static const String checked = imgAssets + 'checked.png';
 }
+

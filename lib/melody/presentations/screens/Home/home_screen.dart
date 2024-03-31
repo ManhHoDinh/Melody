@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:melody/melody/core/constants/color_palatte.dart';
 import 'package:melody/melody/core/helper/assets_helper.dart';

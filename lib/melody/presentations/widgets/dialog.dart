@@ -15,7 +15,7 @@ class DialogOverlay extends StatelessWidget {
   Widget build(BuildContext context) {
     return AlertDialog(
       icon: Image.asset(
-        isSuccess ? AssetHelper.icoChecked : AssetHelper.icoCanceled,
+        isSuccess ? AssetHelper.checked : AssetHelper.checked,
         excludeFromSemantics: true,
         height: 120,
       ),

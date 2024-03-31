@@ -59,6 +59,8 @@ dependencies:
   speech_to_text: ^6.6.0
   highlight_text: ^1.0.0
   avatar_glow: ^2.0.0
+  google_sign_in: ^6.1.6
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -79,8 +81,9 @@ flutter:
     - assets/design_course/
     - assets/fitness_app/
     - assets/hotel/
+    - assets/melody/
     - assets/introduction_animation/
-    
+
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
 
