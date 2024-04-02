@@ -1,5 +1,7 @@
 import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:get/get_navigation/src/root/get_material_app.dart';
+import 'package:get/get_navigation/src/routes/get_route.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:melody/app_theme.dart';
 import 'package:flutter/material.dart';
@@ -8,20 +10,15 @@ import 'package:melody/melody/core/helper/local_storage_helper.dart';
 import 'package:melody/melody/presentations/screens/artist/upload_song_page.dart';
 import 'package:melody/melody/presentations/screens/playing/playlist_provider.dart';
 import 'package:melody/melody/presentations/screens/queue/queue.dart';
+import 'package:melody/melody/main.dart';
+import 'package:melody/melody/presentations/routes/app_router.dart';
+import 'package:melody/melody/presentations/screens/Discovery/discovery_screen.dart';
+import 'package:melody/melody/presentations/screens/Home/home_screen.dart';
 import 'package:melody/melody/presentations/screens/splash/splash_screen.dart';
 import 'package:provider/provider.dart';
 import 'navigation_home_screen.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'melody/core/models/firebase/firebase_request.dart';
-
-// Future<void> signInUserAnon() async {
-//   try {
-//     final UserCredential = await FirebaseAuth.instance.signInAnonymously();
-//     print("Sign in with temporary account!");
-//   } catch (e) {
-//     print(e.toString());
-//   }
-// }
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -31,9 +28,6 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await FireBaseDataBase.initializeDB();
 
-  //  sign in anonymously
-  // await signInUserAnon();
-  //
   await SystemChrome.setPreferredOrientations(<DeviceOrientation>[
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown
@@ -55,7 +49,7 @@ class MyApp extends StatelessWidget {
       systemNavigationBarDividerColor: Colors.transparent,
       systemNavigationBarIconBrightness: Brightness.dark,
     ));
-    return MaterialApp(
+    return GetMaterialApp(
       title: 'Flutter UI',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
