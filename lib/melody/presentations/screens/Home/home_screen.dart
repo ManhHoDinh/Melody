@@ -48,9 +48,21 @@ class _HomeScreenState extends State<HomeScreen>
         image: AssetHelper.imgArtist),
   ];
   List<Instrument> instrument = [
-    const Instrument(id: 1, name: 'Pinano', image: AssetHelper.imgArtist),
-    const Instrument(id: 1, name: 'Violet', image: AssetHelper.imgArtist),
-    const Instrument(id: 1, name: 'Symphony ', image: AssetHelper.imgArtist),
+    const Instrument(
+        id: "1",
+        name: 'Violet',
+        image: AssetHelper.imgArtist,
+        description: "ff"),
+    const Instrument(
+        id: "1",
+        name: 'Symphony ',
+        image: AssetHelper.imgArtist,
+        description: "ff"),
+    const Instrument(
+        id: "1",
+        name: 'Pinano',
+        image: AssetHelper.imgArtist,
+        description: "ff"),
   ];
   List<Composer> composer = [
     const Composer(
@@ -77,7 +89,7 @@ class _HomeScreenState extends State<HomeScreen>
   List<Event> event = [
     Event(
         startAt: DateTime.now(),
-        id: 1,
+        id: "ff",
         name: 'Symphony',
         image: AssetHelper.imgArtist,
         location: 'New York',

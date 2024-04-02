@@ -126,7 +126,7 @@ class __$$MusicImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$MusicImpl implements _Music {
+class _$MusicImpl with DiagnosticableTreeMixin implements _Music {
   const _$MusicImpl(
       {required this.name,
       required this.id,
@@ -146,8 +146,19 @@ class _$MusicImpl implements _Music {
   final String image;
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'Music(name: $name, id: $id, artist: $artist, image: $image)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'Music'))
+      ..add(DiagnosticsProperty('name', name))
+      ..add(DiagnosticsProperty('id', id))
+      ..add(DiagnosticsProperty('artist', artist))
+      ..add(DiagnosticsProperty('image', image));
   }
 
   @override

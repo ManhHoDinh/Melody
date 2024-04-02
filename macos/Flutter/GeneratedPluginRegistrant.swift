@@ -15,9 +15,9 @@ import google_sign_in_ios
 import irondash_engine_context
 import path_provider_foundation
 import shared_preferences_foundation
+import speech_to_text_macos
 import super_native_extensions
 import url_launcher_macos
-import speech_to_text_macos
 
 func RegisterGeneratedPlugins(registry: FlutterPluginRegistry) {
   FLTFirebaseFirestorePlugin.register(with: registry.registrar(forPlugin: "FLTFirebaseFirestorePlugin"))
