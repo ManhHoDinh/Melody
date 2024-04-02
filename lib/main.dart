@@ -1,4 +1,6 @@
 import 'dart:io';
+import 'package:get/get_navigation/src/root/get_material_app.dart';
+import 'package:get/get_navigation/src/routes/get_route.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:melody/app_theme.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +10,9 @@ import 'package:melody/melody/presentations/routes/app_router.dart';
 import 'package:melody/melody/presentations/screens/album/all_album.dart';
 import 'package:melody/melody/presentations/screens/event/all_event_screen.dart';
 import 'package:melody/melody/main.dart';
+import 'package:melody/melody/presentations/routes/app_router.dart';
+import 'package:melody/melody/presentations/screens/Discovery/discovery_screen.dart';
+import 'package:melody/melody/presentations/screens/Home/home_screen.dart';
 import 'package:melody/melody/presentations/screens/instrument/create_instrument_screen.dart';
 import 'package:melody/melody/presentations/screens/splash/splash_screen.dart';
 import 'navigation_home_screen.dart';

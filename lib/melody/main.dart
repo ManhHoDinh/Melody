@@ -4,6 +4,7 @@ import 'package:hive_flutter/adapters.dart';
 import 'package:melody/melody/presentations/library/all_playlist_screen.dart';
 import 'package:melody/melody/presentations/routes/app_router.dart';
 import 'package:melody/melody/presentations/screens/Home/home_screen.dart';
+import 'package:melody/melody/presentations/screens/Home/navigation_home.dart';
 import 'package:melody/melody/presentations/screens/account/login_screen.dart';
 import 'package:melody/melody/presentations/screens/instrument/create_instrument_screen.dart';
 import 'package:melody/melody/presentations/screens/instrument/detail_instrument_screen.dart';
@@ -84,8 +85,7 @@ class _AuthenticationWrapperState extends State<AuthenticationWrapper> {
                         return SplashScreen();
                       } else {
                         // If the update is complete, navigate to the MainScreen
-                        // return HomeScreen();
-                        return AllPlaylistScreen();
+                        return NavigationHome();
                       }
                     },
                   );

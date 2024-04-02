@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:melody/melody/core/models/user/user.dart';
 import 'package:melody/melody/presentations/screens/Home/home_screen.dart';
+import 'package:melody/melody/presentations/screens/Home/navigation_home.dart';
 import 'package:melody/melody/presentations/screens/instrument/create_instrument_screen.dart';
 
 import '../../presentations/widgets/dialog.dart';
@@ -62,15 +63,15 @@ class AuthServices {
       if (FirebaseAuth.instance.currentUser != null) {
         await UpdateCurrentUser();
         await showDialog(
-            context: context,
-            builder: (context) {
-              return DialogOverlay(
-                isSuccess: true,
-                task: 'login',
-              );
-            }).whenComplete(
-            // () => Navigator.of(context).pushNamed(HomeScreen.routeName)
-            () => Get.to(CreateInstrumentScreen()));
+                context: context,
+                builder: (context) {
+                  return DialogOverlay(
+                    isSuccess: true,
+                    task: 'login',
+                  );
+                })
+            .whenComplete(() => Navigator.of(context).pushNamedAndRemoveUntil(
+                NavigationHome.routeName, (route) => false));
       }
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
@@ -137,8 +138,8 @@ class AuthServices {
                 task: 'login',
               );
             },
-          ).whenComplete(
-              () => Navigator.of(context).pushNamed(HomeScreen.routeName));
+          ).whenComplete(() => Navigator.of(context).pushNamedAndRemoveUntil(
+              NavigationHome.routeName, (route) => false));
         }
       }
     } on FirebaseAuthException catch (e) {
