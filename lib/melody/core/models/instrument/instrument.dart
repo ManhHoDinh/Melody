@@ -1,7 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:flutter/foundation.dart';
-part 'Instrument.freezed.dart';
-part 'Instrument.g.dart';
+part 'instrument.freezed.dart';
+part 'instrument.g.dart';
 
 @freezed
 class Instrument with _$Instrument {

@@ -62,6 +62,7 @@ dependencies:
   google_sign_in: ^6.1.6
 
 dev_dependencies:
+  analyzer: ^6.4.1
   flutter_test:
     sdk: flutter
 
