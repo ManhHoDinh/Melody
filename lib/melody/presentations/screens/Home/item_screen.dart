@@ -5,8 +5,9 @@ import 'widgets/music_item.dart';
 class MusicSection extends StatelessWidget {
   final String title;
   final List<Music> albums;
-
-  MusicSection({required this.title, required this.albums});
+  void Function()? viewMoreAction = () {};
+  MusicSection(
+      {required this.title, required this.albums, this.viewMoreAction});
 
   @override
   Widget build(BuildContext context) {
@@ -24,9 +25,7 @@ class MusicSection extends StatelessWidget {
                   color: Colors.white),
             ),
             TextButton(
-              onPressed: () {
-                // Implement your logic to view more
-              },
+              onPressed: viewMoreAction ?? () {},
               child: Text(
                 'View More',
                 style: TextStyle(color: Colors.blue),

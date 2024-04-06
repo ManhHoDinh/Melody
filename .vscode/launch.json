@@ -1,0 +1,10 @@
+{
+    "configurations": [
+        {
+            "name": "Flutter (lib\\melody\\core\\models\\album\\album.freezed.dart)",
+            "type": "dart",
+            "request": "launch",
+            "program": "lib\\melody\\core\\models\\album\\album.freezed.dart"
+        }
+    ]
+}

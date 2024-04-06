@@ -1,9 +1,7 @@
 class AssetHelper {
   static const String imgAssets = 'assets/melody/';
-  //Assets in icons
-  
-  //Assets in images
-  
+  static const String test = 'assets/images/test_img.png';
+
   //splash
   static const String splashImage = imgAssets + 'splashImage.png';
   static const String registerLogo = imgAssets + "register.png";
@@ -26,8 +24,6 @@ class AssetHelper {
   static const String checked = imgAssets + 'ico_checked.png';
   static const String cancel = imgAssets + 'ico_checked.png';
 
-
-
   static const String icoTab1 = imgAssets + 'tab1.png';
   static const String icoTab1s = imgAssets + 'tab1s.png';
   static const String icoTab2 = imgAssets + 'tab2.png';
@@ -36,5 +32,4 @@ class AssetHelper {
   static const String icoTab3s = imgAssets + 'tab3s.png';
   static const String icoTab4 = imgAssets + 'tab4.png';
   static const String icoTab4s = imgAssets + 'tab4s.png';
-  
 }
