@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get.dart';
 import 'package:melody/melody/presentations/screens/playing/playlist_provider.dart';
 import 'package:melody/melody/presentations/screens/playing/widgets/neu_box.dart';
 import 'package:melody/melody/presentations/screens/queue/queue.dart';
@@ -38,18 +39,21 @@ class Playing extends StatelessWidget {
                   children: [
                     // back button
                     IconButton(
-                        onPressed: () => Navigator.pop(context),
+                        onPressed: () {
+                          Get.back();
+                        },
                         icon: Icon(Icons.arrow_back)),
                     // title
                     Text("P L A Y I N G"),
                     // menu button
                     IconButton(
                         onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const Queue()),
-                          );
+                          // Navigator.push(
+                          //   context,
+                          //   MaterialPageRoute(
+                          //       builder: (context) => const Queue()),
+                          // );
+                          Get.toNamed('/queue');
                         },
                         icon: Icon(Icons.menu))
                   ],
@@ -67,7 +71,12 @@ class Playing extends StatelessWidget {
                       // image
                       ClipRRect(
                         borderRadius: BorderRadius.circular(8),
-                        child: Image.asset(currentSong.songImagePath),
+                        child: Image.network(
+                          currentSong.songImagePath,
+                          height: 320,
+                          width: 320,
+                          fit: BoxFit.cover,
+                        ),
                       ),
 
                       // song and artist name and fav icon
@@ -85,6 +94,9 @@ class Playing extends StatelessWidget {
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 20),
+                                  ),
+                                  SizedBox(
+                                    height: 2,
                                   ),
                                   Text(currentSong.artistName)
                                 ],

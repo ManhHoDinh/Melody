@@ -14,5 +14,14 @@ final Map<String, WidgetBuilder> routes = {
 };
 
 class Routes {
+  static String allAlbum = '/allAlbum';
+  static String allEvent = '/allEvent';
+  static String createInstrument = '/createInstrument';
   static String discovery = '/discovery';
+  static String uploadSong = '/uploadSong';
+  static String artistPage = '/artistPage';
+  static String editArtist = '/editArtist';
+  static String playing = '/playing';
+  static String queue = '/queue';
+  static String editSong = '/editSong';
 }

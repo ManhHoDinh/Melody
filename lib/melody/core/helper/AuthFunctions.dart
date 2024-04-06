@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:melody/melody/core/models/artist/artist.dart';
 import 'package:melody/melody/core/models/user/user.dart';
 import 'package:melody/melody/presentations/screens/Home/home_screen.dart';
 import 'package:melody/melody/presentations/screens/Home/navigation_home.dart';
@@ -12,8 +13,11 @@ import '../../presentations/widgets/dialog.dart';
 
 class AuthServices {
   static UserModel? CurrentUser;
-  static signUpUser({required String name, required String email,required String password,
-     required BuildContext buildContext}) async {
+  static signUpUser(
+      {required String name,
+      required String email,
+      required String password,
+      required BuildContext buildContext}) async {
     try {
       UserCredential userCredential = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: email, password: password);
@@ -23,6 +27,16 @@ class AuthServices {
         Name: name,
         Email: email,
       );
+      Artist userArtistInfo = Artist(
+          artistId: uid,
+          artistName: name,
+          bio: "",
+          avatar:
+              "https://firebasestorage.googleapis.com/v0/b/melody-bf3aa.appspot.com/o/images%2Fdefault-avatar.jpg?alt=media&token=11836316-b00f-481c-932c-1c741cc681ef");
+
+      DocumentReference artist =
+          FirebaseFirestore.instance.collection("Artists").doc(uid);
+      await artist.set(userArtistInfo.toJson());
       DocumentReference doc =
           FirebaseFirestore.instance.collection("Users").doc(uid);
       await doc
@@ -65,8 +79,8 @@ class AuthServices {
                     task: 'login',
                   );
                 })
-            .whenComplete(
-                () =>Navigator.of(context).pushNamedAndRemoveUntil(NavigationHome.routeName, (route) => false));
+            .whenComplete(() => Navigator.of(context).pushNamedAndRemoveUntil(
+                NavigationHome.routeName, (route) => false));
       }
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
@@ -133,8 +147,8 @@ class AuthServices {
                 task: 'login',
               );
             },
-          ).whenComplete(
-              () => Navigator.of(context).pushNamedAndRemoveUntil(NavigationHome.routeName, (route) => false));
+          ).whenComplete(() => Navigator.of(context).pushNamedAndRemoveUntil(
+              NavigationHome.routeName, (route) => false));
         }
       }
     } on FirebaseAuthException catch (e) {

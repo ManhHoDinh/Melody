@@ -1,12 +1,21 @@
 import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:melody/melody/core/helper/firebase_helper.dart';
+import 'package:melody/melody/core/models/artist/artist.dart';
+import 'package:melody/melody/core/models/firebase/artist_request.dart';
+import 'package:melody/melody/core/models/firebase/user_request.dart';
+import 'package:melody/melody/core/models/song/song.dart';
 import 'package:melody/melody/presentations/screens/artist/widgets/custom_button.dart';
 import 'package:melody/melody/presentations/screens/artist/widgets/custom_textfield.dart';
+import 'package:path/path.dart' as path;
+import 'package:get/get.dart';
 
 class UploadSongPage extends StatefulWidget {
   const UploadSongPage({super.key});
@@ -18,9 +27,11 @@ class UploadSongPage extends StatefulWidget {
 class _UploadSongPageState extends State<UploadSongPage> {
   final artistController = TextEditingController();
   final songNameController = TextEditingController();
-
-  PlatformFile? choosedImage;
-  PlatformFile? choosedSong;
+  FirebaseAuth mAuth = FirebaseAuth.instance;
+  File? choosedImage;
+  File? choosedSong;
+  String? artworkDownloadUrl;
+  String? songDownloadUrl;
 
   Future selectImage() async {
     final result = await FilePicker.platform
@@ -33,35 +44,22 @@ class _UploadSongPageState extends State<UploadSongPage> {
     if (result == null) return;
 
     setState(() {
-      choosedImage = result.files.first;
+      choosedImage = File(result.files.single.path!);
     });
   }
 
   Future selectSong() async {
     final result = await FilePicker.platform.pickFiles(
-      type: FileType.audio,
-      allowMultiple: false,
-    );
+        type: FileType.custom, allowedExtensions: ['mp3', 'wav', 'acc']);
     if (result == null) return;
 
     setState(() {
-      choosedSong = result.files.first;
+      choosedSong = File(result.files.single.path!);
     });
   }
 
-  Future uploadFilesToFirebase() async {
-    // final artworkFile = File(choosedImage!.path!);
-    // final songFile = File(choosedSong!.path!);
-
-    // final artworkRef = FirebaseStorage.instance
-    //     .ref()
-    //     .child("song_artworks/${choosedImage!.name}");
-
-    // final songRef =
-    //     FirebaseStorage.instance.ref().child("song_files/${choosedSong!.name}");
-
-    // artworkRef.putFile(artworkFile);
-    // print(artworkFile.path);
+  void initState() {
+    super.initState();
   }
 
   @override
@@ -70,7 +68,9 @@ class _UploadSongPageState extends State<UploadSongPage> {
         child: Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          onPressed: () {},
+          onPressed: () {
+            Get.back();
+          }, // add navigation to the previous page
           icon: Icon(Icons.arrow_back),
         ),
         title: Text('U P L O A D'),
@@ -92,10 +92,33 @@ class _UploadSongPageState extends State<UploadSongPage> {
               SizedBox(
                 height: 10,
               ),
-              CustomTextfield(
-                controller: artistController,
-                readOnly: true,
-                hintText: "Dinh Dai Duong",
+              FutureBuilder<Artist>(
+                future: ArtistRequest.getById(mAuth.currentUser!.uid),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return CustomTextfield(
+                      maxLines: 1,
+                      controller: artistController,
+                      readOnly: true,
+                      hintText: 'Loading...',
+                    );
+                  } else if (snapshot.hasError) {
+                    return CustomTextfield(
+                      maxLines: 1,
+                      controller: artistController,
+                      readOnly: true,
+                      hintText: 'Error loading artist name',
+                    );
+                  } else {
+                    return CustomTextfield(
+                      maxLines: 1,
+                      controller: artistController,
+                      readOnly: true,
+                      hintText:
+                          snapshot.data!.artistName as String ?? 'Artist name',
+                    );
+                  }
+                },
               ),
               SizedBox(
                 height: 13,
@@ -108,6 +131,7 @@ class _UploadSongPageState extends State<UploadSongPage> {
                 height: 10,
               ),
               CustomTextfield(
+                maxLines: 1,
                 controller: songNameController,
                 readOnly: false,
                 hintText: "Name your song",
@@ -132,7 +156,7 @@ class _UploadSongPageState extends State<UploadSongPage> {
               ),
               Text(
                 "Choosing file: " +
-                    (choosedSong == null ? "" : choosedSong!.name!),
+                    (choosedSong == null ? "" : choosedSong!.path),
                 style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
               ),
               SizedBox(
@@ -172,11 +196,136 @@ class _UploadSongPageState extends State<UploadSongPage> {
               SizedBox(
                 height: 31,
               ),
-              CustomButton(
-                  onClick: uploadFilesToFirebase,
-                  bgColor: Color(0xff262626),
-                  text: "Upload song",
-                  textColor: Colors.white),
+              FutureBuilder<Artist>(
+                future: ArtistRequest.getById(mAuth.currentUser!.uid),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return CustomButton(
+                      onClick: () {},
+                      bgColor: Color(0xff262626),
+                      text: "Upload song",
+                      textColor: Colors.white,
+                    );
+                  } else if (snapshot.hasError) {
+                    return CustomButton(
+                      onClick: () {},
+                      bgColor: Color(0xff262626),
+                      text: "Error", // Placeholder text if there's an error
+                      textColor: Colors.white,
+                    );
+                  } else {
+                    return CustomButton(
+                      onClick: () async {
+                        try {
+                          if (songNameController.text.isEmpty) {
+                            Fluttertoast.showToast(
+                                msg: "Please enter a name for your song!");
+                            return;
+                          }
+                          if (choosedSong == null) {
+                            Fluttertoast.showToast(
+                                msg:
+                                    "Please choose a song you want to upload!");
+                            return;
+                          }
+
+                          showDialog(
+                              context: context,
+                              builder: (context) {
+                                return Center(
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      CircularProgressIndicator(),
+                                      SizedBox(
+                                        height: 20,
+                                      ),
+                                      Text(
+                                        "Uploading",
+                                        style: TextStyle(
+                                            color: Colors.white, fontSize: 16),
+                                      )
+                                    ],
+                                  ),
+                                );
+                              });
+                          String songId =
+                              FirebaseHelper.songCollection.doc().id;
+                          String artistId = mAuth.currentUser!.uid;
+
+                          final songFile = path.basename(choosedSong!.path);
+                          final songExtension =
+                              path.extension(choosedSong!.path);
+                          final uploadedSongFileName =
+                              songFile.endsWith(songExtension)
+                                  ? songFile
+                                  : '$songFile$songExtension';
+                          final songRef = FirebaseStorage.instance
+                              .ref()
+                              .child("song_files/$uploadedSongFileName");
+
+                          final user = mAuth.currentUser;
+                          if (user != null) {
+                            try {
+                              UploadTask songUploadTask =
+                                  songRef.putFile(choosedSong!);
+                              await Future.wait([songUploadTask]);
+                              songDownloadUrl = await songRef.getDownloadURL();
+
+                              if (choosedImage != null) {
+                                final artworkFile =
+                                    path.basename(choosedImage!.path);
+                                final artworkRef = FirebaseStorage.instance
+                                    .ref()
+                                    .child("song_artworks/$artworkFile");
+                                UploadTask artworkUploadTask =
+                                    artworkRef.putFile(choosedImage!);
+                                await Future.wait([artworkUploadTask]);
+                                artworkDownloadUrl =
+                                    await artworkRef.getDownloadURL();
+                              }
+                              Song newSong = Song(
+                                songId: songId,
+                                artistId: artistId,
+                                songName: songNameController.text,
+                                artistName: snapshot.data!.artistName as String,
+                                songImagePath: artworkDownloadUrl !=
+                                        null // default artwork if user didn't choose an image
+                                    ? artworkDownloadUrl.toString()
+                                    : "https://firebasestorage.googleapis.com/v0/b/melody-bf3aa.appspot.com/o/song_artworks%2Fdefaultartwork.jpg?alt=media&token=4146ab52-7d77-428f-bb5f-2741e662d20c",
+                                audioPath: songDownloadUrl.toString(),
+                              );
+
+                              FirebaseHelper.songCollection
+                                  .doc(songId)
+                                  .set(newSong.toJson())
+                                  .whenComplete(
+                                      () => Navigator.of(context).pop());
+
+                              Fluttertoast.showToast(
+                                  msg: "Upload song successfully!");
+
+                              // add navigation to exit uploading page
+                              Get.back();
+                            } catch (e) {
+                              print(e);
+                            }
+                          } else {
+                            print("User's not signed in");
+                          }
+                        } catch (e) {
+                          print(e);
+                        }
+                      },
+                      bgColor: Color(0xff262626),
+                      text: "Upload song",
+                      textColor: Colors.white,
+                    );
+                  }
+                },
+              ),
             ],
           ),
         ),

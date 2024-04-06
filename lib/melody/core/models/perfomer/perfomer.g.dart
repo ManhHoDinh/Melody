@@ -6,7 +6,8 @@ part of 'perfomer.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$PerfomerImpl _$$PerfomerImplFromJson(Map<String, dynamic> json) => _$PerfomerImpl(
+_$PerfomerImpl _$$PerfomerImplFromJson(Map<String, dynamic> json) =>
+    _$PerfomerImpl(
       name: json['name'] as String,
       id: json['id'] as int,
       music: json['music'] as String,
