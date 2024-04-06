@@ -3,7 +3,8 @@ class AssetHelper {
   //Assets in icons
   
   //Assets in images
-  
+    static const String test = 'assets/images/test_img.png';
+
   //splash
   static const String splashImage = imgAssets + 'splashImage.png';
   static const String registerLogo = imgAssets + "register.png";

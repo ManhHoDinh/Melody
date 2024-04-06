@@ -23,7 +23,7 @@ class InstrumentRequest {
         .doc(id)
         .get();
     Instrument instrument = Instrument.fromJson(doc.data()!);
-    return Future.value(instrument.image);
+    return Future.value(instrument.description);
   }
 
   static Future<Instrument> getById(String id) async {

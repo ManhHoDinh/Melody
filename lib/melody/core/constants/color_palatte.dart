@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 
 class ColorPalette {
   static const Color backgroundColor = Color(0xffFFFFFF);
-  static const Color primaryColor = Color(0xff476A49);
+  static const Color primaryColor = Color(0xffEE10B0);
   static const Color secondColor = Color(0xff0E9EEF);
-  
+
   static const Color greenText = Color(0xff57CC99);
   static const Color darkBlueText = Color(0xff22577A);
   static const Color grayText = Color(0xffBFBFBF);
@@ -32,10 +32,10 @@ class ColorPalette {
 class Gradients {
   static const Gradient defaultGradientBackground = LinearGradient(
     begin: Alignment.topLeft,
-    end: Alignment.bottomLeft,
+    end: Alignment.bottomRight,
     colors: [
-      ColorPalette.darkBlueText,
-      ColorPalette.primaryColor,
+      Color(0xff412C3A),
+      Color(0xff0E1920),
     ],
   );
 }

@@ -10,12 +10,14 @@ final Map<String, WidgetBuilder> routes = {
   LoginScreen.routeName: (context) => LoginScreen(),
   SplashScreen.routeName: (context) => SplashScreen(),
   HomeScreen.routeName: (context) => HomeScreen(),
-  LoginScreen.routeName : (context) => LoginScreen(),
-  SplashScreen.routeName : (context) => SplashScreen(),
-  SignUpScreen.routeName : (context) => SignUpScreen(),
+  LoginScreen.routeName: (context) => LoginScreen(),
+  SplashScreen.routeName: (context) => SplashScreen(),
+  SignUpScreen.routeName: (context) => SignUpScreen(),
 };
 
 class Routes {
-    static String discovery = '/discovery';
+  static String allAlbum = '/allAlbum';
+  static String allEvent = '/allEvent';
+  static String createInstrument = '/createInstrument';
+  static String discovery = '/discovery';
 }
-  
