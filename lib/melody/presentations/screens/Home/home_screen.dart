@@ -4,6 +4,7 @@ import 'package:melody/melody/core/helper/assets_helper.dart';
 import 'package:melody/melody/core/helper/text_styles.dart';
 import 'package:melody/melody/core/models/composer/composer.dart';
 import 'package:melody/melody/core/models/event/event.dart';
+import 'package:melody/melody/core/models/firebase/composer_request.dart';
 import 'package:melody/melody/core/models/instrument/instrument.dart';
 import 'package:melody/melody/core/models/music/music.dart';
 import 'package:get/get.dart';
@@ -52,17 +53,17 @@ class _HomeScreenState extends State<HomeScreen>
     const Instrument(id: 1, name: 'Violet', image: AssetHelper.imgArtist),
     const Instrument(id: 1, name: 'Symphony ', image: AssetHelper.imgArtist),
   ];
-  List<Composer> composer = [
-    const Composer(
-        music: 'Mozart', id: 1, name: 'Symphony', image: AssetHelper.imgArtist),
-    const Composer(
-        music: 'Mozart', id: 1, name: 'Son tung', image: AssetHelper.imgArtist),
-    const Composer(
-        music: 'Dinh Dai Duong',
-        id: 1,
-        name: 'Symphony ',
-        image: AssetHelper.imgArtist),
-  ];
+  // List<Composer> composer = [
+  //   const Composer(
+  //       music: 'Mozart', id: 1, name: 'Symphony', image: AssetHelper.imgArtist),
+  //   const Composer(
+  //       music: 'Mozart', id: 1, name: 'Son tung', image: AssetHelper.imgArtist),
+  //   const Composer(
+  //       music: 'Dinh Dai Duong',
+  //       id: 1,
+  //       name: 'Symphony ',
+  //       image: AssetHelper.imgArtist),
+  // ];
   List<Perfomer> perfomer = [
     const Perfomer(
         music: 'Mozart', id: 1, name: 'Symphony', image: AssetHelper.imgArtist),
@@ -248,23 +249,33 @@ class _HomeScreenState extends State<HomeScreen>
                 title: 'Composer',
                 albums: albums,
               ),
-              Flexible(
-                child: GridView.builder(
-                  physics: NeverScrollableScrollPhysics(),
-                  itemCount: searchComposer(composer, searchValue).length,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 3,
-                    crossAxisSpacing: 10,
-                    mainAxisSpacing: 10,
-                    childAspectRatio: 5 / 6,
-                  ),
-                  itemBuilder: (context, index) {
-                    return ComposerItem(
-                      composer: searchComposer(composer, searchValue)[index],
-                    );
-                  },
-                ),
-              ),
+              StreamBuilder<List<Composer>>(
+                  stream: ComposerRequest.search(searchValue),
+                  builder: ((context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      // While waiting for data, show a loading indicator
+                      return CircularProgressIndicator();
+                    } else if (snapshot.hasError) {
+                      // If there's an error with the stream, display an error message
+                      return Text('Error: ${snapshot.error}');
+                    } else {
+                      return GridView.builder(
+                          shrinkWrap: true,
+                          itemCount: snapshot.data!.length,
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 3,
+                                  crossAxisSpacing: 10,
+                                  mainAxisSpacing: 10,
+                                  childAspectRatio: 5 / 6),
+                          itemBuilder: ((context, index) {
+                            
+                            return ComposerItem(
+                              composer: snapshot.data![index],
+                            );
+                          }));
+                    }
+                  })),
               MusicSection(
                 title: 'Perfomer',
                 albums: albums,

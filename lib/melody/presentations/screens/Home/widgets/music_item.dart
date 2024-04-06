@@ -1,6 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:melody/melody/core/models/firebase/music_request.dart';
 import 'package:melody/melody/core/models/music/music.dart';
+import 'package:melody/melody/core/models/user/user.dart';
 
 class MusicItem extends StatelessWidget {
   
@@ -33,6 +36,29 @@ class MusicItem extends StatelessWidget {
             music.artist,
             style: TextStyle(fontSize: 12, color: Color(0xffe7e7e9)),
           ),
+           FutureBuilder<DocumentSnapshot<Map<String, dynamic>>>(
+              future: MusicRequest.getUserFromId(music.id.toString()),
+              builder: (context, snapshot) {
+                if (snapshot.hasError) {
+                  return Text('Error: ${snapshot.error}');
+                }
+
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return CircularProgressIndicator();
+                }
+
+                if (!snapshot.hasData || snapshot.data == null) {
+                  return Text('No data found');
+                }
+                if (snapshot.hasData) {
+                  UserModel user = UserModel.fromJson(snapshot.data!.data()!);
+                  return Text(
+                    user.Name,
+                    style: TextStyle(fontSize: 12, color: Color(0xffe7e7e9)),
+                  );
+                }
+                return Container();
+              }),
         ],
       ),
     );

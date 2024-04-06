@@ -1,22 +1,22 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'composer.dart';
+part of 'album.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$ComposerImpl _$$ComposerImplFromJson(Map<String, dynamic> json) => _$ComposerImpl(
+_$AlbumImpl _$$AlbumImplFromJson(Map<String, dynamic> json) => _$AlbumImpl(
       name: json['name'] as String,
       id: json['id'] as String,
-      music: json['music'] as String,
+      artist_id: json['artist_id'] as String,
       image: json['image'] as String,
     );
 
-Map<String, dynamic> _$$ComposerImplToJson(_$ComposerImpl instance) =>
+Map<String, dynamic> _$$AlbumImplToJson(_$AlbumImpl instance) =>
     <String, dynamic>{
       'name': instance.name,
       'id': instance.id,
-      'music': instance.music,
+      'artist_id': instance.artist_id,
       'image': instance.image,
     };

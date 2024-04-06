@@ -60,7 +60,8 @@ dependencies:
   highlight_text: ^1.0.0
   avatar_glow: ^2.0.0
   google_sign_in: ^6.1.6
-
+  image_picker: ^1.0.7
+  firebase_storage: ^11.6.0
 dev_dependencies:
   flutter_test:
     sdk: flutter
