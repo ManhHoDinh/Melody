@@ -9,13 +9,22 @@ import '../../../core/models/album/album.dart';
 import 'widgets/album_item.dart';
 
 class AllAlbumScreen extends StatefulWidget {
-  const AllAlbumScreen({super.key});
+  const AllAlbumScreen({super.key, this.animationController});
+  final AnimationController? animationController;
 
   @override
   State<AllAlbumScreen> createState() => _AllAlbumScreenState();
 }
 
-class _AllAlbumScreenState extends State<AllAlbumScreen> {
+class _AllAlbumScreenState extends State<AllAlbumScreen>
+    with TickerProviderStateMixin {
+  AnimationController? animationController;
+  @override
+  void initState() {
+    super.initState();
+    animationController = widget.animationController;
+  }
+
   TextEditingController searchController = TextEditingController();
   String searchValue = '';
 

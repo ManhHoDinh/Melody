@@ -51,7 +51,6 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
-        textTheme: AppTheme.textTheme,
         platform: TargetPlatform.iOS,
       ),
       // initialRoute: Routes.createInstrument,
