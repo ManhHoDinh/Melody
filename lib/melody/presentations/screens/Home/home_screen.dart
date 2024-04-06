@@ -18,8 +18,9 @@ import '../../../core/models/music/music.dart';
 import 'widgets/music_item.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  const HomeScreen({super.key, this.animationController});
   static final String routeName = 'home_screen';
+  final AnimationController? animationController;
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();

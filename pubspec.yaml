@@ -63,6 +63,8 @@ dependencies:
     highlight_text: ^1.0.0
     comment_box: ^0.0.18
     avatar_glow: ^2.0.0
+  google_sign_in: ^6.1.6
+
 dev_dependencies:
     flutter_test:
         sdk: flutter

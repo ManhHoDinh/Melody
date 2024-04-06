@@ -10,9 +10,9 @@ import '../../../core/constants/color_palatte.dart';
 import '../../../core/helper/assets_helper.dart';
 
 class DiscoveryScreen extends StatefulWidget {
-  const DiscoveryScreen({super.key});
+   DiscoveryScreen({super.key,required this.animationController});
   static const String routeName = 'composer_screen';
-
+   AnimationController? animationController;
   @override
   State<DiscoveryScreen> createState() => _DiscoveryScreenState();
 }
