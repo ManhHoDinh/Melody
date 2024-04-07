@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:melody/melody/core/models/artist/artist.dart';
 import 'package:melody/melody/core/models/user/user.dart';
 import 'package:melody/melody/presentations/screens/Home/home_screen.dart';
 import 'package:melody/melody/presentations/screens/Home/navigation_home.dart';
@@ -28,6 +29,16 @@ class AuthServices {
         Name: name,
         Email: email,
       );
+      Artist userArtistInfo = Artist(
+          artistId: uid,
+          artistName: name,
+          bio: "",
+          avatar:
+              "https://firebasestorage.googleapis.com/v0/b/melody-bf3aa.appspot.com/o/images%2Fdefault-avatar.jpg?alt=media&token=11836316-b00f-481c-932c-1c741cc681ef");
+
+      DocumentReference artist =
+          FirebaseFirestore.instance.collection("Artists").doc(uid);
+      await artist.set(userArtistInfo.toJson());
       DocumentReference doc =
           FirebaseFirestore.instance.collection("Users").doc(uid);
       await doc

@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:get/get_navigation/src/routes/get_route.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -6,19 +7,19 @@ import 'package:melody/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:melody/melody/core/helper/local_storage_helper.dart';
-import 'package:melody/melody/presentations/routes/app_router.dart';
-import 'package:melody/melody/presentations/screens/album/all_album.dart';
-import 'package:melody/melody/presentations/screens/event/all_event_screen.dart';
 import 'package:melody/melody/main.dart';
 import 'package:melody/melody/presentations/routes/app_router.dart';
 import 'package:melody/melody/presentations/screens/Discovery/discovery_screen.dart';
 import 'package:melody/melody/presentations/screens/Home/home_screen.dart';
 import 'package:melody/melody/presentations/screens/instrument/create_instrument_screen.dart';
 import 'package:melody/melody/presentations/screens/splash/splash_screen.dart';
+import 'package:provider/provider.dart';
+import 'melody/presentations/screens/playing/playlist_provider.dart';
 import 'navigation_home_screen.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
-import 'package:get/get.dart';
+
 import 'melody/core/models/firebase/firebase_request.dart';
+import 'package:get/get.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -31,7 +32,10 @@ void main() async {
   await SystemChrome.setPreferredOrientations(<DeviceOrientation>[
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown
-  ]).then((_) => runApp(MyApp()));
+  ]).then((_) => runApp(ChangeNotifierProvider(
+        create: (context) => PlaylistProvider(),
+        child: MyApp(),
+      )));
 }
 
 class MyApp extends StatelessWidget {
@@ -53,16 +57,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         platform: TargetPlatform.iOS,
       ),
-      // initialRoute: Routes.createInstrument,
       home: melodyApp(),
-
-      getPages: [
-        GetPage(name: Routes.allAlbum, page: () => AllAlbumScreen()),
-        GetPage(name: Routes.allEvent, page: () => AllEventScreen()),
-        GetPage(
-            name: Routes.createInstrument,
-            page: () => CreateInstrumentScreen()),
-      ],
     );
   }
 }
