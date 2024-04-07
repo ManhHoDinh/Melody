@@ -68,7 +68,6 @@ dependencies:
   firebase_storage: ^11.6.0
 
 dev_dependencies:
-  analyzer: ^6.4.1
   flutter_test:
     sdk: flutter
 
