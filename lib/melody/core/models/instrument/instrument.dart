@@ -3,7 +3,7 @@ import 'package:flutter/foundation.dart';
 part 'instrument.freezed.dart';
 part 'instrument.g.dart';
 
-@Freezed()
+@freezed
 class Instrument with _$Instrument {
   const factory Instrument({
     required String name,
@@ -11,6 +11,6 @@ class Instrument with _$Instrument {
     required String description,
     required String image,
   }) = _Instrument;
-  factory Instrument.fromJson(Map<String, dynamic> json) =>
-      _$InstrumentFromJson(json);
+
+  factory Instrument.fromJson(Map<String, Object?> json) => _$InstrumentFromJson(json);
 }

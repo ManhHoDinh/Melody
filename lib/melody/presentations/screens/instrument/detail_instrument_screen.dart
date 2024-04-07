@@ -75,16 +75,16 @@ class _DetailInstrumentScreenState extends State<DetailInstrumentScreen> {
                       ),
                       Container(
                         height: 350,
-                        child: QuillEditor.basic(
-                          configurations: QuillEditorConfigurations(
-                            controller: _controller,
-                            readOnly: false,
-                            sharedConfigurations:
-                                const QuillSharedConfigurations(
-                              locale: Locale('de'),
-                            ),
-                          ),
-                        ),
+                        // child: QuillEditor.basic(
+                        //   configurations: QuillEditorConfigurations(
+                        //     controller: _controller,
+                        //     readOnly: false,
+                        //     sharedConfigurations:
+                        //         const QuillSharedConfigurations(
+                        //       locale: Locale('de'),
+                        //     ),
+                        //   ),
+                        // ),
                       ),
                       SizedBox(
                         height: 20,
