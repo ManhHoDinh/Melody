@@ -6,9 +6,9 @@ import 'package:melody/melody/core/models/perfomer/perfomer.dart';
 
 class PerfomerItem extends StatelessWidget {
   final Perfomer perfomer;
-  const PerfomerItem.PerformerItem({super.key, required this.perfomer});
+  const PerfomerItem({super.key, required this.perfomer});
 
-  @override
+  @override 
   Widget build(BuildContext context) {
     return Container(
       child: Column(
@@ -23,7 +23,7 @@ class PerfomerItem extends StatelessWidget {
                 shape: BoxShape.circle,
                 image: DecorationImage(
                   fit: BoxFit.cover,
-                  image: AssetImage(perfomer.image),
+                  image: NetworkImage(perfomer.image),
                 ),
               ),
             ),

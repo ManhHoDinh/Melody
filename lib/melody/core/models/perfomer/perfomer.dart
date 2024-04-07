@@ -7,7 +7,7 @@ part 'perfomer.g.dart';
 class Perfomer with _$Perfomer {
   const factory Perfomer({
     required String name,
-    required int id,
+    required String id,
     required String music,
     required String image,
   }) = _Perfomer;

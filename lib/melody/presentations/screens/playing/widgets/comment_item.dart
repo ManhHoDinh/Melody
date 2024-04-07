@@ -19,7 +19,8 @@ class CommentItem extends StatelessWidget {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(5),
               image: DecorationImage(
-                  fit: BoxFit.fitWidth, image: AssetImage(comment.name)),
+                  fit: BoxFit.fitWidth,
+                  image: AssetImage('assets/images/avatar.png')),
             ),
           ),
         ),
@@ -30,6 +31,13 @@ class CommentItem extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(height: 70),
+              Text(
+                comment.name, // Display the user's name here
+                style: TextStyle(
+                    fontWeight: FontWeight.w600,
+                    fontSize: 14,
+                    color: Colors.black),
+              ),
               Expanded(
                 child: Text(
                   comment.comment,
@@ -46,7 +54,8 @@ class CommentItem extends StatelessWidget {
                   children: [
                     Flexible(
                       child: Text(
-                        DateFormat('d MMMM yyyy').format(comment.day),
+                        DateFormat('d MMMM yyyy')
+                            .format(DateTime.parse(comment.day)),
                         style: const TextStyle(
                             fontSize: 12, color: Color.fromARGB(255, 0, 0, 0)),
                       ),
@@ -55,7 +64,8 @@ class CommentItem extends StatelessWidget {
                       padding: const EdgeInsets.only(right: 20.0),
                       child: Flexible(
                         child: Text(
-                          DateFormat('HH:mm').format(comment.time),
+                          DateFormat('HH:mm')
+                              .format(DateTime.parse(comment.time)),
                           style: const TextStyle(
                               fontSize: 12,
                               color: Color.fromARGB(255, 0, 0, 0)),

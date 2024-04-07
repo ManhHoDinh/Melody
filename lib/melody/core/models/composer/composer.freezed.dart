@@ -1,6 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: type=lint
+// ignore_for_file: type=lString
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'composer.dart';
@@ -21,7 +21,7 @@ Composer _$ComposerFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$Composer {
   String get name => throw _privateConstructorUsedError;
-  int get id => throw _privateConstructorUsedError;
+  String get id => throw _privateConstructorUsedError;
   String get music => throw _privateConstructorUsedError;
   String get image => throw _privateConstructorUsedError;
 
@@ -35,7 +35,7 @@ abstract class $ComposerCopyWith<$Res> {
   factory $ComposerCopyWith(Composer value, $Res Function(Composer) then) =
       _$ComposerCopyWithImpl<$Res, Composer>;
   @useResult
-  $Res call({String name, int id, String music, String image});
+  $Res call({String name, String id, String music, String image});
 }
 
 /// @nodoc
@@ -64,7 +64,7 @@ class _$ComposerCopyWithImpl<$Res, $Val extends Composer>
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
       music: null == music
           ? _value.music
           : music // ignore: cast_nullable_to_non_nullable
@@ -84,7 +84,7 @@ abstract class _$$ComposerImplCopyWith<$Res> implements $ComposerCopyWith<$Res> 
       __$$ComposerImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String name, int id, String music, String image});
+  $Res call({String name, String id, String music, String image});
 }
 
 /// @nodoc
@@ -111,7 +111,7 @@ class __$$ComposerImplCopyWithImpl<$Res>
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
       music: null == music
           ? _value.music
           : music // ignore: cast_nullable_to_non_nullable
@@ -139,7 +139,7 @@ class _$ComposerImpl implements _Composer {
   @override
   final String name;
   @override
-  final int id;
+  final String id;
   @override
   final String music;
   @override
@@ -182,7 +182,7 @@ class _$ComposerImpl implements _Composer {
 abstract class _Composer implements Composer {
   const factory _Composer(
       {required final String name,
-      required final int id,
+      required final String id,
       required final String music,
       required final String image}) = _$ComposerImpl;
 
@@ -191,7 +191,7 @@ abstract class _Composer implements Composer {
   @override
   String get name;
   @override
-  int get id;
+  String get id;
   @override
   String get music;
   @override

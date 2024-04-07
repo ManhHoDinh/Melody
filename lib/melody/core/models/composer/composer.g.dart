@@ -6,9 +6,10 @@ part of 'composer.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$ComposerImpl _$$ComposerImplFromJson(Map<String, dynamic> json) => _$ComposerImpl(
+_$ComposerImpl _$$ComposerImplFromJson(Map<String, dynamic> json) =>
+    _$ComposerImpl(
       name: json['name'] as String,
-      id: json['id'] as int,
+      id: json['id'] as String,
       music: json['music'] as String,
       image: json['image'] as String,
     );

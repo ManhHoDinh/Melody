@@ -10,9 +10,9 @@ import '../../../core/constants/color_palatte.dart';
 import '../../../core/helper/assets_helper.dart';
 
 class DiscoveryScreen extends StatefulWidget {
-   DiscoveryScreen({super.key,required this.animationController});
+  DiscoveryScreen({super.key, required this.animationController});
   static const String routeName = 'composer_screen';
-   AnimationController? animationController;
+  AnimationController? animationController;
   @override
   State<DiscoveryScreen> createState() => _DiscoveryScreenState();
 }
@@ -62,77 +62,81 @@ class _DiscoveryScreenState extends State<DiscoveryScreen> {
       ),
       child: Scaffold(
         resizeToAvoidBottomInset: false,
+
         backgroundColor: Colors.transparent,
         appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          title: RichText(
-            text: const TextSpan(
-              text: 'Disc',
-              style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: Color(0xff6D0B14)),
-              children: <TextSpan>[
-                TextSpan(
-                  text: 'very',
-                  style: TextStyle(fontSize: 20, color: Color(0xff4059F1)),
-                ),
-              ],
-            ),
-          ),
-          leading: IconButton(
-            onPressed: () {
-              setState(() {
-                isTextFieldVisible = !isTextFieldVisible;
-              });
-            },
-            icon: Icon(
-              Icons.search,
-              color: ColorPalette.secondColor,
-            ),
-          ),
-        ),
-        endDrawer: Drawer(
-          child: Container(
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.centerLeft,
-                end: Alignment.centerRight,
-                colors: [Color(0xff6D0B14), Color(0xff4059F1)],
+            backgroundColor: Colors.transparent,
+            title: RichText(
+              text: const TextSpan(
+                text: 'Disc',
+                style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xff6D0B14)),
+                children: <TextSpan>[
+                  TextSpan(
+                    text: 'very',
+                    style: TextStyle(fontSize: 20, color: Color(0xff4059F1)),
+                  ),
+                ],
               ),
             ),
-            child: ListView(
-              children: const <Widget>[
-                DrawerHeader(
-                  decoration: BoxDecoration(),
-                  child: Text(
-                    'Melody',
-                    style: TextStyle(
-                      color: Color.fromARGB(255, 252, 252, 252),
-                      fontSize: 24,
-                    ),
-                  ),
+            centerTitle: true,
+            actions: [
+              IconButton(
+                onPressed: () {
+                  setState(() {
+                    isTextFieldVisible = !isTextFieldVisible;
+                  });
+                },
+                icon: Icon(
+                  Icons.search,
+                  color: ColorPalette.secondColor,
                 ),
-                ListTile(
-                  title: Text(
-                    'Item 1',
-                    style: TextStyle(
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-                ListTile(
-                  title: Text(
-                    'Item 2',
-                    style: TextStyle(
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
+              ),
+            ]),
+
+        // endDrawer: Drawer(
+        //   child: Container(
+        //     decoration: const BoxDecoration(
+        //       gradient: LinearGradient(
+        //         begin: Alignment.centerLeft,
+        //         end: Alignment.centerRight,
+        //         colors: [Color(0xff6D0B14), Color(0xff4059F1)],
+        //       ),
+        //     ),
+        //     child: ListView(
+        //       children: const <Widget>[
+        //         DrawerHeader(
+        //           decoration: BoxDecoration(),
+        //           child: Text(
+        //             'Melody',
+        //             style: TextStyle(
+        //               color: Color.fromARGB(255, 252, 252, 252),
+        //               fontSize: 24,
+        //             ),
+        //           ),
+        //         ),
+        //         ListTile(
+        //           title: Text(
+        //             'Item 1',
+        //             style: TextStyle(
+        //               color: Colors.white,
+        //             ),
+        //           ),
+        //         ),
+        //         ListTile(
+        //           title: Text(
+        //             'Item 2',
+        //             style: TextStyle(
+        //               color: Colors.white,
+        //             ),
+        //           ),
+        //         ),
+        //       ],
+        //     ),
+        //   ),
+        // ),
         body: Container(
           padding: EdgeInsets.symmetric(horizontal: 16),
           child: Column(

@@ -21,10 +21,14 @@ Comment _$CommentFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$Comment {
   String get name => throw _privateConstructorUsedError;
-  int get id => throw _privateConstructorUsedError;
+  String get id => throw _privateConstructorUsedError;
   String get comment => throw _privateConstructorUsedError;
-  DateTime get time => throw _privateConstructorUsedError;
-  DateTime get day => throw _privateConstructorUsedError;
+
+  String get time => throw _privateConstructorUsedError;
+   @JsonKey(name: "day", fromJson: _sendAtFromJson)
+  String get day => throw _privateConstructorUsedError;
+
+
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $CommentCopyWith<Comment> get copyWith => throw _privateConstructorUsedError;
@@ -35,7 +39,7 @@ abstract class $CommentCopyWith<$Res> {
   factory $CommentCopyWith(Comment value, $Res Function(Comment) then) =
       _$CommentCopyWithImpl<$Res, Comment>;
   @useResult
-  $Res call({String name, int id, String comment, DateTime time, DateTime day});
+  $Res call({String name, String id, String comment, @JsonKey(name: "time", fromJson: _sendAtFromJson) String time, @JsonKey(name: "day", fromJson: _sendAtFromJson) String day});
 }
 
 /// @nodoc
@@ -54,8 +58,8 @@ class _$CommentCopyWithImpl<$Res, $Val extends Comment>
     Object? name = null,
     Object? id = null,
     Object? comment = null,
-    Object? day= null,
-    Object? time = null,
+    Object? day= freezed,
+    Object? time = freezed,
   }) {
     return _then(_value.copyWith(
       name: null == name
@@ -65,18 +69,18 @@ class _$CommentCopyWithImpl<$Res, $Val extends Comment>
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
       comment: null == comment
           ? _value.comment
           : comment // ignore: cast_nullable_to_non_nullable
               as String,
-      day: null == day
+      day: freezed == day
             ? _value.day
-            : day as DateTime, // ignore: cast_nullable_to_non_nullable
-      time: null == time
+            : day as String, // ignore: cast_nullable_to_non_nullable
+      time: freezed == time
           ? _value.time
           : time // ignore: cast_nullable_to_non_nullable
-              as DateTime,
+              as String,
     ) as $Val);
   }
 }
@@ -88,7 +92,7 @@ abstract class _$$CommentImplCopyWith<$Res> implements $CommentCopyWith<$Res> {
       __$$CommentImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String name, int id, String comment, DateTime time, DateTime day});
+  $Res call({String name, String id, String comment,  String time,String day});
 }
 
 /// @nodoc
@@ -105,8 +109,8 @@ class __$$CommentImplCopyWithImpl<$Res>
     Object? name = null,
     Object? id = null,
    Object? comment = null,
-    Object? day= null,
-    Object? time = null,
+    Object? day= freezed,
+    Object? time = freezed,
   }) {
     return _then(_$CommentImpl(
       name: null == name
@@ -116,18 +120,18 @@ class __$$CommentImplCopyWithImpl<$Res>
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
       comment: null == comment
           ? _value.comment
           : comment // ignore: cast_nullable_to_non_nullable
               as String,
-      day: null == day
+      day: freezed == day
             ? _value.day
-            : day as DateTime, // ignore: cast_nullable_to_non_nullable
-      time: null == time
+            : day as String, // ignore: cast_nullable_to_non_nullable
+      time: freezed == time
           ? _value.time
           : time // ignore: cast_nullable_to_non_nullable
-              as DateTime,
+              as String,
     ));
   }
 }
@@ -139,8 +143,8 @@ class _$CommentImpl implements _Comment {
       {required this.name,
       required this.id,
       required this.comment,
-      required this.day,
-      required this.time});
+       @JsonKey(name: "day", fromJson: _sendAtFromJson) required this.day,
+       @JsonKey(name: "time", fromJson: _sendAtFromJson) required this.time});
 
   factory _$CommentImpl.fromJson(Map<String, dynamic> json) =>
       _$$CommentImplFromJson(json);
@@ -148,13 +152,14 @@ class _$CommentImpl implements _Comment {
   @override
   final String name;
   @override
-  final int id;
+  final String id;
   @override
   final String comment;
   @override
-  final DateTime time;
+  final String time;
   @override
-  final DateTime day;
+
+  final String day;
 
   @override
   String toString() {
@@ -196,23 +201,27 @@ class _$CommentImpl implements _Comment {
 abstract class _Comment implements Comment {
   const factory _Comment(
       {required final String name,
-      required final int id,
+      required final String id,
       required final String comment,
-      required final DateTime day,
-      required final DateTime time}) = _$CommentImpl;
+        @JsonKey(name: "day", fromJson: _sendAtFromJson)
+      required final String day,
+        @JsonKey(name: "time", fromJson: _sendAtFromJson)
+      required final String time}) = _$CommentImpl;
 
   factory _Comment.fromJson(Map<String, dynamic> json) = _$CommentImpl.fromJson;
 
   @override
   String get name;
   @override
-  int get id;
+  String get id;
   @override
   String get comment;
   @override
-  DateTime get day;
+    @JsonKey(name: "day", fromJson: _sendAtFromJson)
+  String get day;
    @override
-  DateTime get time;
+  @JsonKey(name: "time", fromJson: _sendAtFromJson)
+  String get time;
   @override
   @JsonKey(ignore: true)
   _$$CommentImplCopyWith<_$CommentImpl> get copyWith =>

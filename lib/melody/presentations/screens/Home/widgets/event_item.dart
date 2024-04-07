@@ -27,7 +27,7 @@ class EventItem extends StatelessWidget {
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20),
                 image: DecorationImage(
-                    image: AssetImage(event.image), fit: BoxFit.cover)),
+                    image: NetworkImage(event.image), fit: BoxFit.cover)),
           ),
           Container(
             margin: EdgeInsets.only(left: 20),
@@ -36,7 +36,7 @@ class EventItem extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  format.format(event.startAt),
+                  format.format(event.startAt!),
                   style: TextStyle(color: Colors.white),
                 ),
                 Text(

@@ -23,7 +23,7 @@ class InstrumentItem extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10),
                   image: DecorationImage(
                       fit: BoxFit.fitWidth,
-                      image: AssetImage(instrument.image))),
+                      image: NetworkImage(instrument.image))),
             ),
           ),
           Align(

@@ -1,0 +1,13 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+class FirebaseHelper {
+  static var playlistCollection =
+      FirebaseFirestore.instance.collection("Playlists");
+  static var albumCollection = FirebaseFirestore.instance.collection("Albums");
+  static var songCollection = FirebaseFirestore.instance.collection("Songs");
+  static var instrumentCollection =
+      FirebaseFirestore.instance.collection("Instruments");
+  static var eventCollection = FirebaseFirestore.instance.collection("Events");
+  static var userCollection = FirebaseFirestore.instance.collection("Users");
+  static var composerCollection = FirebaseFirestore.instance.collection("Composer");
+}

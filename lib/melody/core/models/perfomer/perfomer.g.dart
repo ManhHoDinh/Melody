@@ -8,7 +8,7 @@ part of 'perfomer.dart';
 
 _$PerfomerImpl _$$PerfomerImplFromJson(Map<String, dynamic> json) => _$PerfomerImpl(
       name: json['name'] as String,
-      id: json['id'] as int,
+      id: json['id'] as String,
       music: json['music'] as String,
       image: json['image'] as String,
     );

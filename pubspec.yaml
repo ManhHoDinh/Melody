@@ -63,7 +63,9 @@ dependencies:
     highlight_text: ^1.0.0
     comment_box: ^0.0.18
     avatar_glow: ^2.0.0
-  google_sign_in: ^6.1.6
+    google_sign_in: ^6.1.6
+    firebase_storage: ^11.6.0
+
 
 dev_dependencies:
     flutter_test:
@@ -87,7 +89,7 @@ flutter:
         - assets/fitness_app/
         - assets/hotel/
         - assets/introduction_animation/
-
+        - assets/melody/
     # An image asset can refer to one or more resolution-specific "variants", see
     # https://flutter.dev/assets-and-images/#resolution-aware.
 

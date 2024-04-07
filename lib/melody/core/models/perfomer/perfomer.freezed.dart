@@ -21,7 +21,7 @@ Perfomer _$PerfomerFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$Perfomer {
   String get name => throw _privateConstructorUsedError;
-  int get id => throw _privateConstructorUsedError;
+  String get id => throw _privateConstructorUsedError;
   String get music => throw _privateConstructorUsedError;
   String get image => throw _privateConstructorUsedError;
 
@@ -35,7 +35,7 @@ abstract class $PerfomerCopyWith<$Res> {
   factory $PerfomerCopyWith(Perfomer value, $Res Function(Perfomer) then) =
       _$PerfomerCopyWithImpl<$Res, Perfomer>;
   @useResult
-  $Res call({String name, int id, String music, String image});
+  $Res call({String name, String id, String music, String image});
 }
 
 /// @nodoc
@@ -64,7 +64,7 @@ class _$PerfomerCopyWithImpl<$Res, $Val extends Perfomer>
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
       music: null == music
           ? _value.music
           : music // ignore: cast_nullable_to_non_nullable
@@ -84,7 +84,7 @@ abstract class _$$PerfomerImplCopyWith<$Res> implements $PerfomerCopyWith<$Res> 
       __$$PerfomerImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String name, int id, String music, String image});
+  $Res call({String name, String id, String music, String image});
 }
 
 /// @nodoc
@@ -111,7 +111,7 @@ class __$$PerfomerImplCopyWithImpl<$Res>
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
       music: null == music
           ? _value.music
           : music // ignore: cast_nullable_to_non_nullable
@@ -139,7 +139,7 @@ class _$PerfomerImpl implements _Perfomer {
   @override
   final String name;
   @override
-  final int id;
+  final String id;
   @override
   final String music;
   @override
@@ -182,7 +182,7 @@ class _$PerfomerImpl implements _Perfomer {
 abstract class _Perfomer implements Perfomer {
   const factory _Perfomer(
       {required final String name,
-      required final int id,
+      required final String id,
       required final String music,
       required final String image}) = _$PerfomerImpl;
 
@@ -191,7 +191,7 @@ abstract class _Perfomer implements Perfomer {
   @override
   String get name;
   @override
-  int get id;
+  String get id;
   @override
   String get music;
   @override

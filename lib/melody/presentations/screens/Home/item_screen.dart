@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:melody/melody/core/models/music/music.dart';
+import 'package:melody/melody/presentations/screens/Home/composer_screen.dart';
+import 'package:melody/melody/presentations/screens/Home/instrument_screen.dart';
+import 'package:melody/melody/presentations/screens/Home/perfomer_screen.dart';
 import 'widgets/music_item.dart';
 
 class MusicSection extends StatelessWidget {
@@ -25,7 +28,34 @@ class MusicSection extends StatelessWidget {
             ),
             TextButton(
               onPressed: () {
-                // Implement your logic to view more
+                switch (title) {
+                  case 'Composer':
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ComposerScreen(albums: albums),
+                      ),
+                    );
+                    break;
+                  case 'Perfomer':
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => PerfomerScreen(albums: albums),
+                      ),
+                    );
+                    break;
+                  case 'Instrument':
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => InstrumentScreen(albums: albums),
+                      ),
+                    );
+                    break;
+                  default:
+                    break;
+                }
               },
               child: Text(
                 'View More',

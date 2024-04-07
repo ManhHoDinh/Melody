@@ -4,7 +4,12 @@ import 'package:melody/melody/core/helper/assets_helper.dart';
 import 'package:melody/melody/core/helper/text_styles.dart';
 import 'package:melody/melody/core/models/composer/composer.dart';
 import 'package:melody/melody/core/models/event/event.dart';
+import 'package:melody/melody/core/models/firebase/composer_request.dart';
+import 'package:melody/melody/core/models/firebase/event_request.dart';
+import 'package:melody/melody/core/models/firebase/instrument_request.dart';
+import 'package:melody/melody/core/models/firebase/perfomer_request.dart';
 import 'package:melody/melody/core/models/instrument/instrument.dart';
+// import 'package:melody/melody/core/models/instrument/instrument.dart';
 import 'package:melody/melody/core/models/music/music.dart';
 import 'package:get/get.dart';
 import 'package:melody/melody/core/models/perfomer/perfomer.dart';
@@ -13,6 +18,7 @@ import 'package:melody/melody/presentations/screens/Discovery/discovery_screen.d
 import 'package:melody/melody/presentations/screens/Home/widgets/composer_item.dart';
 import 'package:melody/melody/presentations/screens/Home/widgets/event_item.dart';
 import 'package:melody/melody/presentations/screens/Home/widgets/instrument_item.dart';
+// import 'package:melody/melody/presentations/screens/Home/widgets/instrument_item.dart';
 import 'package:melody/melody/presentations/screens/Home/widgets/perfomer_item.dart';
 import '../../../core/models/music/music.dart';
 import 'widgets/music_item.dart';
@@ -47,43 +53,18 @@ class _HomeScreenState extends State<HomeScreen>
         name: 'Symphony ',
         image: AssetHelper.imgArtist),
   ];
-  List<Instrument> instrument = [
-    const Instrument(id: 1, name: 'Pinano', image: AssetHelper.imgArtist),
-    const Instrument(id: 1, name: 'Violet', image: AssetHelper.imgArtist),
-    const Instrument(id: 1, name: 'Symphony ', image: AssetHelper.imgArtist),
-  ];
-  List<Composer> composer = [
-    const Composer(
-        music: 'Mozart', id: 1, name: 'Symphony', image: AssetHelper.imgArtist),
-    const Composer(
-        music: 'Mozart', id: 1, name: 'Son tung', image: AssetHelper.imgArtist),
-    const Composer(
-        music: 'Dinh Dai Duong',
-        id: 1,
-        name: 'Symphony ',
-        image: AssetHelper.imgArtist),
-  ];
-  List<Perfomer> perfomer = [
-    const Perfomer(
-        music: 'Mozart', id: 1, name: 'Symphony', image: AssetHelper.imgArtist),
-    const Perfomer(
-        music: 'Mozart', id: 1, name: 'Son tung', image: AssetHelper.imgArtist),
-    const Perfomer(
-        music: 'Dinh Dai Duong',
-        id: 1,
-        name: 'Symphony ',
-        image: AssetHelper.imgArtist),
-  ];
-  List<Event> event = [
-    Event(
-        startAt: DateTime.now(),
-        id: 1,
-        name: 'Symphony',
-        image: AssetHelper.imgArtist,
-        location: 'New York',
-        endAt: DateTime.now(),
-        description: 'This is a symphony event'),
-  ];
+  void _openDialog() {
+    showDialog(
+      context: context,
+      builder: (context) => ListeningDialog(
+        onSpeechEnd: (spokenText) {
+          searchController.text = spokenText;
+          searchValue = spokenText;
+        },
+      ),
+    );
+  }
+
   late AnimationController _animationController;
   late Animation<Alignment> _topAlignmentAnimation;
   late Animation<Alignment> _bottomAlignmentAnimation;
@@ -177,7 +158,7 @@ class _HomeScreenState extends State<HomeScreen>
         appBar: AppBar(
           backgroundColor: Colors.transparent,
           title: Align(
-            alignment: Alignment.centerLeft,
+            alignment: Alignment.center,
             child: Text(
               'Home',
               style: TextStyle(fontSize: 25).whiteTextColor,
@@ -219,6 +200,10 @@ class _HomeScreenState extends State<HomeScreen>
                   hintText: 'Search Song, Composer, Instrument',
                   prefixIconColor: Color.fromARGB(255, 0, 0, 0),
                   prefixIcon: Icon(Icons.search),
+                  suffixIcon: IconButton(
+                    icon: Icon(Icons.mic),
+                    onPressed: _openDialog,
+                  ),
                 ),
               ),
               SizedBox(height: 10),
@@ -226,85 +211,164 @@ class _HomeScreenState extends State<HomeScreen>
                 title: 'Instrument',
                 albums: albums, // Pass your list of popular songs here
               ),
+              // Expanded(
+              //   child: GridView.builder(
+              //     physics: NeverScrollableScrollPhysics(),
+              //     itemCount: searchInstrument(instrument, searchValue).length,
+              //     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              //       crossAxisCount: 3,
+              //       crossAxisSpacing: 10,
+              //       mainAxisSpacing: 10,
+              //       childAspectRatio: 5 / 6,
+              //     ),
+              //     itemBuilder: (context, index) {
+              //       return InstrumentItem(
+              //         instrument:
+              //             searchInstrument(instrument, searchValue)[index],
+              //       );
+              //     },
+              //   ),
+              // ),
               Expanded(
-                child: GridView.builder(
-                  physics: NeverScrollableScrollPhysics(),
-                  itemCount: searchInstrument(instrument, searchValue).length,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 3,
-                    crossAxisSpacing: 10,
-                    mainAxisSpacing: 10,
-                    childAspectRatio: 5 / 6,
-                  ),
-                  itemBuilder: (context, index) {
-                    return InstrumentItem(
-                      instrument:
-                          searchInstrument(instrument, searchValue)[index],
-                    );
-                  },
-                ),
-              ),
+                  child: StreamBuilder<List<Instrument>>(
+                      stream: InstrumentRequest.search(searchValue),
+                      builder: ((context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          // While waiting for data, show a loading indicator
+                          return CircularProgressIndicator();
+                        } else if (snapshot.hasError) {
+                          // If there's an error with the stream, display an error message
+                          return Text('Error: ${snapshot.error}');
+                        } else {
+                          return GridView.builder(
+                              shrinkWrap: true,
+                              itemCount: snapshot.data!.length,
+                              gridDelegate:
+                                  const SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisCount: 3,
+                                      crossAxisSpacing: 10,
+                                      mainAxisSpacing: 10,
+                                      childAspectRatio: 5 / 6),
+                              itemBuilder: ((context, index) {
+                                return InstrumentItem(
+                                  instrument: snapshot.data![index],
+                                );
+                              }));
+                        }
+                      }))),
               MusicSection(
                 title: 'Composer',
                 albums: albums,
               ),
-              Flexible(
-                child: GridView.builder(
-                  physics: NeverScrollableScrollPhysics(),
-                  itemCount: searchComposer(composer, searchValue).length,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 3,
-                    crossAxisSpacing: 10,
-                    mainAxisSpacing: 10,
-                    childAspectRatio: 5 / 6,
-                  ),
-                  itemBuilder: (context, index) {
-                    return ComposerItem(
-                      composer: searchComposer(composer, searchValue)[index],
-                    );
-                  },
-                ),
-              ),
+              Expanded(
+                  child: StreamBuilder<List<Composer>>(
+                      stream: ComposerRequest.search(searchValue),
+                      builder: ((context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          // While waiting for data, show a loading indicator
+                          return CircularProgressIndicator();
+                        } else if (snapshot.hasError) {
+                          // If there's an error with the stream, display an error message
+                          return Text('Error: ${snapshot.error}');
+                        } else {
+                          return GridView.builder(
+                              shrinkWrap: true,
+                              itemCount: snapshot.data!.length,
+                              gridDelegate:
+                                  const SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisCount: 3,
+                                      crossAxisSpacing: 10,
+                                      mainAxisSpacing: 10,
+                                      childAspectRatio: 5 / 6),
+                              itemBuilder: ((context, index) {
+                                return ComposerItem(
+                                  composer: snapshot.data![index],
+                                );
+                              }));
+                        }
+                      }))),
               MusicSection(
                 title: 'Perfomer',
                 albums: albums,
               ),
+              // Expanded(
+              //   child: GridView.builder(
+              //     physics: NeverScrollableScrollPhysics(),
+              //     itemCount: perfomer.length,
+              //     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              //       crossAxisCount: 3,
+              //       crossAxisSpacing: 10,
+              //       mainAxisSpacing: 10,
+              //       childAspectRatio: 5 / 6,
+              //     ),
+              //     itemBuilder: (context, index) {
+              //       return PerfomerItem.PerformerItem(
+              //         perfomer: perfomer[index],
+              //       );
+              //     },
+              //   ),
+              // ),
               Expanded(
-                child: GridView.builder(
-                  physics: NeverScrollableScrollPhysics(),
-                  itemCount: perfomer.length,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 3,
-                    crossAxisSpacing: 10,
-                    mainAxisSpacing: 10,
-                    childAspectRatio: 5 / 6,
-                  ),
-                  itemBuilder: (context, index) {
-                    return PerfomerItem.PerformerItem(
-                      perfomer: perfomer[index],
-                    );
-                  },
-                ),
-              ),
+                  child: StreamBuilder<List<Perfomer>>(
+                      stream: PerfomerRequest.search(searchValue),
+                      builder: ((context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          // While waiting for data, show a loading indicator
+                          return CircularProgressIndicator();
+                        } else if (snapshot.hasError) {
+                          // If there's an error with the stream, display an error message
+                          return Text('Error: ${snapshot.error}');
+                        } else {
+                          return GridView.builder(
+                              shrinkWrap: true,
+                              itemCount: snapshot.data!.length,
+                              gridDelegate:
+                                  const SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisCount: 3,
+                                      crossAxisSpacing: 10,
+                                      mainAxisSpacing: 10,
+                                      childAspectRatio: 5 / 6),
+                              itemBuilder: ((context, index) {
+                                return PerfomerItem(
+                                  perfomer: snapshot.data![index],
+                                );
+                              }));
+                        }
+                      }))),
               MusicSection(
                 title: 'Event',
                 albums: albums,
               ),
               Expanded(
-                child: ListView.separated(
-                    scrollDirection: Axis.vertical,
-                    itemBuilder: ((context, index) {
-                      return EventItem(
-                        event: event[index],
-                      );
-                    }),
-                    separatorBuilder: ((context, index) {
-                      return SizedBox(
-                        height: 10,
-                      );
-                    }),
-                    itemCount: event.length),
-              )
+                  child: StreamBuilder<List<Event>>(
+                      stream: EventRequest.search(searchValue),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          // While waiting for data, show a loading indicator
+                          return CircularProgressIndicator();
+                        } else if (snapshot.hasError) {
+                          // If there's an error with the stream, display an error message
+                          return Text('Error: ${snapshot.error}');
+                        } else {
+                          return ListView.separated(
+                              scrollDirection: Axis.vertical,
+                              itemBuilder: ((context, index) {
+                                return EventItem(
+                                  event: snapshot.data![index],
+                                );
+                              }),
+                              separatorBuilder: ((context, index) {
+                                return SizedBox(
+                                  height: 10,
+                                );
+                              }),
+                              itemCount: snapshot.data!.length);
+                        }
+                      })),
             ],
           ),
         ),
@@ -312,18 +376,20 @@ class _HomeScreenState extends State<HomeScreen>
     );
   }
 
-  List<Instrument> searchInstrument(List<Instrument> instrument, String value) {
-    return instrument
-        .where((element) =>
-            element.name.toLowerCase().contains(value.toLowerCase()))
-        .toList();
-  }
+  // List<Instrument> searchInstrument(List<Instrument> instrument, String value) {
+  //   return instrument
+  //       .where((element) =>
+  //           element.name.toLowerCase().contains(value.toLowerCase()))
+  //       .toList();
+  // }
 
   List<Composer> searchComposer(List<Composer> composer, String value) {
     return composer
         .where((element) =>
-            element.name.toLowerCase().contains(value.toLowerCase()) ||
-            element.music.toLowerCase().contains(value.toLowerCase()))
+            (element.name?.toLowerCase()?.contains(value.toLowerCase()) ??
+                false) ||
+            (element.music?.toLowerCase()?.contains(value.toLowerCase()) ??
+                false))
         .toList();
   }
 

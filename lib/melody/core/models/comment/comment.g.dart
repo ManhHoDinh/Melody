@@ -8,10 +8,10 @@ part of 'comment.dart';
 
 _$CommentImpl _$$CommentImplFromJson(Map<String, dynamic> json) => _$CommentImpl(
       name: json['name'] as String,
-      id: json['id'] as int,
+      id: json['id'] as String,
       comment: json['comment'] as String,
-      day: json['day'] as DateTime,
-      time: json['time'] as DateTime,
+      time:json['time'] as String,
+      day: json['day'] as String,
     );
 
 Map<String, dynamic> _$$CommentImplToJson(_$CommentImpl instance) =>
