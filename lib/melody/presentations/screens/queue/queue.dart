@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 
 class Queue extends StatefulWidget {
   const Queue({super.key});
-  static final String routeName = 'home_screen';
+  static final String routeName = 'queue_screen';
 
   @override
   State<Queue> createState() => _QueueState();

@@ -14,7 +14,6 @@ import 'package:melody/melody/presentations/screens/account/sign_up_screen.dart'
 import 'package:melody/melody/presentations/screens/artist/artist_page.dart';
 import 'package:melody/melody/presentations/screens/artist/edit_artist_profile.dart';
 import 'package:melody/melody/presentations/screens/artist/edit_song.dart';
-import 'package:melody/melody/presentations/screens/artist/test_nav.dart';
 import 'package:melody/melody/presentations/screens/artist/upload_song_page.dart';
 import 'package:melody/melody/presentations/screens/playing/playing.dart';
 import 'package:melody/melody/presentations/screens/playing/playlist_provider.dart';
@@ -28,6 +27,7 @@ import 'package:melody/melody/presentations/screens/Home/home_screen.dart';
 import 'package:melody/melody/presentations/screens/instrument/create_instrument_screen.dart';
 import 'package:melody/melody/presentations/screens/splash/splash_screen.dart';
 import 'package:provider/provider.dart';
+import 'melody/presentations/screens/playing/playlist_provider.dart';
 import 'navigation_home_screen.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:get/get.dart';
