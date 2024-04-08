@@ -26,4 +26,3 @@ Map<String, dynamic> _$$EventImplToJson(_$EventImpl instance) =>
       'startAt': instance.startAt?.toIso8601String(),
       'endAt': instance.endAt?.toIso8601String(),
     };
-

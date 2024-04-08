@@ -12,7 +12,7 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter_quill/quill_delta.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:melody/melody/core/models/firebase/instrument_request.dart';
-import 'package:melody/melody/core/models/instrument/instrument.dart';
+import 'package:melody/melody/core/models/instrumentModel/instrumentModel.dart';
 
 class CreateInstrumentScreen extends StatefulWidget {
   const CreateInstrumentScreen({super.key});
@@ -180,7 +180,7 @@ class _CreateInstrumentScreenState extends State<CreateInstrumentScreen> {
                           .collection('Instruments')
                           .doc()
                           .id;
-                      Instrument instrument = Instrument(
+                      InstrumentModel instrument = InstrumentModel(
                           name: nameController.value.text,
                           id: id,
                           description: jsonEncode(
