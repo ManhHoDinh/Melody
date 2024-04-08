@@ -36,7 +36,7 @@ class EventItem extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  format.format(event.startAt),
+                  format.format(event.startAt!),
                   style: TextStyle(color: Colors.white),
                 ),
                 Text(

@@ -19,16 +19,19 @@ import 'package:melody/melody/presentations/screens/artist/upload_song_page.dart
 import 'package:melody/melody/presentations/screens/playing/playing.dart';
 import 'package:melody/melody/presentations/screens/playing/playlist_provider.dart';
 import 'package:melody/melody/presentations/screens/queue/queue.dart';
+import 'package:melody/melody/presentations/screens/album/all_album.dart';
+import 'package:melody/melody/presentations/screens/event/all_event_screen.dart';
 import 'package:melody/melody/main.dart';
 import 'package:melody/melody/presentations/routes/app_router.dart';
 import 'package:melody/melody/presentations/screens/Discovery/discovery_screen.dart';
 import 'package:melody/melody/presentations/screens/Home/home_screen.dart';
+import 'package:melody/melody/presentations/screens/instrument/create_instrument_screen.dart';
 import 'package:melody/melody/presentations/screens/splash/splash_screen.dart';
 import 'package:provider/provider.dart';
 import 'navigation_home_screen.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
-import 'melody/core/models/firebase/firebase_request.dart';
 import 'package:get/get.dart';
+import 'melody/core/models/firebase/firebase_request.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -64,11 +67,17 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
-        textTheme: AppTheme.textTheme,
         platform: TargetPlatform.iOS,
       ),
-      home: TestNav(),
+      // initialRoute: Routes.createInstrument,
+      home: melodyApp(),
+
       getPages: [
+        GetPage(name: Routes.allAlbum, page: () => AllAlbumScreen()),
+        GetPage(name: Routes.allEvent, page: () => AllEventScreen()),
+        GetPage(
+            name: Routes.createInstrument,
+            page: () => CreateInstrumentScreen()),
         GetPage(name: Routes.uploadSong, page: () => UploadSongPage()),
         GetPage(name: Routes.artistPage, page: () => ArtistPage()),
         GetPage(name: Routes.editArtist, page: () => EditArtist()),

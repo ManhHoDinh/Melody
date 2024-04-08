@@ -8,12 +8,12 @@ part of 'event.dart';
 
 _$EventImpl _$$EventImplFromJson(Map<String, dynamic> json) => _$EventImpl(
       name: json['name'] as String,
-      id: json['id'] as int,
+      id: json['id'] as String,
       image: json['image'] as String,
       location: json['location'] as String,
       description: json['description'] as String,
-      startAt: DateTime.parse(json['startAt'] as String),
-      endAt: DateTime.parse(json['endAt'] as String),
+      startAt: _sendAtFromJson(json['startAt'] as Timestamp),
+      endAt: _sendAtFromJson(json['endAt'] as Timestamp),
     );
 
 Map<String, dynamic> _$$EventImplToJson(_$EventImpl instance) =>
@@ -23,6 +23,6 @@ Map<String, dynamic> _$$EventImplToJson(_$EventImpl instance) =>
       'image': instance.image,
       'location': instance.location,
       'description': instance.description,
-      'startAt': instance.startAt.toIso8601String(),
-      'endAt': instance.endAt.toIso8601String(),
+      'startAt': instance.startAt?.toIso8601String(),
+      'endAt': instance.endAt?.toIso8601String(),
     };
