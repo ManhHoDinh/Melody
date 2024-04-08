@@ -10,6 +10,7 @@ list(APPEND FLUTTER_PLUGIN_LIST
   firebase_core
   firebase_storage
   pasteboard
+  irondash_engine_context
   permission_handler_windows
   url_launcher_windows
 )

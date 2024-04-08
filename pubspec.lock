@@ -297,6 +297,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.6"
+  dart_quill_delta:
+    dependency: transitive
+    description:
+      name: dart_quill_delta
+      sha256: "733eb31821ceb45f43c47bf7f8c5a8aaee39550c0985ed38ff440e8ea5353e2d"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.1"
   dart_style:
     dependency: transitive
     description:
@@ -464,31 +472,31 @@ packages:
       sha256: c8e1d59385eee98de63c92f961d2a7062c5d9a65e7f45bdc7f1b0b205aab2492
       url: "https://pub.dev"
     source: hosted
-    version: "2.11.5"
+    version: "2.14.0"
   firebase_storage:
     dependency: "direct main"
     description:
       name: firebase_storage
-      sha256: ce1b0efe8dc111058c5f079b2f2ce84906d030d0fd2eef70c42ca1253c67039a
+      sha256: "75e6cb6bed65138b5bbd86bfd7cf9bc9a175fb0c31aacc400e9203df117ffbe6"
       url: "https://pub.dev"
     source: hosted
-    version: "11.6.9"
+    version: "11.6.0"
   firebase_storage_platform_interface:
     dependency: transitive
     description:
       name: firebase_storage_platform_interface
-      sha256: "4a2b64d4dac096390a0b7f2e7b6d086d0546c4a1bf7ee3fc4b5ae4cc41005c46"
+      sha256: b14e6a872da7303a45e081ff55160fd772eb15b7a00bdca12c740546fb67c18f
       url: "https://pub.dev"
     source: hosted
-    version: "5.1.12"
+    version: "5.1.15"
   firebase_storage_web:
     dependency: transitive
     description:
       name: firebase_storage_web
-      sha256: "4153814db8d59138e816d9f016736e4095c45675a2c18f2868d11ffd8cc6a4ca"
+      sha256: a1ad5da5983ac91c85ca7b5b4735b580cc7e1646aa502d7fa4dff7ab899e2159
       url: "https://pub.dev"
     source: hosted
-    version: "3.7.3"
+    version: "3.9.0"
   fixnum:
     dependency: transitive
     description:
@@ -615,10 +623,10 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_quill
-      sha256: "9028fdec46e80ff513418ef151ffc236f4adfd306028476161b0909e36631104"
+      sha256: "055d43156944816dab15fd277e154a0be860e17e76705cbb41cc6a0c2af7d42c"
       url: "https://pub.dev"
     source: hosted
-    version: "8.6.4"
+    version: "9.2.3"
   flutter_rating_bar:
     dependency: "direct main"
     description:
@@ -1036,7 +1044,7 @@ packages:
       sha256: "8829d8a55c13fc0e37127c29fedf290c102f4e40ae94ada574091fe0ff96c917"
       url: "https://pub.dev"
     source: hosted
-    version: "1.8.3"
+    version: "1.9.0"
   path_drawing:
     dependency: transitive
     description:
@@ -1165,6 +1173,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.0.2"
+  pixel_snap:
+    dependency: transitive
+    description:
+      name: pixel_snap
+      sha256: "677410ea37b07cd37ecb6d5e6c0d8d7615a7cf3bd92ba406fd1ac57e937d1fb0"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.1.5"
   platform:
     dependency: transitive
     description:
@@ -1394,6 +1410,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.2.0"
+  super_clipboard:
+    dependency: transitive
+    description:
+      name: super_clipboard
+      sha256: "15d25eb88df8e904e0c2ef77378c6010cc57bbfc0b6f91f2416d08fad5fcca92"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.8.5"
+  super_native_extensions:
+    dependency: transitive
+    description:
+      name: super_native_extensions
+      sha256: f96db6b137a0b135e43034289bb55ca6447b65225076036e81f97ebb6381ffeb
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.8.5"
   synchronized:
     dependency: transitive
     description:
