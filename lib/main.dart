@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:get/get_navigation/src/routes/get_route.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -6,7 +7,18 @@ import 'package:melody/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:melody/melody/core/helper/local_storage_helper.dart';
-import 'package:melody/melody/presentations/routes/app_router.dart';
+import 'package:melody/melody/core/models/artist/artist.dart';
+import 'package:melody/melody/core/models/firebase/artist_request.dart';
+import 'package:melody/melody/presentations/screens/account/login_screen.dart';
+import 'package:melody/melody/presentations/screens/account/sign_up_screen.dart';
+import 'package:melody/melody/presentations/screens/artist/artist_page.dart';
+import 'package:melody/melody/presentations/screens/artist/edit_artist_profile.dart';
+import 'package:melody/melody/presentations/screens/artist/edit_song.dart';
+import 'package:melody/melody/presentations/screens/artist/test_nav.dart';
+import 'package:melody/melody/presentations/screens/artist/upload_song_page.dart';
+import 'package:melody/melody/presentations/screens/playing/playing.dart';
+import 'package:melody/melody/presentations/screens/playing/playlist_provider.dart';
+import 'package:melody/melody/presentations/screens/queue/queue.dart';
 import 'package:melody/melody/presentations/screens/album/all_album.dart';
 import 'package:melody/melody/presentations/screens/event/all_event_screen.dart';
 import 'package:melody/melody/main.dart';
@@ -15,6 +27,7 @@ import 'package:melody/melody/presentations/screens/Discovery/discovery_screen.d
 import 'package:melody/melody/presentations/screens/Home/home_screen.dart';
 import 'package:melody/melody/presentations/screens/instrument/create_instrument_screen.dart';
 import 'package:melody/melody/presentations/screens/splash/splash_screen.dart';
+import 'package:provider/provider.dart';
 import 'navigation_home_screen.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:get/get.dart';
@@ -31,7 +44,10 @@ void main() async {
   await SystemChrome.setPreferredOrientations(<DeviceOrientation>[
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown
-  ]).then((_) => runApp(MyApp()));
+  ]).then((_) => runApp(ChangeNotifierProvider(
+        create: (context) => PlaylistProvider(),
+        child: MyApp(),
+      )));
 }
 
 class MyApp extends StatelessWidget {
@@ -62,6 +78,12 @@ class MyApp extends StatelessWidget {
         GetPage(
             name: Routes.createInstrument,
             page: () => CreateInstrumentScreen()),
+        GetPage(name: Routes.uploadSong, page: () => UploadSongPage()),
+        GetPage(name: Routes.artistPage, page: () => ArtistPage()),
+        GetPage(name: Routes.editArtist, page: () => EditArtist()),
+        GetPage(name: Routes.playing, page: () => Playing()),
+        GetPage(name: Routes.queue, page: () => Queue()),
+        GetPage(name: Routes.editSong, page: () => EditSong()),
       ],
     );
   }

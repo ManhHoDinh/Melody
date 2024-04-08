@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:melody/melody/presentations/screens/Discovery/discovery_screen.dart';
 import 'package:melody/melody/presentations/screens/Home/home_screen.dart';
 import 'package:melody/melody/presentations/screens/album/all_album.dart';
+import 'package:melody/melody/presentations/screens/user/user_screen.dart';
 
 import '../../../core/constants/color_palatte.dart';
 import '../../bottom_navigation_view/bottom_bar_view.dart';
@@ -118,7 +119,7 @@ class _BottomHomeScreenState extends State<BottomHomeScreen>
                 }
                 setState(() {
                   tabBody =
-                      HomeScreen(animationController: animationController);
+                      UserScreen(animationController: animationController);
                 });
               });
             }
