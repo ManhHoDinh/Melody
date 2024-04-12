@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:melody/melody/core/models/composer/composer.dart';
-import 'package:melody/melody/core/models/instrument/instrument.dart';
 import 'package:melody/melody/core/models/music/music.dart';
 
+import '../../../../core/models/instrumentModel/instrumentModel.dart';
+
 class InstrumentItem extends StatelessWidget {
-  final Instrument instrument;
+  final InstrumentModel instrument;
   const InstrumentItem({super.key, required this.instrument});
 
   @override

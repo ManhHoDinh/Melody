@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart';
 import 'package:get/get.dart';
 import 'package:melody/melody/core/models/firebase/instrument_request.dart';
-import 'package:melody/melody/core/models/instrument/instrument.dart';
+import 'package:melody/melody/core/models/instrumentModel/instrumentModel.dart';
 
 class DetailInstrumentScreen extends StatefulWidget {
   const DetailInstrumentScreen({super.key});
@@ -49,7 +49,7 @@ class _DetailInstrumentScreenState extends State<DetailInstrumentScreen> {
         scrollDirection: Axis.vertical,
         child: Container(
           padding: EdgeInsets.symmetric(horizontal: 16),
-          child: FutureBuilder<Instrument>(
+          child: FutureBuilder<InstrumentModel>(
               future: InstrumentRequest.getById("JLoV2c0srtrUvDiblND6"),
               builder: (context, snapshot) {
                 if (snapshot.hasData)
@@ -75,16 +75,16 @@ class _DetailInstrumentScreenState extends State<DetailInstrumentScreen> {
                       ),
                       Container(
                         height: 350,
-                        child: QuillEditor.basic(
-                          configurations: QuillEditorConfigurations(
-                            controller: _controller,
-                            readOnly: false,
-                            sharedConfigurations:
-                                const QuillSharedConfigurations(
-                              locale: Locale('de'),
-                            ),
-                          ),
-                        ),
+                        // child: QuillEditor.basic(
+                        //   configurations: QuillEditorConfigurations(
+                        //     controller: _controller,
+                        //     readOnly: false,
+                        //     sharedConfigurations:
+                        //         const QuillSharedConfigurations(
+                        //       locale: Locale('de'),
+                        //     ),
+                        //   ),
+                        // ),
                       ),
                       SizedBox(
                         height: 20,

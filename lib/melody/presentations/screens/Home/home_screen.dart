@@ -4,7 +4,6 @@ import 'package:melody/melody/core/helper/assets_helper.dart';
 import 'package:melody/melody/core/helper/text_styles.dart';
 import 'package:melody/melody/core/models/composer/composer.dart';
 import 'package:melody/melody/core/models/event/event.dart';
-import 'package:melody/melody/core/models/instrument/instrument.dart';
 import 'package:melody/melody/core/models/music/music.dart';
 import 'package:get/get.dart';
 import 'package:melody/melody/core/models/perfomer/perfomer.dart';
@@ -14,6 +13,7 @@ import 'package:melody/melody/presentations/screens/Home/widgets/composer_item.d
 import 'package:melody/melody/presentations/screens/Home/widgets/event_item.dart';
 import 'package:melody/melody/presentations/screens/Home/widgets/instrument_item.dart';
 import 'package:melody/melody/presentations/screens/Home/widgets/perfomer_item.dart';
+import '../../../core/models/instrumentModel/instrumentModel.dart';
 import '../../../core/models/music/music.dart';
 import 'widgets/music_item.dart';
 
@@ -47,18 +47,18 @@ class _HomeScreenState extends State<HomeScreen>
         name: 'Symphony ',
         image: AssetHelper.imgArtist),
   ];
-  List<Instrument> instrument = [
-    const Instrument(
+  List<InstrumentModel> instrument = [
+    const InstrumentModel(
         id: "1",
         name: 'Violet',
         image: AssetHelper.imgArtist,
         description: "ff"),
-    const Instrument(
+    const InstrumentModel(
         id: "1",
         name: 'Symphony ',
         image: AssetHelper.imgArtist,
         description: "ff"),
-    const Instrument(
+    const InstrumentModel(
         id: "1",
         name: 'Pinano',
         image: AssetHelper.imgArtist,
@@ -324,7 +324,7 @@ class _HomeScreenState extends State<HomeScreen>
     );
   }
 
-  List<Instrument> searchInstrument(List<Instrument> instrument, String value) {
+  List<InstrumentModel> searchInstrument(List<InstrumentModel> instrument, String value) {
     return instrument
         .where((element) =>
             element.name.toLowerCase().contains(value.toLowerCase()))

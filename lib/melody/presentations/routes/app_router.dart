@@ -10,7 +10,8 @@ final Map<String, WidgetBuilder> routes = {
   LoginScreen.routeName: (context) => LoginScreen(),
   SplashScreen.routeName: (context) => SplashScreen(),
   HomeScreen.routeName: (context) => HomeScreen(),
-  SignUpScreen.routeName: (context) => SignUpScreen(),
+  LoginScreen.routeName : (context) => LoginScreen(),
+  SignUpScreen.routeName : (context) => SignUpScreen(),
 };
 
 class Routes {

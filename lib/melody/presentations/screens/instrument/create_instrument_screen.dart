@@ -12,7 +12,7 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter_quill/quill_delta.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:melody/melody/core/models/firebase/instrument_request.dart';
-import 'package:melody/melody/core/models/instrument/instrument.dart';
+import 'package:melody/melody/core/models/instrumentModel/instrumentModel.dart';
 
 class CreateInstrumentScreen extends StatefulWidget {
   const CreateInstrumentScreen({super.key});
@@ -106,25 +106,25 @@ class _CreateInstrumentScreenState extends State<CreateInstrumentScreen> {
                 textAlign: TextAlign.start,
                 style: TextStyle(fontSize: 18),
               ),
-              QuillToolbar.simple(
-                configurations: QuillSimpleToolbarConfigurations(
-                  controller: _controller,
-                  sharedConfigurations: const QuillSharedConfigurations(
-                    locale: Locale('de'),
-                  ),
-                ),
-              ),
+              // QuillToolbar.simple(
+              //   configurations: QuillSimpleToolbarConfigurations(
+              //     controller: _controller,
+              //     sharedConfigurations: const QuillSharedConfigurations(
+              //       locale: Locale('de'),
+              //     ),
+              //   ),
+              // ),
               Container(
                 height: 350,
-                child: QuillEditor.basic(
-                  configurations: QuillEditorConfigurations(
-                    controller: _controller,
-                    readOnly: false,
-                    sharedConfigurations: const QuillSharedConfigurations(
-                      locale: Locale('de'),
-                    ),
-                  ),
-                ),
+                // child: QuillEditor.basic(
+                //   configurations: QuillEditorConfigurations(
+                //     controller: _controller,
+                //     readOnly: false,
+                //     sharedConfigurations: const QuillSharedConfigurations(
+                //       locale: Locale('de'),
+                //     ),
+                //   ),
+                // ),
               ),
               SizedBox(
                 height: 20,
@@ -180,7 +180,7 @@ class _CreateInstrumentScreenState extends State<CreateInstrumentScreen> {
                           .collection('Instruments')
                           .doc()
                           .id;
-                      Instrument instrument = Instrument(
+                      InstrumentModel instrument = InstrumentModel(
                           name: nameController.value.text,
                           id: id,
                           description: jsonEncode(

@@ -2,15 +2,15 @@ import 'package:melody/fitness_app/fitness_app_theme.dart';
 import 'package:flutter/material.dart';
 
 class TitleView extends StatelessWidget {
-  final String titleTxt;
-  final String subTxt;
+  String? titleTxt;
+  String? subTxt;
   final AnimationController? animationController;
   final Animation<double>? animation;
 
-  const TitleView(
+  TitleView(
       {Key? key,
-      this.titleTxt: "",
-      this.subTxt: "",
+      this.titleTxt,
+      this.subTxt,
       this.animationController,
       this.animation})
       : super(key: key);
@@ -32,7 +32,7 @@ class TitleView extends StatelessWidget {
                   children: <Widget>[
                     Expanded(
                       child: Text(
-                        titleTxt,
+                        titleTxt??"",
                         textAlign: TextAlign.left,
                         style: TextStyle(
                           fontFamily: FitnessAppTheme.fontName,
@@ -52,7 +52,7 @@ class TitleView extends StatelessWidget {
                         child: Row(
                           children: <Widget>[
                             Text(
-                              subTxt,
+                              subTxt??"",
                               textAlign: TextAlign.left,
                               style: TextStyle(
                                 fontFamily: FitnessAppTheme.fontName,
