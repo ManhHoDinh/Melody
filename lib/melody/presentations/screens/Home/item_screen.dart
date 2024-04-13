@@ -8,8 +8,9 @@ import 'widgets/music_item.dart';
 class MusicSection extends StatelessWidget {
   final String title;
   final List<Music> albums;
-
-  MusicSection({required this.title, required this.albums});
+  void Function()? viewMoreAction = () {};
+  MusicSection(
+      {required this.title, required this.albums, this.viewMoreAction});
 
   @override
   Widget build(BuildContext context) {

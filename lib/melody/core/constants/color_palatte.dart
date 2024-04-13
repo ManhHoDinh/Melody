@@ -4,7 +4,7 @@ class ColorPalette {
   static const Color backgroundColor = Color(0xffFFFFFF);
   static const Color primaryColor = Color(0xff476A49);
   static const Color secondColor = Color(0xff0E9EEF);
-  
+
   static const Color greenText = Color(0xff57CC99);
   static const Color darkBlueText = Color(0xff22577A);
   static const Color grayText = Color(0xffBFBFBF);
@@ -25,7 +25,6 @@ class ColorPalette {
   static const Color white = Color(0xFFFFFFFF);
   static const Color background = Color(0xFFF2F3F8);
   static const Color nearlyDarkBlue = Color(0xFF2633C5);
-
 }
 
 // Color(0xff+x) | Mã hex bỏ # ví dụ #123410 => Color(0xFF123410)

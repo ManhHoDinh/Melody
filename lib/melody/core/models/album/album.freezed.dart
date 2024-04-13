@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'instrument.dart';
+part of 'album.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -14,36 +14,34 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
-Instrument _$InstrumentFromJson(Map<String, dynamic> json) {
-  return _Instrument.fromJson(json);
+Album _$AlbumFromJson(Map<String, dynamic> json) {
+  return _Album.fromJson(json);
 }
 
 /// @nodoc
-mixin _$Instrument {
+mixin _$Album {
   String get name => throw _privateConstructorUsedError;
   String get id => throw _privateConstructorUsedError;
-  String get description => throw _privateConstructorUsedError;
+  String get artist_id => throw _privateConstructorUsedError;
   String get image => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $InstrumentCopyWith<Instrument> get copyWith =>
-      throw _privateConstructorUsedError;
+  $AlbumCopyWith<Album> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $InstrumentCopyWith<$Res> {
-  factory $InstrumentCopyWith(
-          Instrument value, $Res Function(Instrument) then) =
-      _$InstrumentCopyWithImpl<$Res, Instrument>;
+abstract class $AlbumCopyWith<$Res> {
+  factory $AlbumCopyWith(Album value, $Res Function(Album) then) =
+      _$AlbumCopyWithImpl<$Res, Album>;
   @useResult
-  $Res call({String name, String id, String description, String image});
+  $Res call({String name, String id, String artist_id, String image});
 }
 
 /// @nodoc
-class _$InstrumentCopyWithImpl<$Res, $Val extends Instrument>
-    implements $InstrumentCopyWith<$Res> {
-  _$InstrumentCopyWithImpl(this._value, this._then);
+class _$AlbumCopyWithImpl<$Res, $Val extends Album>
+    implements $AlbumCopyWith<$Res> {
+  _$AlbumCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -55,7 +53,7 @@ class _$InstrumentCopyWithImpl<$Res, $Val extends Instrument>
   $Res call({
     Object? name = null,
     Object? id = null,
-    Object? description = null,
+    Object? artist_id = null,
     Object? image = null,
   }) {
     return _then(_value.copyWith(
@@ -67,9 +65,9 @@ class _$InstrumentCopyWithImpl<$Res, $Val extends Instrument>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      description: null == description
-          ? _value.description
-          : description // ignore: cast_nullable_to_non_nullable
+      artist_id: null == artist_id
+          ? _value.artist_id
+          : artist_id // ignore: cast_nullable_to_non_nullable
               as String,
       image: null == image
           ? _value.image
@@ -80,22 +78,21 @@ class _$InstrumentCopyWithImpl<$Res, $Val extends Instrument>
 }
 
 /// @nodoc
-abstract class _$$InstrumentImplCopyWith<$Res>
-    implements $InstrumentCopyWith<$Res> {
-  factory _$$InstrumentImplCopyWith(
-          _$InstrumentImpl value, $Res Function(_$InstrumentImpl) then) =
-      __$$InstrumentImplCopyWithImpl<$Res>;
+abstract class _$$AlbumImplCopyWith<$Res> implements $AlbumCopyWith<$Res> {
+  factory _$$AlbumImplCopyWith(
+          _$AlbumImpl value, $Res Function(_$AlbumImpl) then) =
+      __$$AlbumImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String name, String id, String description, String image});
+  $Res call({String name, String id, String artist_id, String image});
 }
 
 /// @nodoc
-class __$$InstrumentImplCopyWithImpl<$Res>
-    extends _$InstrumentCopyWithImpl<$Res, _$InstrumentImpl>
-    implements _$$InstrumentImplCopyWith<$Res> {
-  __$$InstrumentImplCopyWithImpl(
-      _$InstrumentImpl _value, $Res Function(_$InstrumentImpl) _then)
+class __$$AlbumImplCopyWithImpl<$Res>
+    extends _$AlbumCopyWithImpl<$Res, _$AlbumImpl>
+    implements _$$AlbumImplCopyWith<$Res> {
+  __$$AlbumImplCopyWithImpl(
+      _$AlbumImpl _value, $Res Function(_$AlbumImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -103,10 +100,10 @@ class __$$InstrumentImplCopyWithImpl<$Res>
   $Res call({
     Object? name = null,
     Object? id = null,
-    Object? description = null,
+    Object? artist_id = null,
     Object? image = null,
   }) {
-    return _then(_$InstrumentImpl(
+    return _then(_$AlbumImpl(
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -115,9 +112,9 @@ class __$$InstrumentImplCopyWithImpl<$Res>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      description: null == description
-          ? _value.description
-          : description // ignore: cast_nullable_to_non_nullable
+      artist_id: null == artist_id
+          ? _value.artist_id
+          : artist_id // ignore: cast_nullable_to_non_nullable
               as String,
       image: null == image
           ? _value.image
@@ -129,80 +126,79 @@ class __$$InstrumentImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$InstrumentImpl implements _Instrument {
-  const _$InstrumentImpl(
+class _$AlbumImpl implements _Album {
+  const _$AlbumImpl(
       {required this.name,
       required this.id,
-      required this.description,
+      required this.artist_id,
       required this.image});
 
-  factory _$InstrumentImpl.fromJson(Map<String, dynamic> json) =>
-      _$$InstrumentImplFromJson(json);
+  factory _$AlbumImpl.fromJson(Map<String, dynamic> json) =>
+      _$$AlbumImplFromJson(json);
 
   @override
   final String name;
   @override
   final String id;
   @override
-  final String description;
+  final String artist_id;
   @override
   final String image;
 
   @override
   String toString() {
-    return 'Instrument(name: $name, id: $id, description: $description, image: $image)';
+    return 'Album(name: $name, id: $id, artist_id: $artist_id, image: $image)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$InstrumentImpl &&
+            other is _$AlbumImpl &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.description, description) ||
-                other.description == description) &&
+            (identical(other.artist_id, artist_id) ||
+                other.artist_id == artist_id) &&
             (identical(other.image, image) || other.image == image));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, name, id, description, image);
+  int get hashCode => Object.hash(runtimeType, name, id, artist_id, image);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$InstrumentImplCopyWith<_$InstrumentImpl> get copyWith =>
-      __$$InstrumentImplCopyWithImpl<_$InstrumentImpl>(this, _$identity);
+  _$$AlbumImplCopyWith<_$AlbumImpl> get copyWith =>
+      __$$AlbumImplCopyWithImpl<_$AlbumImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$InstrumentImplToJson(
+    return _$$AlbumImplToJson(
       this,
     );
   }
 }
 
-abstract class _Instrument implements Instrument {
-  const factory _Instrument(
+abstract class _Album implements Album {
+  const factory _Album(
       {required final String name,
       required final String id,
-      required final String description,
-      required final String image}) = _$InstrumentImpl;
+      required final String artist_id,
+      required final String image}) = _$AlbumImpl;
 
-  factory _Instrument.fromJson(Map<String, dynamic> json) =
-      _$InstrumentImpl.fromJson;
+  factory _Album.fromJson(Map<String, dynamic> json) = _$AlbumImpl.fromJson;
 
   @override
   String get name;
   @override
   String get id;
   @override
-  String get description;
+  String get artist_id;
   @override
   String get image;
   @override
   @JsonKey(ignore: true)
-  _$$InstrumentImplCopyWith<_$InstrumentImpl> get copyWith =>
+  _$$AlbumImplCopyWith<_$AlbumImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

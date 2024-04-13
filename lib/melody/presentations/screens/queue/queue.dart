@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:melody/melody/core/models/song/song.dart';
 import 'package:melody/melody/presentations/screens/playing/playing.dart';
 import 'package:melody/melody/presentations/screens/playing/playlist_provider.dart';
@@ -6,7 +7,7 @@ import 'package:provider/provider.dart';
 
 class Queue extends StatefulWidget {
   const Queue({super.key});
-  static final String routeName = 'home_screen';
+  static final String routeName = 'queue_screen';
 
   @override
   State<Queue> createState() => _QueueState();
@@ -29,7 +30,8 @@ class _QueueState extends State<Queue> {
     // update current song index
     playlistProvider.currentSongIndex = songIndex;
     // navigate to playing page
-    Navigator.push(context, MaterialPageRoute(builder: (context) => Playing()));
+    // Navigator.push(context, MaterialPageRoute(builder: (context) => Playing()));
+    Get.back();
   }
 
   @override
@@ -50,7 +52,12 @@ class _QueueState extends State<Queue> {
                   return ListTile(
                     title: Text(song.songName),
                     subtitle: Text(song.artistName),
-                    leading: Image.asset(song.songImagePath),
+                    leading: Image.network(
+                      song.songImagePath,
+                      height: 48,
+                      width: 48,
+                      fit: BoxFit.cover,
+                    ),
                     onTap: () => goToSong(index),
                   );
                 });

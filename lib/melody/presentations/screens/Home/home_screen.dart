@@ -20,6 +20,7 @@ import 'package:melody/melody/presentations/screens/Home/widgets/event_item.dart
 import 'package:melody/melody/presentations/screens/Home/widgets/instrument_item.dart';
 // import 'package:melody/melody/presentations/screens/Home/widgets/instrument_item.dart';
 import 'package:melody/melody/presentations/screens/Home/widgets/perfomer_item.dart';
+import '../../../core/models/instrumentModel/instrumentModel.dart';
 import '../../../core/models/music/music.dart';
 import 'widgets/music_item.dart';
 

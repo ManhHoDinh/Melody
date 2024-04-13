@@ -27,7 +27,8 @@ mixin _$Perfomer {
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $PerfomerCopyWith<Perfomer> get copyWith => throw _privateConstructorUsedError;
+  $PerfomerCopyWith<Perfomer> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -78,7 +79,8 @@ class _$PerfomerCopyWithImpl<$Res, $Val extends Perfomer>
 }
 
 /// @nodoc
-abstract class _$$PerfomerImplCopyWith<$Res> implements $PerfomerCopyWith<$Res> {
+abstract class _$$PerfomerImplCopyWith<$Res>
+    implements $PerfomerCopyWith<$Res> {
   factory _$$PerfomerImplCopyWith(
           _$PerfomerImpl value, $Res Function(_$PerfomerImpl) then) =
       __$$PerfomerImplCopyWithImpl<$Res>;
@@ -126,7 +128,7 @@ class __$$PerfomerImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$PerfomerImpl implements _Perfomer {
+class _$PerfomerImpl with DiagnosticableTreeMixin implements _Perfomer {
   const _$PerfomerImpl(
       {required this.name,
       required this.id,
@@ -146,8 +148,19 @@ class _$PerfomerImpl implements _Perfomer {
   final String image;
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'Perfomer(name: $name, id: $id, music: $music, image: $image)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'Perfomer'))
+      ..add(DiagnosticsProperty('name', name))
+      ..add(DiagnosticsProperty('id', id))
+      ..add(DiagnosticsProperty('music', music))
+      ..add(DiagnosticsProperty('image', image));
   }
 
   @override
@@ -186,7 +199,8 @@ abstract class _Perfomer implements Perfomer {
       required final String music,
       required final String image}) = _$PerfomerImpl;
 
-  factory _Perfomer.fromJson(Map<String, dynamic> json) = _$PerfomerImpl.fromJson;
+  factory _Perfomer.fromJson(Map<String, dynamic> json) =
+      _$PerfomerImpl.fromJson;
 
   @override
   String get name;

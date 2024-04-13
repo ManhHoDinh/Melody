@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:melody/melody/presentations/screens/Discovery/discovery_screen.dart';
 import 'package:melody/melody/presentations/screens/Home/home_screen.dart';
+import 'package:melody/melody/presentations/screens/album/all_album.dart';
+import 'package:melody/melody/presentations/screens/user/user_screen.dart';
 
 import '../../../core/constants/color_palatte.dart';
 import '../../bottom_navigation_view/bottom_bar_view.dart';
@@ -80,7 +82,7 @@ class _BottomHomeScreenState extends State<BottomHomeScreen>
           tabIconsList: tabIconsList,
           addClick: () {},
           changeIndex: (int index) {
-            if (index == 0 || index == 2) {
+            if (index == 0) {
               animationController?.reverse().then<dynamic>((data) {
                 if (!mounted) {
                   return;
@@ -90,8 +92,7 @@ class _BottomHomeScreenState extends State<BottomHomeScreen>
                       HomeScreen(animationController: animationController);
                 });
               });
-            }
-            if (index == 1) {
+            } else if (index == 1) {
               animationController?.reverse().then<dynamic>((data) {
                 if (!mounted) {
                   return;
@@ -101,15 +102,24 @@ class _BottomHomeScreenState extends State<BottomHomeScreen>
                       DiscoveryScreen(animationController: animationController);
                 });
               });
-            }
-             else if (index == 3) {
+            } else if (index == 2) {
               animationController?.reverse().then<dynamic>((data) {
                 if (!mounted) {
                   return;
                 }
                 setState(() {
                   tabBody =
-                      HomeScreen(animationController: animationController);
+                      AllAlbumScreen(animationController: animationController);
+                });
+              });
+            } else if (index == 3) {
+              animationController?.reverse().then<dynamic>((data) {
+                if (!mounted) {
+                  return;
+                }
+                setState(() {
+                  tabBody =
+                      UserScreen(animationController: animationController);
                 });
               });
             }

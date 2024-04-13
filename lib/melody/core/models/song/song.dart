@@ -6,7 +6,9 @@ part 'song.freezed.dart';
 @Freezed()
 class Song with _$Song {
   const factory Song(
-      {required String songName,
+      {required String songId,
+      required String artistId,
+      required String songName,
       required String artistName,
       required String songImagePath,
       required String audioPath}) = _Song;

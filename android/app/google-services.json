@@ -14,6 +14,17 @@
       },
       "oauth_client": [
         {
+<<<<<<< HEAD
+          "client_id": "482788902102-n994onobm8ub2efi43hr561407ikivcj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.melody",
+            "certificate_hash": "0180dabc780945d4bdee341d9ec5431c1ad40af2"
+          }
+        },
+        {
+=======
+>>>>>>> d5a91410e1159640c44b88d75ac1f1c535181e09
           "client_id": "482788902102-08o5r12cct487s4sb6sk3l8bq7mhvt4f.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -29,6 +40,16 @@
             {
               "client_id": "482788902102-08o5r12cct487s4sb6sk3l8bq7mhvt4f.apps.googleusercontent.com",
               "client_type": 3
+<<<<<<< HEAD
+            },
+            {
+              "client_id": "482788902102-hfn866vem2ai0vcvulpq36ee8ec97isc.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.melody"
+              }
+=======
+>>>>>>> d5a91410e1159640c44b88d75ac1f1c535181e09
             }
           ]
         }

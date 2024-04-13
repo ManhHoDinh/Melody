@@ -6,23 +6,7 @@ import 'dart:math';
 
 class PlaylistProvider extends ChangeNotifier {
   // playlist of songs
-  final List<Song> _playlist = [
-    Song(
-        songName: "Fur Elise",
-        artistName: "Ludwig van Beethoven",
-        songImagePath: "assets/images/furelise.jpg",
-        audioPath: "audios/Fur Elise - Ludwig van Beethoven.mp3"),
-    Song(
-        songName: "Moonlight Sonata",
-        artistName: "Ludwig van Beethoven",
-        songImagePath: "assets/images/moonlightsonata.jpg",
-        audioPath: "audios/Moonlight Sonata - Ludwig van Beethoven.mp3"),
-    Song(
-        songName: "Canon In D Major",
-        artistName: "Johann Pachelbel",
-        songImagePath: "assets/images/canonind.jpg",
-        audioPath: "audios/Canon In D Major - Johann Pachelbel.mp3"),
-  ];
+  List<Song> _playlist = [];
 
   List<Song> _originalPlaylist = [];
 
@@ -47,7 +31,8 @@ class PlaylistProvider extends ChangeNotifier {
 
   // constructor
   PlaylistProvider() {
-    _originalPlaylist.addAll(_playlist);
+    List<Song> copiedSongList = List.from(_playlist);
+    _originalPlaylist.addAll(copiedSongList);
     listenToDuration();
   }
 
@@ -96,17 +81,6 @@ class PlaylistProvider extends ChangeNotifier {
         ? Fluttertoast.showToast(msg: "Shuffle mode: ON")
         : Fluttertoast.showToast(msg: "Shuffle mode: OFF");
   }
-  // // toggle shuffle
-  // void toggleShuffle() {
-  //   isShuffle = !isShuffle;
-  //   if (isShuffle) {
-  //     shufflePlaylist();
-  //   } else {
-  //     _playlist.clear();
-  //     _playlist.addAll(_originalPlaylist);
-  //     notifyListeners();
-  //   }
-  // }
 
   // Toggle repeat mode
   void toggleRepeat() {
@@ -117,6 +91,12 @@ class PlaylistProvider extends ChangeNotifier {
         : Fluttertoast.showToast(msg: "Repeat mode: All");
   }
 
+  // Method to play all songs from a specific index
+  void playAllFromIndex(int startIndex) {
+    currentSongIndex = startIndex;
+    notifyListeners();
+  }
+
   // initially not playing
   bool _isPlaying = false;
 
@@ -124,7 +104,7 @@ class PlaylistProvider extends ChangeNotifier {
   void play() async {
     final String path = _playlist[_currentSongIndex!].audioPath;
     await _audioPlayer.stop();
-    await _audioPlayer.play(AssetSource(path));
+    await _audioPlayer.play(UrlSource(path));
     _isPlaying = true;
     notifyListeners();
   }
@@ -228,6 +208,7 @@ class PlaylistProvider extends ChangeNotifier {
   bool get isRepeatOne => _isRepeatOne;
 
   // Setters
+
   set currentSongIndex(int? newIndex) {
     // update current song index
     _currentSongIndex = newIndex;
@@ -247,6 +228,14 @@ class PlaylistProvider extends ChangeNotifier {
 
   set isRepeatOne(bool value) {
     _isRepeatOne = value;
+    notifyListeners();
+  }
+
+  void setPlaylist(List<Song> newPlaylist) {
+    _playlist = newPlaylist;
+    List<Song> copiedSongList = List.from(newPlaylist);
+    _originalPlaylist.clear();
+    _originalPlaylist.addAll(copiedSongList);
     notifyListeners();
   }
 }
