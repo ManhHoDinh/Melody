@@ -8,7 +8,7 @@ import 'package:provider/provider.dart';
 
 class Playing extends StatelessWidget {
   const Playing({super.key});
-
+  static const String routeName = '/playing';
   // convert duration into min:sec
   String formatTime(Duration duration) {
     String twoDigitSeconds =
@@ -40,7 +40,7 @@ class Playing extends StatelessWidget {
                     // back button
                     IconButton(
                         onPressed: () {
-                          Get.back();
+                          Navigator.of(context).pop();
                         },
                         icon: Icon(Icons.arrow_back)),
                     // title

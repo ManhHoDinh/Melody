@@ -61,14 +61,22 @@ class ImageHelper {
       );
     } else {
       return ClipRRect(
-        borderRadius: radius ?? BorderRadius.zero,
-        child: CachedNetworkImage(
-       imageUrl: imageFilePath,
-       progressIndicatorBuilder: (context, url, downloadProgress) => 
-               CircularProgressIndicator(value: downloadProgress.progress),
-       errorWidget: (context, url, error) => Icon(Icons.error),
-    )
-      );
+          borderRadius: radius ?? BorderRadius.zero,
+          child: CachedNetworkImage(
+            imageUrl: imageFilePath,
+            width: width,
+            height: height,
+            fit: fit ?? BoxFit.contain,
+            color: tintColor,
+            progressIndicatorBuilder: (context, url, downloadProgress) =>
+                Center(
+                  child: Container(
+                    width: 30,
+                    height: 30,
+                    child: CircularProgressIndicator(value: downloadProgress.progress)),
+                ),
+            errorWidget: (context, url, error) => Icon(Icons.error),
+          ));
     }
   }
 }

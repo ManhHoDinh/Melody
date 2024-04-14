@@ -4,6 +4,8 @@ import 'package:get/get.dart';
 import 'package:melody/melody/core/models/album/album.dart';
 import 'package:melody/melody/core/models/user/user.dart';
 
+import '../song/song.dart';
+
 class AlbumRequest {
   static Stream<List<Album>> search(String searchValue) =>
       FirebaseFirestore.instance.collection('Albums').snapshots().map((event) =>
@@ -18,4 +20,11 @@ class AlbumRequest {
         await FirebaseFirestore.instance.collection("Users").doc(id).get();
     return document;
   }
+
+  static Stream<List<Album>> getAlbumByID(String albumId) => FirebaseFirestore
+      .instance
+      .collection('Albums')
+      .where('id', isEqualTo: albumId)
+      .snapshots()
+      .map((event) => event.docs.map((e) => Album.fromJson(e.data())).toList());
 }

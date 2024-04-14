@@ -63,10 +63,10 @@ dependencies:
   highlight_text: ^1.0.0
   avatar_glow: ^3.0.1
   google_sign_in: ^6.1.6
-  image_picker: ^1.0.7
+  image_picker: ^1.0.8
   provider: ^6.1.2
   file_picker: 8.0.0+1
-  firebase_storage: ^11.6.0
+  firebase_storage: ^11.6.9
   firebase_core: ^2.27.0
   audioplayers: ^5.2.1
   cached_network_image: ^3.3.1
