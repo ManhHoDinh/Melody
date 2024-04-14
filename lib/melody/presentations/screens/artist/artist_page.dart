@@ -134,7 +134,7 @@ class _ArtistPageState extends State<ArtistPage> {
                             ),
                             Spacer(),
                             StreamBuilder<List<Song>>(
-                              stream: SongRequest.getAll(artistId),
+                              stream: SongRequest.getAllByArtistId(artistId),
                               builder: (context, snapshot) {
                                 if (snapshot.connectionState ==
                                     ConnectionState.waiting) {
@@ -159,7 +159,7 @@ class _ArtistPageState extends State<ArtistPage> {
                         ),
                         SizedBox(height: 25),
                         StreamBuilder<List<Song>>(
-                          stream: SongRequest.getAll(artistId),
+                          stream: SongRequest.getAllByArtistId(artistId),
                           builder: (context, snapshot) {
                             if (snapshot.connectionState ==
                                 ConnectionState.waiting) {

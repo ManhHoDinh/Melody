@@ -23,7 +23,7 @@ class _UserScreenState extends State<UserScreen> {
           onPressed: () {
             // Pass userId to get to specific artist profile
             Get.toNamed("/artistPage",
-                arguments: FirebaseAuth.instance.currentUser!.uid);
+                arguments: "0UBAPBKaLYeFRNvpywpHqPJLSlG2");
           },
           child: Text('Go to Artist Page'),
         ),

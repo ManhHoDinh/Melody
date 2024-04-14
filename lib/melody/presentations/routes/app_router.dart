@@ -4,14 +4,19 @@ import 'package:melody/melody/presentations/screens/Home/home_screen.dart';
 import 'package:melody/melody/presentations/screens/account/login_screen.dart';
 import 'package:melody/melody/presentations/screens/account/sign_up_screen.dart';
 import 'package:melody/melody/presentations/screens/account/sign_up_screen.dart';
+import 'package:melody/melody/presentations/screens/album/modify_album.dart';
+import 'package:melody/melody/presentations/screens/album/detail_album.dart';
+import 'package:melody/melody/presentations/screens/playing/playing.dart';
 import 'package:melody/melody/presentations/screens/splash/splash_screen.dart';
 
 final Map<String, WidgetBuilder> routes = {
   LoginScreen.routeName: (context) => LoginScreen(),
   SplashScreen.routeName: (context) => SplashScreen(),
   HomeScreen.routeName: (context) => HomeScreen(),
-  LoginScreen.routeName : (context) => LoginScreen(),
-  SignUpScreen.routeName : (context) => SignUpScreen(),
+  LoginScreen.routeName: (context) => LoginScreen(),
+  SignUpScreen.routeName: (context) => SignUpScreen(),
+  ModifyAlbum.routeName: (context) => ModifyAlbum(),
+  Playing.routeName: (context) => Playing(),
 };
 
 class Routes {
