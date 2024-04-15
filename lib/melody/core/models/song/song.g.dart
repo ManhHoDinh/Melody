@@ -8,11 +8,14 @@ part of 'song.dart';
 
 _$SongImpl _$$SongImplFromJson(Map<String, dynamic> json) => _$SongImpl(
       songId: json['songId'] as String,
-      artistId: json['artistId'] as String,
-      songName: json['songName'] as String,
-      artistName: json['artistName'] as String,
-      songImagePath: json['songImagePath'] as String,
-      audioPath: json['audioPath'] as String,
+      artistId: json['artistId'] as String? ?? "",
+      songName: json['songName'] as String? ?? "",
+      artistName: json['artistName'] as String? ?? "",
+      songImagePath: json['songImagePath'] as String? ?? "",
+      times: json['times'] == null
+          ? const []
+          : _sendAtFromJson(json['times'] as List<dynamic>),
+      audioPath: json['audioPath'] as String? ?? "",
     );
 
 Map<String, dynamic> _$$SongImplToJson(_$SongImpl instance) =>
@@ -22,5 +25,6 @@ Map<String, dynamic> _$$SongImplToJson(_$SongImpl instance) =>
       'songName': instance.songName,
       'artistName': instance.artistName,
       'songImagePath': instance.songImagePath,
+      'times': _sendAtToJson(instance.times),
       'audioPath': instance.audioPath,
     };

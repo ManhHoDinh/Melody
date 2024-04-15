@@ -26,6 +26,7 @@ import 'package:melody/melody/presentations/screens/Discovery/discovery_screen.d
 import 'package:melody/melody/presentations/screens/Home/home_screen.dart';
 import 'package:melody/melody/presentations/screens/instrument/create_instrument_screen.dart';
 import 'package:melody/melody/presentations/screens/splash/splash_screen.dart';
+import 'package:melody/melody/presentations/screens/statistic/statistic_screen.dart';
 import 'package:provider/provider.dart';
 import 'melody/presentations/screens/playing/playlist_provider.dart';
 import 'navigation_home_screen.dart';
@@ -69,8 +70,9 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         platform: TargetPlatform.iOS,
       ),
-      // initialRoute: Routes.createInstrument,
-      home: melodyApp(),
+
+      initialRoute: Routes.stistic,
+      // home: melodyApp(),
 
       getPages: [
         GetPage(name: Routes.allAlbum, page: () => AllAlbumScreen()),
@@ -84,6 +86,8 @@ class MyApp extends StatelessWidget {
         GetPage(name: Routes.playing, page: () => Playing()),
         GetPage(name: Routes.queue, page: () => Queue()),
         GetPage(name: Routes.editSong, page: () => EditSong()),
+        GetPage(name: Routes.editSong, page: () => EditSong()),
+        GetPage(name: Routes.stistic, page: () => StatisticScreen()),
       ],
     );
   }
