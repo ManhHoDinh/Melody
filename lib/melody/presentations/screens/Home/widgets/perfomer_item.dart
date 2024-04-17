@@ -15,7 +15,7 @@ class PerfomerItem extends StatelessWidget {
         mainAxisSize: MainAxisSize.max,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Flexible(
+          Expanded(
             child: Container(
               width: 80,
               height: 70,

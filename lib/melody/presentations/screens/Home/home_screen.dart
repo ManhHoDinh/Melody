@@ -20,7 +20,6 @@ import 'package:melody/melody/presentations/screens/Home/widgets/event_item.dart
 import 'package:melody/melody/presentations/screens/Home/widgets/instrument_item.dart';
 // import 'package:melody/melody/presentations/screens/Home/widgets/instrument_item.dart';
 import 'package:melody/melody/presentations/screens/Home/widgets/perfomer_item.dart';
-import '../../../core/models/instrumentModel/instrumentModel.dart';
 import '../../../core/models/music/music.dart';
 import 'widgets/music_item.dart';
 
@@ -54,6 +53,7 @@ class _HomeScreenState extends State<HomeScreen>
         name: 'Symphony ',
         image: AssetHelper.imgArtist),
   ];
+
   void _openDialog() {
     showDialog(
       context: context,
@@ -66,121 +66,54 @@ class _HomeScreenState extends State<HomeScreen>
     );
   }
 
-  late AnimationController _animationController;
-  late Animation<Alignment> _topAlignmentAnimation;
-  late Animation<Alignment> _bottomAlignmentAnimation;
-  @override
-  void initState() {
-    super.initState();
-    _animationController = AnimationController(
-      vsync: this,
-      duration: Duration(seconds: 4),
-    );
-    _topAlignmentAnimation = TweenSequence<Alignment>(
-      [
-        TweenSequenceItem<Alignment>(
-          tween: Tween<Alignment>(
-            begin: Alignment.topLeft,
-            end: Alignment.topRight,
-          ),
-          weight: 1,
-        ),
-        TweenSequenceItem<Alignment>(
-          tween: Tween<Alignment>(
-            begin: Alignment.topRight,
-            end: Alignment.bottomRight,
-          ),
-          weight: 1,
-        ),
-        TweenSequenceItem<Alignment>(
-          tween: Tween<Alignment>(
-            begin: Alignment.bottomRight,
-            end: Alignment.bottomLeft,
-          ),
-          weight: 1,
-        ),
-        TweenSequenceItem<Alignment>(
-          tween: Tween<Alignment>(
-            begin: Alignment.bottomLeft,
-            end: Alignment.topLeft,
-          ),
-          weight: 1,
-        ),
-      ],
-    ).animate(_animationController);
-    _bottomAlignmentAnimation = TweenSequence<Alignment>(
-      [
-        TweenSequenceItem<Alignment>(
-          tween: Tween<Alignment>(
-            begin: Alignment.topLeft,
-            end: Alignment.topRight,
-          ),
-          weight: 1,
-        ),
-        TweenSequenceItem<Alignment>(
-          tween: Tween<Alignment>(
-            begin: Alignment.topRight,
-            end: Alignment.bottomRight,
-          ),
-          weight: 1,
-        ),
-        TweenSequenceItem<Alignment>(
-          tween: Tween<Alignment>(
-            begin: Alignment.bottomRight,
-            end: Alignment.bottomLeft,
-          ),
-          weight: 1,
-        ),
-        TweenSequenceItem<Alignment>(
-          tween: Tween<Alignment>(
-            begin: Alignment.bottomLeft,
-            end: Alignment.topLeft,
-          ),
-          weight: 1,
-        ),
-      ],
-    ).animate(_animationController);
-    _animationController.repeat();
-  }
-
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.centerLeft,
-          end: Alignment.centerRight,
-          colors: [Color(0xff6D0B14), Color(0xff4059F1)],
-        ),
-      ),
-      child: Scaffold(
-        resizeToAvoidBottomInset: false,
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      appBar: AppBar(
         backgroundColor: Colors.transparent,
-        appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          title: Align(
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.centerLeft,
+              end: Alignment.centerRight,
+              colors: [Color(0xff6D0B14), Color(0xff4059F1)],
+            ),
+          ),
+          child: Align(
             alignment: Alignment.center,
             child: Text(
               'Home',
               style: TextStyle(fontSize: 25).whiteTextColor,
             ),
           ),
-          actions: [
-            IconButton(
-              onPressed: () {
-                Get.toNamed(DiscoveryScreen.routeName);
-              },
-              icon: Icon(
-                Icons.account_circle,
-                color: ColorPalette.secondColor,
-                size: 40,
-              ),
-            ),
-          ],
         ),
-        body: Container(
-          padding: EdgeInsets.symmetric(horizontal: 16),
+        actions: [
+          IconButton(
+            onPressed: () {
+              Get.toNamed(DiscoveryScreen.routeName);
+            },
+            icon: Icon(
+              Icons.account_circle,
+              color: ColorPalette.secondColor,
+              size: 40,
+            ),
+          ),
+        ],
+      ),
+      body: SingleChildScrollView(
+        child: Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.centerLeft,
+              end: Alignment.centerRight,
+              colors: [Color(0xff6D0B14), Color(0xff4059F1)],
+            ),
+          ),
+          padding: EdgeInsets.symmetric(
+              horizontal: 16, vertical: 16), 
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               TextField(
                 onChanged: (value) {
@@ -207,169 +140,137 @@ class _HomeScreenState extends State<HomeScreen>
                   ),
                 ),
               ),
-              SizedBox(height: 10),
+              SizedBox(height: 20),
               MusicSection(
                 title: 'Instrument',
-                albums: albums, // Pass your list of popular songs here
+                albums: albums,
               ),
-              // Expanded(
-              //   child: GridView.builder(
-              //     physics: NeverScrollableScrollPhysics(),
-              //     itemCount: searchInstrument(instrument, searchValue).length,
-              //     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              //       crossAxisCount: 3,
-              //       crossAxisSpacing: 10,
-              //       mainAxisSpacing: 10,
-              //       childAspectRatio: 5 / 6,
-              //     ),
-              //     itemBuilder: (context, index) {
-              //       return InstrumentItem(
-              //         instrument:
-              //             searchInstrument(instrument, searchValue)[index],
-              //       );
-              //     },
-              //   ),
-              // ),
-              Expanded(
-                  child: StreamBuilder<List<Instrument>>(
-                      stream: InstrumentRequest.search(searchValue),
-                      builder: ((context, snapshot) {
-                        if (snapshot.connectionState ==
-                            ConnectionState.waiting) {
-                          // While waiting for data, show a loading indicator
-                          return CircularProgressIndicator();
-                        } else if (snapshot.hasError) {
-                          // If there's an error with the stream, display an error message
-                          return Text('Error: ${snapshot.error}');
-                        } else {
-                          return GridView.builder(
-                              shrinkWrap: true,
-                              itemCount: snapshot.data!.length,
-                              gridDelegate:
-                                  const SliverGridDelegateWithFixedCrossAxisCount(
-                                      crossAxisCount: 3,
-                                      crossAxisSpacing: 10,
-                                      mainAxisSpacing: 10,
-                                      childAspectRatio: 5 / 6),
-                              itemBuilder: ((context, index) {
-                                return InstrumentItem(
-                                  instrument: snapshot.data![index],
-                                );
-                              }));
-                        }
-                      }))),
+              SizedBox(height: 20),
+              StreamBuilder<List<Instrument>>(
+                stream: InstrumentRequest.search(searchValue),
+                builder: ((context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return CircularProgressIndicator();
+                  } else if (snapshot.hasError) {
+                    return Text('Error: ${snapshot.error}');
+                  } else {
+                    return GridView.builder(
+                      shrinkWrap: true,
+                      itemCount: snapshot.data!.length,
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 3,
+                        crossAxisSpacing: 10,
+                        mainAxisSpacing: 10,
+                        childAspectRatio: 5 / 6,
+                      ),
+                      itemBuilder: ((context, index) {
+                        return InstrumentItem(
+                          instrument: snapshot.data![index],
+                        );
+                      }),
+                    );
+                  }
+                }),
+              ),
+              SizedBox(height: 20),
               MusicSection(
                 title: 'Composer',
                 albums: albums,
               ),
-              Expanded(
-                  child: StreamBuilder<List<Composer>>(
-                      stream: ComposerRequest.search(searchValue),
-                      builder: ((context, snapshot) {
-                        if (snapshot.connectionState ==
-                            ConnectionState.waiting) {
-                          // While waiting for data, show a loading indicator
-                          return CircularProgressIndicator();
-                        } else if (snapshot.hasError) {
-                          // If there's an error with the stream, display an error message
-                          return Text('Error: ${snapshot.error}');
-                        } else {
-                          return GridView.builder(
-                              shrinkWrap: true,
-                              itemCount: snapshot.data!.length,
-                              gridDelegate:
-                                  const SliverGridDelegateWithFixedCrossAxisCount(
-                                      crossAxisCount: 3,
-                                      crossAxisSpacing: 10,
-                                      mainAxisSpacing: 10,
-                                      childAspectRatio: 5 / 6),
-                              itemBuilder: ((context, index) {
-                                return ComposerItem(
-                                  composer: snapshot.data![index],
-                                );
-                              }));
-                        }
-                      }))),
+              SizedBox(height: 20),
+              StreamBuilder<List<Composer>>(
+                stream: ComposerRequest.search(searchValue),
+                builder: ((context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return CircularProgressIndicator();
+                  } else if (snapshot.hasError) {
+                    return Text('Error: ${snapshot.error}');
+                  } else {
+                    return GridView.builder(
+                      shrinkWrap: true,
+                      itemCount: snapshot.data!.length,
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 3,
+                        crossAxisSpacing: 10,
+                        mainAxisSpacing: 10,
+                        childAspectRatio: 5 / 6,
+                      ),
+                      itemBuilder: ((context, index) {
+                        return ComposerItem(
+                          composer: snapshot.data![index],
+                        );
+                      }),
+                    );
+                  }
+                }),
+              ),
+              SizedBox(height: 20),
               MusicSection(
-                title: 'Perfomer',
+                title: 'Performer',
                 albums: albums,
               ),
-              // Expanded(
-              //   child: GridView.builder(
-              //     physics: NeverScrollableScrollPhysics(),
-              //     itemCount: perfomer.length,
-              //     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              //       crossAxisCount: 3,
-              //       crossAxisSpacing: 10,
-              //       mainAxisSpacing: 10,
-              //       childAspectRatio: 5 / 6,
-              //     ),
-              //     itemBuilder: (context, index) {
-              //       return PerfomerItem.PerformerItem(
-              //         perfomer: perfomer[index],
-              //       );
-              //     },
-              //   ),
-              // ),
-              Expanded(
-                  child: StreamBuilder<List<Perfomer>>(
-                      stream: PerfomerRequest.search(searchValue),
-                      builder: ((context, snapshot) {
-                        if (snapshot.connectionState ==
-                            ConnectionState.waiting) {
-                          // While waiting for data, show a loading indicator
-                          return CircularProgressIndicator();
-                        } else if (snapshot.hasError) {
-                          // If there's an error with the stream, display an error message
-                          return Text('Error: ${snapshot.error}');
-                        } else {
-                          return GridView.builder(
-                              shrinkWrap: true,
-                              itemCount: snapshot.data!.length,
-                              gridDelegate:
-                                  const SliverGridDelegateWithFixedCrossAxisCount(
-                                      crossAxisCount: 3,
-                                      crossAxisSpacing: 10,
-                                      mainAxisSpacing: 10,
-                                      childAspectRatio: 5 / 6),
-                              itemBuilder: ((context, index) {
-                                return PerfomerItem(
-                                  perfomer: snapshot.data![index],
-                                );
-                              }));
-                        }
-                      }))),
+              SizedBox(height: 20),
+              StreamBuilder<List<Perfomer>>(
+                stream: PerfomerRequest.search(searchValue),
+                builder: ((context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return CircularProgressIndicator();
+                  } else if (snapshot.hasError) {
+                    return Text('Error: ${snapshot.error}');
+                  } else {
+                    return GridView.builder(
+                      shrinkWrap: true,
+                      itemCount: snapshot.data!.length,
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 3,
+                        crossAxisSpacing: 10,
+                        mainAxisSpacing: 10,
+                        childAspectRatio: 5 / 6,
+                      ),
+                      itemBuilder: ((context, index) {
+                        return PerfomerItem(
+                          perfomer: snapshot.data![index],
+                        );
+                      }),
+                    );
+                  }
+                }),
+              ),
+              SizedBox(height: 20),
               MusicSection(
                 title: 'Event',
                 albums: albums,
               ),
-              Expanded(
-                  child: StreamBuilder<List<Event>>(
-                      stream: EventRequest.search(searchValue),
-                      builder: (context, snapshot) {
-                        if (snapshot.connectionState ==
-                            ConnectionState.waiting) {
-                          // While waiting for data, show a loading indicator
-                          return CircularProgressIndicator();
-                        } else if (snapshot.hasError) {
-                          // If there's an error with the stream, display an error message
-                          return Text('Error: ${snapshot.error}');
-                        } else {
-                          return ListView.separated(
-                              scrollDirection: Axis.vertical,
-                              itemBuilder: ((context, index) {
-                                return EventItem(
-                                  event: snapshot.data![index],
-                                );
-                              }),
-                              separatorBuilder: ((context, index) {
-                                return SizedBox(
-                                  height: 10,
-                                );
-                              }),
-                              itemCount: snapshot.data!.length);
-                        }
-                      })),
+              SizedBox(height: 20),
+              StreamBuilder<List<Event>>(
+                stream: EventRequest.search(searchValue),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return CircularProgressIndicator();
+                  } else if (snapshot.hasError) {
+                    return Text('Error: ${snapshot.error}');
+                  } else {
+                    return ListView.separated(
+                      shrinkWrap: true,
+                      scrollDirection: Axis.vertical,
+                      itemBuilder: ((context, index) {
+                        return EventItem(
+                          event: snapshot.data![index],
+                        );
+                      }),
+                      separatorBuilder: ((context, index) {
+                        return SizedBox(
+                          height: 10,
+                        );
+                      }),
+                      itemCount: snapshot.data!.length,
+                    );
+                  }
+                },
+              ),
             ],
           ),
         ),

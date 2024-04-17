@@ -1,28 +1,23 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'event.dart';
+part of 'instrument.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$EventImpl _$$EventImplFromJson(Map<String, dynamic> json) => _$EventImpl(
+_$InstrumentImpl _$$InstrumentImplFromJson(Map<String, dynamic> json) =>
+    _$InstrumentImpl(
       name: json['name'] as String,
       id: json['id'] as String,
-      image: json['image'] as String,
-      location: json['location'] as String,
       description: json['description'] as String,
-      startAt:(json['startAt'] as String),
-      endAt: (json['endAt'] as String),
+      image: json['image'] as String,
     );
 
-Map<String, dynamic> _$$EventImplToJson(_$EventImpl instance) =>
+Map<String, dynamic> _$$InstrumentImplToJson(_$InstrumentImpl instance) =>
     <String, dynamic>{
       'name': instance.name,
       'id': instance.id,
-      'image': instance.image,
-      'location': instance.location,
       'description': instance.description,
-      'startAt': instance.startAt,
-      'endAt': instance.endAt,
+      'image': instance.image,
     };

@@ -15,6 +15,7 @@ import 'package:melody/melody/presentations/screens/artist/artist_page.dart';
 import 'package:melody/melody/presentations/screens/artist/edit_artist_profile.dart';
 import 'package:melody/melody/presentations/screens/artist/edit_song.dart';
 import 'package:melody/melody/presentations/screens/artist/upload_song_page.dart';
+import 'package:melody/melody/presentations/screens/event/edit_event.dart';
 import 'package:melody/melody/presentations/screens/playing/playing.dart';
 import 'package:melody/melody/presentations/screens/playing/playlist_provider.dart';
 import 'package:melody/melody/presentations/screens/queue/queue.dart';
@@ -75,15 +76,16 @@ class MyApp extends StatelessWidget {
       getPages: [
         GetPage(name: Routes.allAlbum, page: () => AllAlbumScreen()),
         GetPage(name: Routes.allEvent, page: () => AllEventScreen()),
-        GetPage(
-            name: Routes.createInstrument,
-            page: () => CreateInstrumentScreen()),
+        // GetPage(
+        //     name: Routes.createInstrument,
+        //     page: () => CreateInstrumentScreen()),
         GetPage(name: Routes.uploadSong, page: () => UploadSongPage()),
         GetPage(name: Routes.artistPage, page: () => ArtistPage()),
         GetPage(name: Routes.editArtist, page: () => EditArtist()),
         GetPage(name: Routes.playing, page: () => Playing()),
         GetPage(name: Routes.queue, page: () => Queue()),
         GetPage(name: Routes.editSong, page: () => EditSong()),
+       
       ],
     );
   }

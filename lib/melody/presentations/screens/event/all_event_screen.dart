@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:melody/melody/core/helper/text_styles.dart';
 import 'package:melody/melody/core/models/event/event.dart';
 import 'package:melody/melody/core/models/firebase/event_request.dart';
+import 'package:melody/melody/presentations/screens/artist/edit_artist_profile.dart';
+import 'package:melody/melody/presentations/screens/event/add_event.dart';
 
 import '../../../core/constants/color_palatte.dart';
 import '../../../core/helper/assets_helper.dart';
@@ -37,7 +41,21 @@ class _AllEventScreenState extends State<AllEventScreen> {
                 Icons.arrow_back,
                 color: ColorPalette.secondColor,
               ),
-            )),
+            ),
+            actions: [
+          IconButton(
+            onPressed: () {
+                 Get.to(() => AddEventSrceen());
+            },
+            icon: Icon(
+              Icons.add,
+              color: ColorPalette.secondColor,
+              size: 40,
+            ),
+          ),
+        ],
+            
+            ),
         body: Container(
           padding: EdgeInsets.symmetric(horizontal: 16),
           child: Column(

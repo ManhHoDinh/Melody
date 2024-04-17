@@ -10,6 +10,7 @@ class FirebaseHelper {
   static var eventCollection = FirebaseFirestore.instance.collection("Events");
   static var userCollection = FirebaseFirestore.instance.collection("Users");
   static var composerCollection = FirebaseFirestore.instance.collection("Composer");
+  static var artistCollection = FirebaseFirestore.instance.collection("Artists");
 }
 
 

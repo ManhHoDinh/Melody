@@ -4,14 +4,12 @@
 
 list(APPEND FLUTTER_PLUGIN_LIST
   audioplayers_windows
-  audioplayers_windows
   cloud_firestore
   file_selector_windows
   firebase_auth
   firebase_core
   firebase_storage
   pasteboard
-  permission_handler_windows
   url_launcher_windows
 )
 

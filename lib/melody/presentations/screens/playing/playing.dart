@@ -18,7 +18,7 @@ String formattedDateTime =
     DateFormat("MMMM d, yyyy 'at' h:mm:ss a 'UTC'z", 'en_US').format(now);
 
 class Playing extends StatelessWidget {
-  Playing({super.key});
+  Playing({super.key, AnimationController? animationController});
 
   // convert duration into min:sec
 
