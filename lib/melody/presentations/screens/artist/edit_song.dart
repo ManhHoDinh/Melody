@@ -9,8 +9,8 @@ import 'package:get/get.dart';
 import 'package:melody/melody/core/helper/firebase_helper.dart';
 import 'package:melody/melody/core/models/firebase/song_request.dart';
 import 'package:melody/melody/core/models/song/song.dart';
-import 'package:melody/melody/presentations/screens/artist/widgets/custom_button.dart';
-import 'package:melody/melody/presentations/screens/artist/widgets/custom_textfield.dart';
+import 'package:melody/melody/presentations/widgets/custom_button.dart';
+import 'package:melody/melody/presentations/widgets/custom_textfield.dart';
 import 'package:path/path.dart' as path;
 
 class EditSong extends StatefulWidget {

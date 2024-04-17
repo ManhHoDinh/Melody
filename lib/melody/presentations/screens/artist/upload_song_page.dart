@@ -12,8 +12,8 @@ import 'package:melody/melody/core/models/artist/artist.dart';
 import 'package:melody/melody/core/models/firebase/artist_request.dart';
 import 'package:melody/melody/core/models/firebase/user_request.dart';
 import 'package:melody/melody/core/models/song/song.dart';
-import 'package:melody/melody/presentations/screens/artist/widgets/custom_button.dart';
-import 'package:melody/melody/presentations/screens/artist/widgets/custom_textfield.dart';
+import 'package:melody/melody/presentations/widgets/custom_button.dart';
+import 'package:melody/melody/presentations/widgets/custom_textfield.dart';
 import 'package:path/path.dart' as path;
 import 'package:get/get.dart';
 
@@ -32,6 +32,9 @@ class _UploadSongPageState extends State<UploadSongPage> {
   File? choosedSong;
   String? artworkDownloadUrl;
   String? songDownloadUrl;
+  final Map<String, dynamic> arguments = Get.arguments ?? {};
+  late String authorName;
+  late String authorId;
 
   Future selectImage() async {
     final result = await FilePicker.platform
@@ -60,6 +63,8 @@ class _UploadSongPageState extends State<UploadSongPage> {
 
   void initState() {
     super.initState();
+    authorName = arguments['authorName'] ?? '';
+    authorId = arguments['authorId'] ?? '';
   }
 
   @override
@@ -92,33 +97,11 @@ class _UploadSongPageState extends State<UploadSongPage> {
               SizedBox(
                 height: 10,
               ),
-              FutureBuilder<Artist>(
-                future: ArtistRequest.getById(mAuth.currentUser!.uid),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return CustomTextfield(
-                      maxLines: 1,
-                      controller: artistController,
-                      readOnly: true,
-                      hintText: 'Loading...',
-                    );
-                  } else if (snapshot.hasError) {
-                    return CustomTextfield(
-                      maxLines: 1,
-                      controller: artistController,
-                      readOnly: true,
-                      hintText: 'Error loading artist name',
-                    );
-                  } else {
-                    return CustomTextfield(
-                      maxLines: 1,
-                      controller: artistController,
-                      readOnly: true,
-                      hintText:
-                          snapshot.data!.artistName as String ?? 'Artist name',
-                    );
-                  }
-                },
+              CustomTextfield(
+                maxLines: 1,
+                controller: artistController,
+                readOnly: true,
+                hintText: authorName,
               ),
               SizedBox(
                 height: 13,
@@ -253,7 +236,6 @@ class _UploadSongPageState extends State<UploadSongPage> {
                               });
                           String songId =
                               FirebaseHelper.songCollection.doc().id;
-                          String artistId = mAuth.currentUser!.uid;
 
                           final songFile = path.basename(choosedSong!.path);
                           final songExtension =
@@ -288,9 +270,9 @@ class _UploadSongPageState extends State<UploadSongPage> {
                               }
                               Song newSong = Song(
                                 songId: songId,
-                                artistId: artistId,
+                                artistId: authorId,
                                 songName: songNameController.text,
-                                artistName: snapshot.data!.artistName as String,
+                                artistName: authorName,
                                 songImagePath: artworkDownloadUrl !=
                                         null // default artwork if user didn't choose an image
                                     ? artworkDownloadUrl.toString()

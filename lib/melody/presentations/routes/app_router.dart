@@ -10,8 +10,8 @@ final Map<String, WidgetBuilder> routes = {
   LoginScreen.routeName: (context) => LoginScreen(),
   SplashScreen.routeName: (context) => SplashScreen(),
   HomeScreen.routeName: (context) => HomeScreen(),
-  LoginScreen.routeName : (context) => LoginScreen(),
-  SignUpScreen.routeName : (context) => SignUpScreen(),
+  LoginScreen.routeName: (context) => LoginScreen(),
+  SignUpScreen.routeName: (context) => SignUpScreen(),
 };
 
 class Routes {
@@ -25,4 +25,7 @@ class Routes {
   static String playing = '/playing';
   static String queue = '/queue';
   static String editSong = '/editSong';
+  static String uploadComposer = '/uploadComposer';
+  static String composerPage = '/composerPage';
+  static String editComposer = '/editComposer';
 }

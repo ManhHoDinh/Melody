@@ -23,8 +23,9 @@ class SongItem extends StatelessWidget {
           ),
           Row(
             children: [
-              Image.network(
-                song.songImagePath,
+              FadeInImage(
+                placeholder: AssetImage("assets/images/defaultartwork.jpg"),
+                image: NetworkImage(song.songImagePath),
                 width: 49,
                 height: 49,
                 fit: BoxFit.cover,
@@ -90,6 +91,7 @@ class SongItem extends StatelessWidget {
                   Get.toNamed('/editSong', arguments: song.songId);
                 },
               ),
+              Divider(),
               ListTile(
                 leading: Icon(Icons.delete),
                 title: Text('Delete'),

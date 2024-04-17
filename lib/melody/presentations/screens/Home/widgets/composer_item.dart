@@ -21,13 +21,14 @@ class ComposerItem extends StatelessWidget {
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                   image: DecorationImage(
-                      fit: BoxFit.fitWidth, image: AssetImage(composer.image))),
+                      fit: BoxFit.fitWidth,
+                      image: NetworkImage(composer.portrait))),
             ),
           ),
           Align(
             alignment: Alignment.center,
             child: Text(
-              composer.name,
+              composer.composerName,
               style: TextStyle(
                   fontWeight: FontWeight.w600,
                   fontSize: 14,

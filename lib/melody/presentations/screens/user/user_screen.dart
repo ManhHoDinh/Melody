@@ -19,15 +19,28 @@ class _UserScreenState extends State<UserScreen> {
         centerTitle: true,
       ),
       body: Center(
-        child: ElevatedButton(
-          onPressed: () {
-            // Pass userId to get to specific artist profile
-            Get.toNamed("/artistPage",
-                arguments: FirebaseAuth.instance.currentUser!.uid);
-          },
-          child: Text('Go to Artist Page'),
-        ),
-      ),
+          child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          ElevatedButton(
+            onPressed: () {
+              // Pass userId to get to specific artist profile
+              Get.toNamed("/artistPage",
+                  arguments: FirebaseAuth.instance.currentUser!.uid);
+            },
+            child: Text('Go to Artist Page'),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              // Pass userId to get to specific artist profile
+              Get.toNamed(
+                "/uploadComposer",
+              );
+            },
+            child: Text('Go to Upload Composer Page'),
+          ),
+        ],
+      )),
     );
   }
 }

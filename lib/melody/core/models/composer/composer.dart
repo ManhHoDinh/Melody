@@ -6,11 +6,12 @@ part 'composer.g.dart';
 @freezed
 class Composer with _$Composer {
   const factory Composer({
-    required String name,
-    required int id,
-    required String music,
-    required String image,
+    required String composerId,
+    required String composerName,
+    required String about,
+    required String portrait,
   }) = _Composer;
 
-  factory Composer.fromJson(Map<String, Object?> json) => _$ComposerFromJson(json);
+  factory Composer.fromJson(Map<String, Object?> json) =>
+      _$ComposerFromJson(json);
 }

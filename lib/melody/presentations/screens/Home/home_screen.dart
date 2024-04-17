@@ -1,9 +1,11 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:melody/melody/core/constants/color_palatte.dart';
 import 'package:melody/melody/core/helper/assets_helper.dart';
 import 'package:melody/melody/core/helper/text_styles.dart';
 import 'package:melody/melody/core/models/composer/composer.dart';
 import 'package:melody/melody/core/models/event/event.dart';
+import 'package:melody/melody/core/models/firebase/composer_request.dart';
 import 'package:melody/melody/core/models/music/music.dart';
 import 'package:get/get.dart';
 import 'package:melody/melody/core/models/perfomer/perfomer.dart';
@@ -64,17 +66,17 @@ class _HomeScreenState extends State<HomeScreen>
         image: AssetHelper.imgArtist,
         description: "ff"),
   ];
-  List<Composer> composer = [
-    const Composer(
-        music: 'Mozart', id: 1, name: 'Symphony', image: AssetHelper.imgArtist),
-    const Composer(
-        music: 'Mozart', id: 1, name: 'Son tung', image: AssetHelper.imgArtist),
-    const Composer(
-        music: 'Dinh Dai Duong',
-        id: 1,
-        name: 'Symphony ',
-        image: AssetHelper.imgArtist),
-  ];
+  // List<Composer> composer = [
+  //   // const Composer(
+  //   //     music: 'Mozart', id: 1, name: 'Symphony', image: AssetHelper.imgArtist),
+  //   // const Composer(
+  //   //     music: 'Mozart', id: 1, name: 'Son tung', image: AssetHelper.imgArtist),
+  //   // const Composer(
+  //   //     music: 'Dinh Dai Duong',
+  //   //     id: 1,
+  //   //     name: 'Symphony ',
+  //   //     image: AssetHelper.imgArtist),
+  // ];
   List<Perfomer> perfomer = [
     const Perfomer(
         music: 'Mozart', id: 1, name: 'Symphony', image: AssetHelper.imgArtist),
@@ -260,22 +262,46 @@ class _HomeScreenState extends State<HomeScreen>
                 title: 'Composer',
                 albums: albums,
               ),
-              Flexible(
-                child: GridView.builder(
-                  physics: NeverScrollableScrollPhysics(),
-                  itemCount: searchComposer(composer, searchValue).length,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 3,
-                    crossAxisSpacing: 10,
-                    mainAxisSpacing: 10,
-                    childAspectRatio: 5 / 6,
-                  ),
-                  itemBuilder: (context, index) {
-                    return ComposerItem(
-                      composer: searchComposer(composer, searchValue)[index],
+              StreamBuilder<List<Composer>>(
+                stream: ComposerRequest.getAll(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Center(
+                      child: CircularProgressIndicator(),
                     );
-                  },
-                ),
+                  } else if (snapshot.hasError) {
+                    return Center(
+                      child: Text('Error loading composer list'),
+                    );
+                  } else {
+                    List<Composer> composer = snapshot.data!;
+                    return Flexible(
+                      child: GridView.builder(
+                        physics: NeverScrollableScrollPhysics(),
+                        itemCount: searchComposer(composer, searchValue).length,
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 3,
+                          crossAxisSpacing: 10,
+                          mainAxisSpacing: 10,
+                          childAspectRatio: 5 / 6,
+                        ),
+                        itemBuilder: (context, index) {
+                          return GestureDetector(
+                            onTap: () {
+                              Get.toNamed('/composerPage',
+                                  arguments: composer[index].composerId);
+                            },
+                            child: ComposerItem(
+                              composer:
+                                  searchComposer(composer, searchValue)[index],
+                            ),
+                          );
+                        },
+                      ),
+                    );
+                  }
+                },
               ),
               MusicSection(
                 title: 'Perfomer',
@@ -324,7 +350,8 @@ class _HomeScreenState extends State<HomeScreen>
     );
   }
 
-  List<InstrumentModel> searchInstrument(List<InstrumentModel> instrument, String value) {
+  List<InstrumentModel> searchInstrument(
+      List<InstrumentModel> instrument, String value) {
     return instrument
         .where((element) =>
             element.name.toLowerCase().contains(value.toLowerCase()))
@@ -334,8 +361,7 @@ class _HomeScreenState extends State<HomeScreen>
   List<Composer> searchComposer(List<Composer> composer, String value) {
     return composer
         .where((element) =>
-            element.name.toLowerCase().contains(value.toLowerCase()) ||
-            element.music.toLowerCase().contains(value.toLowerCase()))
+            element.composerName.toLowerCase().contains(value.toLowerCase()))
         .toList();
   }
 
