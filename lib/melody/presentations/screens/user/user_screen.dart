@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 
 class UserScreen extends StatefulWidget {
   AnimationController? animationController;
-  UserScreen({super.key, required this.animationController});
+  UserScreen({super.key, this.animationController});
 
   @override
   State<UserScreen> createState() => _UserScreenState();

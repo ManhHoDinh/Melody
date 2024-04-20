@@ -99,6 +99,7 @@ class _HomeScreenState extends State<HomeScreen>
   late AnimationController _animationController;
   late Animation<Alignment> _topAlignmentAnimation;
   late Animation<Alignment> _bottomAlignmentAnimation;
+
   @override
   void initState() {
     super.initState();
@@ -174,6 +175,13 @@ class _HomeScreenState extends State<HomeScreen>
   }
 
   @override
+  void dispose() {
+    print(_animationController);
+    _animationController?.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Container(
       decoration: const BoxDecoration(
@@ -208,38 +216,39 @@ class _HomeScreenState extends State<HomeScreen>
             ),
           ],
         ),
-        body: Container(
-          padding: EdgeInsets.symmetric(horizontal: 16),
-          child: Column(
-            children: [
-              TextField(
-                onChanged: (value) {
-                  setState(() {
-                    searchValue = value;
-                  });
-                },
-                controller: searchController,
-                style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
-                decoration: InputDecoration(
-                  filled: true,
-                  hintStyle: TextStyle(color: Color.fromARGB(255, 0, 0, 0)),
-                  fillColor: Color(0xffFFFFFF),
-                  border: OutlineInputBorder(
-                    borderSide: BorderSide.none,
-                    borderRadius: BorderRadius.circular(20),
+        body: SingleChildScrollView(
+          child: Container(
+            padding: EdgeInsets.symmetric(horizontal: 16),
+            child: Column(
+              children: [
+                TextField(
+                  onChanged: (value) {
+                    setState(() {
+                      searchValue = value;
+                    });
+                  },
+                  controller: searchController,
+                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
+                  decoration: InputDecoration(
+                    filled: true,
+                    hintStyle: TextStyle(color: Color.fromARGB(255, 0, 0, 0)),
+                    fillColor: Color(0xffFFFFFF),
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide.none,
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    hintText: 'Search Song, Composer, Instrument',
+                    prefixIconColor: Color.fromARGB(255, 0, 0, 0),
+                    prefixIcon: Icon(Icons.search),
                   ),
-                  hintText: 'Search Song, Composer, Instrument',
-                  prefixIconColor: Color.fromARGB(255, 0, 0, 0),
-                  prefixIcon: Icon(Icons.search),
                 ),
-              ),
-              SizedBox(height: 10),
-              MusicSection(
-                title: 'Instrument',
-                albums: albums, // Pass your list of popular songs here
-              ),
-              Expanded(
-                child: GridView.builder(
+                SizedBox(height: 10),
+                MusicSection(
+                  title: 'Instrument',
+                  albums: albums, // Pass your list of popular songs here
+                ),
+                GridView.builder(
+                  shrinkWrap: true,
                   physics: NeverScrollableScrollPhysics(),
                   itemCount: searchInstrument(instrument, searchValue).length,
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -255,13 +264,12 @@ class _HomeScreenState extends State<HomeScreen>
                     );
                   },
                 ),
-              ),
-              MusicSection(
-                title: 'Composer',
-                albums: albums,
-              ),
-              Flexible(
-                child: GridView.builder(
+                MusicSection(
+                  title: 'Composer',
+                  albums: albums,
+                ),
+                GridView.builder(
+                  shrinkWrap: true,
                   physics: NeverScrollableScrollPhysics(),
                   itemCount: searchComposer(composer, searchValue).length,
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -276,13 +284,12 @@ class _HomeScreenState extends State<HomeScreen>
                     );
                   },
                 ),
-              ),
-              MusicSection(
-                title: 'Perfomer',
-                albums: albums,
-              ),
-              Expanded(
-                child: GridView.builder(
+                MusicSection(
+                  title: 'Perfomer',
+                  albums: albums,
+                ),
+                GridView.builder(
+                  shrinkWrap: true,
                   physics: NeverScrollableScrollPhysics(),
                   itemCount: perfomer.length,
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -297,13 +304,13 @@ class _HomeScreenState extends State<HomeScreen>
                     );
                   },
                 ),
-              ),
-              MusicSection(
-                title: 'Event',
-                albums: albums,
-              ),
-              Expanded(
-                child: ListView.separated(
+                MusicSection(
+                  title: 'Event',
+                  albums: albums,
+                ),
+                ListView.separated(
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
                     scrollDirection: Axis.vertical,
                     itemBuilder: ((context, index) {
                       return EventItem(
@@ -315,16 +322,17 @@ class _HomeScreenState extends State<HomeScreen>
                         height: 10,
                       );
                     }),
-                    itemCount: event.length),
-              )
-            ],
+                    itemCount: event.length)
+              ],
+            ),
           ),
         ),
       ),
     );
   }
 
-  List<InstrumentModel> searchInstrument(List<InstrumentModel> instrument, String value) {
+  List<InstrumentModel> searchInstrument(
+      List<InstrumentModel> instrument, String value) {
     return instrument
         .where((element) =>
             element.name.toLowerCase().contains(value.toLowerCase()))

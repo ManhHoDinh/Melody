@@ -41,9 +41,16 @@ class TabIconData {
       animationController: null,
     ),
     TabIconData(
+      imagePath: AssetHelper.playlistIcon,
+      selectedImagePath: AssetHelper.selectedPlaylistIcon,
+      index: 3,
+      isSelected: false,
+      animationController: null,
+    ),
+    TabIconData(
       imagePath: AssetHelper.icoTab4,
       selectedImagePath: AssetHelper.icoTab4s,
-      index: 3,
+      index: 4,
       isSelected: false,
       animationController: null,
     ),

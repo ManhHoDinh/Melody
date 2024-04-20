@@ -123,8 +123,9 @@ class _LineChartWidgetState extends State<LineChartWidget> {
         maxValue = element;
       }
     });
+    print(maxValue);
 
-    int count = 0;
+    int count = -1;
     return LineChartData(
       gridData: FlGridData(
         show: true,
@@ -176,6 +177,7 @@ class _LineChartWidgetState extends State<LineChartWidget> {
         LineChartBarData(
           spots: data.map((item) {
             count++;
+
             return FlSpot(count.toDouble(), item);
           }).toList(),
           isCurved: true,

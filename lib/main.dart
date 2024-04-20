@@ -6,6 +6,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:melody/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:melody/di.dart';
 import 'package:melody/melody/core/helper/local_storage_helper.dart';
 import 'package:melody/melody/core/models/artist/artist.dart';
 import 'package:melody/melody/core/models/firebase/artist_request.dart';
@@ -71,9 +72,9 @@ class MyApp extends StatelessWidget {
         platform: TargetPlatform.iOS,
       ),
 
-      initialRoute: Routes.stistic,
-      // home: melodyApp(),
-
+      // initialRoute: Routes.stistic,
+      home: melodyApp(),
+      initialBinding: MyBindings(),
       getPages: [
         GetPage(name: Routes.allAlbum, page: () => AllAlbumScreen()),
         GetPage(name: Routes.allEvent, page: () => AllEventScreen()),
@@ -87,7 +88,7 @@ class MyApp extends StatelessWidget {
         GetPage(name: Routes.queue, page: () => Queue()),
         GetPage(name: Routes.editSong, page: () => EditSong()),
         GetPage(name: Routes.editSong, page: () => EditSong()),
-        GetPage(name: Routes.stistic, page: () => StatisticScreen()),
+        GetPage(name: Routes.statistic, page: () => StatisticScreen()),
       ],
     );
   }
