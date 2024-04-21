@@ -11,9 +11,9 @@ import 'package:image_picker/image_picker.dart';
 import 'package:melody/melody/core/helper/firebase_helper.dart';
 import 'package:melody/melody/core/models/album/album.dart';
 import 'package:melody/melody/core/models/artist/artist.dart';
+import 'package:melody/melody/presentations/widgets/custom_textfield.dart';
 import 'package:melody/melody/core/models/firebase/artist_request.dart';
-import 'package:melody/melody/presentations/screens/artist/widgets/custom_button.dart';
-import 'package:melody/melody/presentations/screens/artist/widgets/custom_textfield.dart';
+import 'package:melody/melody/presentations/widgets/custom_button.dart';
 import 'package:path/path.dart' as path;
 
 class ModifyAlbum extends StatefulWidget {

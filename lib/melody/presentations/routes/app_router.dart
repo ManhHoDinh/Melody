@@ -30,5 +30,8 @@ class Routes {
   static String playing = '/playing';
   static String queue = '/queue';
   static String editSong = '/editSong';
+  static String uploadComposer = '/uploadComposer';
+  static String composerPage = '/composerPage';
+  static String editComposer = '/editComposer';
   static String statistic = '/statistic';
 }

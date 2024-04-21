@@ -37,8 +37,9 @@ class SongItem extends StatelessWidget {
             },
             child: Row(
               children: [
-                Image.network(
-                  song.songImagePath,
+                FadeInImage(
+                  placeholder: AssetImage("assets/images/defaultartwork.jpg"),
+                  image: NetworkImage(song.songImagePath),
                   width: 49,
                   height: 49,
                   fit: BoxFit.cover,

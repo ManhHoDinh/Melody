@@ -8,16 +8,16 @@ part of 'composer.dart';
 
 _$ComposerImpl _$$ComposerImplFromJson(Map<String, dynamic> json) =>
     _$ComposerImpl(
-      name: json['name'] as String,
-      id: json['id'] as int,
-      music: json['music'] as String,
-      image: json['image'] as String,
+      composerId: json['composerId'] as String,
+      composerName: json['composerName'] as String,
+      about: json['about'] as String,
+      portrait: json['portrait'] as String,
     );
 
 Map<String, dynamic> _$$ComposerImplToJson(_$ComposerImpl instance) =>
     <String, dynamic>{
-      'name': instance.name,
-      'id': instance.id,
-      'music': instance.music,
-      'image': instance.image,
+      'composerId': instance.composerId,
+      'composerName': instance.composerName,
+      'about': instance.about,
+      'portrait': instance.portrait,
     };

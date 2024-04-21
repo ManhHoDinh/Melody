@@ -1,9 +1,11 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:melody/melody/core/constants/color_palatte.dart';
 import 'package:melody/melody/core/helper/assets_helper.dart';
 import 'package:melody/melody/core/helper/text_styles.dart';
 import 'package:melody/melody/core/models/composer/composer.dart';
 import 'package:melody/melody/core/models/event/event.dart';
+import 'package:melody/melody/core/models/firebase/composer_request.dart';
 import 'package:melody/melody/core/models/music/music.dart';
 import 'package:get/get.dart';
 import 'package:melody/melody/core/models/perfomer/perfomer.dart';
@@ -64,17 +66,17 @@ class _HomeScreenState extends State<HomeScreen>
         image: AssetHelper.imgArtist,
         description: "ff"),
   ];
-  List<Composer> composer = [
-    const Composer(
-        music: 'Mozart', id: 1, name: 'Symphony', image: AssetHelper.imgArtist),
-    const Composer(
-        music: 'Mozart', id: 1, name: 'Son tung', image: AssetHelper.imgArtist),
-    const Composer(
-        music: 'Dinh Dai Duong',
-        id: 1,
-        name: 'Symphony ',
-        image: AssetHelper.imgArtist),
-  ];
+  // List<Composer> composer = [
+  //   // const Composer(
+  //   //     music: 'Mozart', id: 1, name: 'Symphony', image: AssetHelper.imgArtist),
+  //   // const Composer(
+  //   //     music: 'Mozart', id: 1, name: 'Son tung', image: AssetHelper.imgArtist),
+  //   // const Composer(
+  //   //     music: 'Dinh Dai Duong',
+  //   //     id: 1,
+  //   //     name: 'Symphony ',
+  //   //     image: AssetHelper.imgArtist),
+  // ];
   List<Perfomer> perfomer = [
     const Perfomer(
         music: 'Mozart', id: 1, name: 'Symphony', image: AssetHelper.imgArtist),
@@ -184,13 +186,7 @@ class _HomeScreenState extends State<HomeScreen>
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.centerLeft,
-          end: Alignment.centerRight,
-          colors: [Color(0xff6D0B14), Color(0xff4059F1)],
-        ),
-      ),
+      decoration: const BoxDecoration(color: Color(0xffF7F7F7)),
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         backgroundColor: Colors.transparent,
@@ -200,11 +196,15 @@ class _HomeScreenState extends State<HomeScreen>
             alignment: Alignment.centerLeft,
             child: Text(
               'Home',
-              style: TextStyle(fontSize: 25).whiteTextColor,
+              style: TextStyle(
+                  fontSize: 32,
+                  color: Colors.black,
+                  fontWeight: FontWeight.w800),
             ),
           ),
           actions: [
             IconButton(
+              padding: EdgeInsets.only(right: 20),
               onPressed: () {
                 Get.toNamed(DiscoveryScreen.routeName);
               },
@@ -218,9 +218,13 @@ class _HomeScreenState extends State<HomeScreen>
         ),
         body: SingleChildScrollView(
           child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 16),
+            height: 950, // Them cai nay de cuon duoc qua cai bottom navigation
+            padding: EdgeInsets.symmetric(horizontal: 20),
             child: Column(
               children: [
+                SizedBox(
+                  height: 5,
+                ),
                 TextField(
                   onChanged: (value) {
                     setState(() {
@@ -230,19 +234,64 @@ class _HomeScreenState extends State<HomeScreen>
                   controller: searchController,
                   style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
                   decoration: InputDecoration(
+                    contentPadding: EdgeInsets.symmetric(horizontal: 5),
                     filled: true,
-                    hintStyle: TextStyle(color: Color.fromARGB(255, 0, 0, 0)),
-                    fillColor: Color(0xffFFFFFF),
+                    hintStyle: TextStyle(color: Color(0xff198FB4)),
+                    fillColor: Color(0xffB6E0ED),
                     border: OutlineInputBorder(
                       borderSide: BorderSide.none,
-                      borderRadius: BorderRadius.circular(20),
+                      borderRadius: BorderRadius.circular(15),
                     ),
                     hintText: 'Search Song, Composer, Instrument',
-                    prefixIconColor: Color.fromARGB(255, 0, 0, 0),
+                    prefixIconColor: Color(0xff198FB4),
                     prefixIcon: Icon(Icons.search),
                   ),
                 ),
-                SizedBox(height: 10),
+                SizedBox(height: 7),
+                MusicSection(
+                  title: 'Composer',
+                  albums: albums,
+                ),
+                StreamBuilder<List<Composer>>(
+                  stream: ComposerRequest.getAll(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    } else if (snapshot.hasError) {
+                      return Center(
+                        child: Text('Error loading composer list'),
+                      );
+                    } else {
+                      List<Composer> composer = snapshot.data!;
+                      return GridView.builder(
+                        physics: NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        itemCount: searchComposer(composer, searchValue).length,
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 3,
+                          crossAxisSpacing: 10,
+                          mainAxisSpacing: 10,
+                          childAspectRatio: 5 / 6,
+                        ),
+                        itemBuilder: (context, index) {
+                          return GestureDetector(
+                            onTap: () {
+                              Get.toNamed('/composerPage',
+                                  arguments: composer[index].composerId);
+                            },
+                            child: ComposerItem(
+                              composer:
+                                  searchComposer(composer, searchValue)[index],
+                            ),
+                          );
+                        },
+                      );
+                    }
+                  },
+                ),
                 MusicSection(
                   title: 'Instrument',
                   albums: albums, // Pass your list of popular songs here
@@ -265,38 +314,18 @@ class _HomeScreenState extends State<HomeScreen>
                   },
                 ),
                 MusicSection(
-                  title: 'Composer',
+                  title: 'Artist',
                   albums: albums,
                 ),
                 GridView.builder(
-                  shrinkWrap: true,
                   physics: NeverScrollableScrollPhysics(),
-                  itemCount: searchComposer(composer, searchValue).length,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 3,
-                    crossAxisSpacing: 10,
-                    mainAxisSpacing: 10,
-                    childAspectRatio: 5 / 6,
-                  ),
-                  itemBuilder: (context, index) {
-                    return ComposerItem(
-                      composer: searchComposer(composer, searchValue)[index],
-                    );
-                  },
-                ),
-                MusicSection(
-                  title: 'Perfomer',
-                  albums: albums,
-                ),
-                GridView.builder(
                   shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
                   itemCount: perfomer.length,
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 3,
                     crossAxisSpacing: 10,
                     mainAxisSpacing: 10,
-                    childAspectRatio: 5 / 6,
+                    childAspectRatio: 3 / 3,
                   ),
                   itemBuilder: (context, index) {
                     return PerfomerItem.PerformerItem(
@@ -342,8 +371,7 @@ class _HomeScreenState extends State<HomeScreen>
   List<Composer> searchComposer(List<Composer> composer, String value) {
     return composer
         .where((element) =>
-            element.name.toLowerCase().contains(value.toLowerCase()) ||
-            element.music.toLowerCase().contains(value.toLowerCase()))
+            element.composerName.toLowerCase().contains(value.toLowerCase()))
         .toList();
   }
 

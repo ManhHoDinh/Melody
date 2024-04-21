@@ -12,6 +12,7 @@ class MusicSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
@@ -22,7 +23,7 @@ class MusicSection extends StatelessWidget {
               style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
-                  color: Colors.white),
+                  color: Colors.black),
             ),
             TextButton(
               onPressed: viewMoreAction ?? () {},
@@ -33,7 +34,7 @@ class MusicSection extends StatelessWidget {
             ),
           ],
         ),
-        SizedBox(height: 10),
+        SizedBox(height: 0),
       ],
     );
   }

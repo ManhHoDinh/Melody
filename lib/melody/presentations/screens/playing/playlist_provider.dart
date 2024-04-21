@@ -41,11 +41,7 @@ class PlaylistProvider extends ChangeNotifier {
   void shufflePlaylist() {
     _playlist.clear();
     _playlist.addAll(List<Song>.from(_originalPlaylist)..shuffle());
-    print(playlist[0].songName +
-        "\n" +
-        playlist[1].songName +
-        "\n" +
-        playlist[2].songName);
+
     notifyListeners();
   }
 

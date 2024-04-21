@@ -8,14 +8,14 @@ import 'package:melody/melody/core/models/firebase/album_request.dart';
 import 'package:melody/melody/core/models/firebase/song_request.dart';
 import 'package:melody/melody/presentations/screens/album/modify_album.dart';
 import 'package:melody/melody/presentations/screens/album/widgets/songInAlbumWidget.dart';
-import 'package:melody/melody/presentations/screens/artist/widgets/play_all_button.dart';
 import 'package:melody/melody/presentations/screens/playing/playing.dart';
+import 'package:melody/melody/presentations/widgets/edit_button.dart';
 import 'package:provider/provider.dart';
-
+import 'package:melody/melody/presentations/widgets/play_all_button.dart';
 import '../../../core/models/song/song.dart';
-import '../artist/widgets/edit_button.dart';
+
 import '../artist/widgets/song_item.dart';
-import '../artist/widgets/upload_button.dart';
+import 'package:melody/melody/presentations/widgets/upload_button.dart';
 import '../playing/playlist_provider.dart';
 
 class AlbumDetailScreen extends StatefulWidget {
@@ -39,6 +39,7 @@ class _AlbumDetailScreenState extends State<AlbumDetailScreen> {
         (FirebaseAuth.instance.currentUser!.uid == widget.album.artist_id);
     ChangeSongsList();
   }
+
   void ChangeSongsList() {
     songInAlbum = SongRequest.AllSongs.where(
         (element) => widget.album.songIds.contains(element.songId)).toList();
