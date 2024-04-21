@@ -20,8 +20,7 @@ class MusicSection extends StatelessWidget {
               title,
               style: TextStyle(
                   fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white),
+                  fontWeight: FontWeight.bold,),
             ),
             TextButton(
               onPressed: () {

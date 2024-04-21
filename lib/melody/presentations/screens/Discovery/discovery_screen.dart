@@ -54,187 +54,139 @@ class _DiscoveryScreenState extends State<DiscoveryScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.centerLeft,
-          end: Alignment.centerRight,
-          colors: [Color(0xff6D0B14), Color(0xff4059F1)],
-        ),
-      ),
-      child: Scaffold(
-        resizeToAvoidBottomInset: false,
-        backgroundColor: Colors.transparent,
-        appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          title: RichText(
-            text: const TextSpan(
-              text: 'Disc',
-              style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: Color(0xff6D0B14)),
-              children: <TextSpan>[
-                TextSpan(
-                  text: 'very',
-                  style: TextStyle(fontSize: 20, color: Color(0xff4059F1)),
-                ),
-              ],
-            ),
-          ),
-          leading: IconButton(
-            onPressed: () {
-              setState(() {
-                isTextFieldVisible = !isTextFieldVisible;
-              });
-            },
-            icon: Icon(
-              Icons.search,
-              color: ColorPalette.secondColor,
-            ),
-          ),
-        ),
-        endDrawer: Drawer(
-          child: Container(
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.centerLeft,
-                end: Alignment.centerRight,
-                colors: [Color(0xff6D0B14), Color(0xff4059F1)],
-              ),
-            ),
-            child: ListView(
-              children: const <Widget>[
-                DrawerHeader(
-                  decoration: BoxDecoration(),
-                  child: Text(
-                    'Melody',
-                    style: TextStyle(
-                      color: Color.fromARGB(255, 252, 252, 252),
-                      fontSize: 24,
-                    ),
-                  ),
-                ),
-                ListTile(
-                  title: Text(
-                    'Item 1',
-                    style: TextStyle(
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-                ListTile(
-                  title: Text(
-                    'Item 2',
-                    style: TextStyle(
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-        body: Container(
-          padding: EdgeInsets.symmetric(horizontal: 16),
-          child: Column(
-            children: [
-              isTextFieldVisible
-                  ? TextField(
-                      onChanged: (value) {
-                        setState(() {
-                          searchValue = value;
-                        });
-                      },
-                      controller: searchController,
-                      style:
-                          TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
-                      decoration: InputDecoration(
-                        filled: true,
-                        hintStyle:
-                            TextStyle(color: Color.fromARGB(255, 0, 0, 0)),
-                        fillColor: Color.fromARGB(255, 254, 254, 254),
-                        border: OutlineInputBorder(
-                            borderSide: BorderSide.none,
-                            borderRadius: BorderRadius.circular(20)),
-                        hintText: 'Search Song, Composer, Instrument',
-                        prefixIconColor: Color.fromARGB(255, 0, 0, 0),
-                        prefixIcon: Icon(Icons.search),
-                        suffixIcon: IconButton(
-                          icon: Icon(Icons.mic),
-                          onPressed: _openDialog,
-                        ),
-                      ),
-                    )
-                  : Container(),
-              SizedBox(
-                height: 20,
-              ),
-              MusicSection(
-                title: 'Popular Songs',
-                albums: albums,
-              ),
-              Expanded(
-                child: GridView.builder(
-                  shrinkWrap: true,
-                  itemCount: searchAlbums(albums, searchValue).length,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 3,
-                    crossAxisSpacing: 10,
-                    mainAxisSpacing: 10,
-                    childAspectRatio: 5 / 6,
-                  ),
-                  itemBuilder: (context, index) {
-                    return MusicItem(
-                      music: searchAlbums(albums, searchValue)[index],
-                    );
-                  },
-                ),
-              ),
-              MusicSection(
-                title: 'New Release Songs',
-                albums: albums,
-              ),
-              Expanded(
-                child: GridView.builder(
-                  shrinkWrap: true,
-                  itemCount: searchAlbums(albums, searchValue).length,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 3,
-                    crossAxisSpacing: 10,
-                    mainAxisSpacing: 10,
-                    childAspectRatio: 5 / 6,
-                  ),
-                  itemBuilder: (context, index) {
-                    return MusicItem(
-                      music: searchAlbums(albums, searchValue)[index],
-                    );
-                  },
-                ),
-              ),
-              MusicSection(
-                title: 'Albums of the Month',
-                albums: albums,
-              ),
-              Expanded(
-                child: GridView.builder(
-                  shrinkWrap: true,
-                  itemCount: searchAlbums(albums, searchValue).length,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 3,
-                    crossAxisSpacing: 10,
-                    mainAxisSpacing: 10,
-                    childAspectRatio: 5 / 6,
-                  ),
-                  itemBuilder: (context, index) {
-                    return MusicItem(
-                      music: searchAlbums(albums, searchValue)[index],
-                    );
-                  },
-                ),
+    return Scaffold(
+      backgroundColor:Color(0xffF7F7F7),
+      appBar: AppBar(
+        title: RichText(
+          text: const TextSpan(
+            text: 'Disc',
+            style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: Color(0xff6D0B14)),
+            children: <TextSpan>[
+              TextSpan(
+                text: 'very',
+                style: TextStyle(fontSize: 20, color: Color(0xff4059F1)),
               ),
             ],
           ),
+          
+        ),
+        centerTitle: true,
+        actions: [IconButton(
+          onPressed: () {
+            setState(() {
+              isTextFieldVisible = !isTextFieldVisible;
+            });
+          },
+          icon: Icon(
+            Icons.search,
+            color: ColorPalette.secondColor,
+          ),
+        ),],
+      ),
+      body: Container(
+        padding: EdgeInsets.symmetric(horizontal: 16),
+        child: Column(
+          children: [
+            isTextFieldVisible
+                ? TextField(
+                    onChanged: (value) {
+                      setState(() {
+                        searchValue = value;
+                      });
+                    },
+                    controller: searchController,
+                    style:
+                        TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
+                    decoration: InputDecoration(
+                      filled: true,
+                      hintStyle:
+                          TextStyle(color: Color.fromARGB(255, 0, 0, 0)),
+                      fillColor: Color.fromARGB(255, 254, 254, 254),
+                      border: OutlineInputBorder(
+                          borderSide: BorderSide.none,
+                          borderRadius: BorderRadius.circular(20)),
+                      hintText: 'Search Song, Composer, Instrument',
+                      prefixIconColor: Color.fromARGB(255, 0, 0, 0),
+                      prefixIcon: Icon(Icons.search),
+                      suffixIcon: IconButton(
+                        icon: Icon(Icons.mic),
+                        onPressed: _openDialog,
+                      ),
+                    ),
+                  )
+                : Container(),
+            SizedBox(
+              height: 20,
+            ),
+            MusicSection(
+              title: 'Popular Songs',
+              albums: albums,
+            ),
+            GridView.builder(
+              shrinkWrap: true,
+              itemCount: searchAlbums(albums, searchValue).length,
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 3,
+                crossAxisSpacing: 10,
+                mainAxisSpacing: 10,
+                childAspectRatio: 5 / 6,
+              ),
+              itemBuilder: (context, index) {
+                return MusicItem(
+                  music: searchAlbums(albums, searchValue)[index],
+                );
+              },
+            ),
+             SizedBox(
+              height: 10,
+            ),
+           
+            MusicSection(
+              title: 'New Release Songs',
+              albums: albums,
+            ),
+            GridView.builder(
+              shrinkWrap: true,
+              itemCount: searchAlbums(albums, searchValue).length,
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 3,
+                crossAxisSpacing: 10,
+                mainAxisSpacing: 10,
+                childAspectRatio: 5 / 6,
+              ),
+              itemBuilder: (context, index) {
+                return MusicItem(
+                  music: searchAlbums(albums, searchValue)[index],
+                );
+              },
+            ),
+             SizedBox(
+              height: 10,
+            ),
+           
+            MusicSection(
+              title: 'Albums of the Month',
+              albums: albums,
+            ),
+            GridView.builder(
+              shrinkWrap: true,
+              itemCount: searchAlbums(albums, searchValue).length,
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 3,
+                crossAxisSpacing: 10,
+                mainAxisSpacing: 10,
+                childAspectRatio: 5 / 6,
+              ),
+              itemBuilder: (context, index) {
+                return MusicItem(
+                  music: searchAlbums(albums, searchValue)[index],
+                );
+              },
+            ),
+          ],
         ),
       ),
     );

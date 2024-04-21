@@ -15,6 +15,8 @@ import 'package:melody/melody/presentations/widgets/upload_button.dart';
 import 'package:melody/melody/presentations/screens/playing/playlist_provider.dart';
 import 'package:provider/provider.dart';
 
+import '../playing/playing.dart';
+
 class ArtistPage extends StatefulWidget {
   ArtistPage({Key? key}) : super(key: key);
 
@@ -231,7 +233,7 @@ class _ArtistPageState extends State<ArtistPage> {
 
       // Set the currentSongIndex and navigate to the playing screen
       playlistProvider.currentSongIndex = index;
-      Get.toNamed('/playing');
+      Navigator.of(context).pushNamed(Playing.routeName);
     }
   }
 }
