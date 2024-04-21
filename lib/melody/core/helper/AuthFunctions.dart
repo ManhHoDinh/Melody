@@ -28,6 +28,7 @@ class AuthServices {
         Id: uid,
         Name: name,
         Email: email,
+        position: 'User',
       );
       Artist userArtistInfo = Artist(
           artistId: uid,
@@ -51,7 +52,10 @@ class AuthServices {
                   task: 'Create User',
                 );
               }))
-          .whenComplete(() => Navigator.of(buildContext).pop());
+          .whenComplete(() async {
+        await UpdateCurrentUser();
+        Navigator.of(buildContext).pop();
+      });
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         ScaffoldMessenger.of(buildContext).showSnackBar(
