@@ -188,37 +188,28 @@ class _HomeScreenState extends State<HomeScreen>
     return Container(
       decoration: const BoxDecoration(color: Color(0xffF7F7F7)),
       child: Scaffold(
-        resizeToAvoidBottomInset: false,
-        backgroundColor: Colors.transparent,
         appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          title: Align(
-            alignment: Alignment.centerLeft,
-            child: Text(
-              'Home',
-              style: TextStyle(
-                  fontSize: 32,
-                  color: Colors.black,
-                  fontWeight: FontWeight.w800),
-            ),
-          ),
-          actions: [
-            IconButton(
-              padding: EdgeInsets.only(right: 20),
-              onPressed: () {
-                Get.toNamed(DiscoveryScreen.routeName);
-              },
-              icon: Icon(
-                Icons.account_circle,
-                color: ColorPalette.secondColor,
-                size: 40,
+        title: RichText(
+          text: const TextSpan(
+            text: 'Ho',
+            style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: Color(0xff6D0B14)),
+            children: <TextSpan>[
+              TextSpan(
+                text: 'me',
+                style: TextStyle(fontSize: 20, color: Color(0xff4059F1)),
               ),
-            ),
-          ],
+            ],
+          ),
+          
+        ),
+       centerTitle: true,
+          
         ),
         body: SingleChildScrollView(
           child: Container(
-            height: 950, // Them cai nay de cuon duoc qua cai bottom navigation
             padding: EdgeInsets.symmetric(horizontal: 20),
             child: Column(
               children: [
@@ -236,14 +227,14 @@ class _HomeScreenState extends State<HomeScreen>
                   decoration: InputDecoration(
                     contentPadding: EdgeInsets.symmetric(horizontal: 5),
                     filled: true,
-                    hintStyle: TextStyle(color: Color(0xff198FB4)),
-                    fillColor: Color(0xffB6E0ED),
+                    hintStyle: TextStyle(color: Color(0xffFFFFFF)),
+                    fillColor: Color(0xff198FB4),
                     border: OutlineInputBorder(
                       borderSide: BorderSide.none,
                       borderRadius: BorderRadius.circular(15),
                     ),
                     hintText: 'Search Song, Composer, Instrument',
-                    prefixIconColor: Color(0xff198FB4),
+                    prefixIconColor: Color(0xffffffff),
                     prefixIcon: Icon(Icons.search),
                   ),
                 ),
@@ -292,6 +283,7 @@ class _HomeScreenState extends State<HomeScreen>
                     }
                   },
                 ),
+                SizedBox(height: 7),  
                 MusicSection(
                   title: 'Instrument',
                   albums: albums, // Pass your list of popular songs here
@@ -313,6 +305,8 @@ class _HomeScreenState extends State<HomeScreen>
                     );
                   },
                 ),
+                SizedBox(height: 7),  
+                
                 MusicSection(
                   title: 'Artist',
                   albums: albums,
@@ -351,7 +345,8 @@ class _HomeScreenState extends State<HomeScreen>
                         height: 10,
                       );
                     }),
-                    itemCount: event.length)
+                    itemCount: event.length),
+                    SizedBox(height: 70,)
               ],
             ),
           ),

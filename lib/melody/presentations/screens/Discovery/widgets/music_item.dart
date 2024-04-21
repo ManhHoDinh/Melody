@@ -27,11 +27,11 @@ class MusicItem extends StatelessWidget {
           Text(
             music.name,
             style: TextStyle(
-                fontWeight: FontWeight.w600, fontSize: 14, color: Colors.white),
+                fontWeight: FontWeight.w600, fontSize: 14),
           ),
           Text(
             music.artist,
-            style: TextStyle(fontSize: 12, color: Color(0xffe7e7e9)),
+            style: TextStyle(fontSize: 12),
           ),
         ],
       ),

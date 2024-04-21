@@ -3,7 +3,7 @@ import 'package:melody/melody/presentations/screens/statistic/tabs/song_statisti
 
 class StatisticScreen extends StatefulWidget {
   const StatisticScreen({super.key});
-
+  static String routeName = 'statistic_screen';
   @override
   State<StatisticScreen> createState() => _StatisticScreenState();
 }

@@ -8,6 +8,7 @@ import 'package:melody/melody/presentations/screens/album/modify_album.dart';
 import 'package:melody/melody/presentations/screens/album/detail_album.dart';
 import 'package:melody/melody/presentations/screens/playing/playing.dart';
 import 'package:melody/melody/presentations/screens/splash/splash_screen.dart';
+import 'package:melody/melody/presentations/screens/statistic/statistic_screen.dart';
 
 final Map<String, WidgetBuilder> routes = {
   LoginScreen.routeName: (context) => LoginScreen(),
@@ -17,6 +18,7 @@ final Map<String, WidgetBuilder> routes = {
   SignUpScreen.routeName: (context) => SignUpScreen(),
   ModifyAlbum.routeName: (context) => ModifyAlbum(),
   Playing.routeName: (context) => Playing(),
+  StatisticScreen.routeName: (context) => StatisticScreen(),
 };
 
 class Routes {

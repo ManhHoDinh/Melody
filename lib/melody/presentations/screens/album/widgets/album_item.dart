@@ -51,17 +51,15 @@ class AlbumItem extends StatelessWidget {
                 builder: (context, snapshot) {
                   if (snapshot.hasError) {
                     return Text('Error: ${snapshot.error}');
-                  }
-
-                  else if (snapshot.connectionState == ConnectionState.waiting) {
+                  } else if (snapshot.connectionState ==
+                      ConnectionState.waiting) {
                     return CircularProgressIndicator();
-                  }
-
-                  else if (snapshot.data == null) {
+                  } else if (snapshot.data == null) {
                     return Text('No data found');
-                  }
-                  else if (snapshot.hasData && snapshot.data!.data() != null){
-                    UserModel? user = UserModel.fromJson(snapshot.data!.data()!);
+                  } else if (snapshot.hasData &&
+                      snapshot.data!.data() != null) {
+                    UserModel? user =
+                        UserModel.fromJson(snapshot.data!.data()!);
                     return Text(
                       user.Name,
                       style: TextStyle(fontSize: 12),
