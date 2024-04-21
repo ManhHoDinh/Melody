@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -60,17 +61,22 @@ class ImageHelper {
       );
     } else {
       return ClipRRect(
-        borderRadius: radius ?? BorderRadius.zero,
-        child: Image.network(
-          imageFilePath,
-          width: width,
-          height: height,
-          fit: fit ?? BoxFit.contain,
-          color: tintColor,
-          scale: scale ?? 1,
-          alignment: alignment ?? Alignment.center,
-        ),
-      );
+          borderRadius: radius ?? BorderRadius.zero,
+          child: CachedNetworkImage(
+            imageUrl: imageFilePath,
+            width: width,
+            height: height,
+            fit: fit ?? BoxFit.contain,
+            color: tintColor,
+            progressIndicatorBuilder: (context, url, downloadProgress) =>
+                Center(
+                  child: Container(
+                    width: 30,
+                    height: 30,
+                    child: CircularProgressIndicator(value: downloadProgress.progress)),
+                ),
+            errorWidget: (context, url, error) => Icon(Icons.error),
+          ));
     }
   }
 }

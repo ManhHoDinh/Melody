@@ -23,7 +23,9 @@ mixin _$Album {
   String get name => throw _privateConstructorUsedError;
   String get id => throw _privateConstructorUsedError;
   String get artist_id => throw _privateConstructorUsedError;
+  String get description => throw _privateConstructorUsedError;
   String get image => throw _privateConstructorUsedError;
+  List<String> get songIds => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -35,7 +37,13 @@ abstract class $AlbumCopyWith<$Res> {
   factory $AlbumCopyWith(Album value, $Res Function(Album) then) =
       _$AlbumCopyWithImpl<$Res, Album>;
   @useResult
-  $Res call({String name, String id, String artist_id, String image});
+  $Res call(
+      {String name,
+      String id,
+      String artist_id,
+      String description,
+      String image,
+      List<String> songIds});
 }
 
 /// @nodoc
@@ -54,7 +62,9 @@ class _$AlbumCopyWithImpl<$Res, $Val extends Album>
     Object? name = null,
     Object? id = null,
     Object? artist_id = null,
+    Object? description = null,
     Object? image = null,
+    Object? songIds = null,
   }) {
     return _then(_value.copyWith(
       name: null == name
@@ -69,10 +79,18 @@ class _$AlbumCopyWithImpl<$Res, $Val extends Album>
           ? _value.artist_id
           : artist_id // ignore: cast_nullable_to_non_nullable
               as String,
+      description: null == description
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String,
       image: null == image
           ? _value.image
           : image // ignore: cast_nullable_to_non_nullable
               as String,
+      songIds: null == songIds
+          ? _value.songIds
+          : songIds // ignore: cast_nullable_to_non_nullable
+              as List<String>,
     ) as $Val);
   }
 }
@@ -84,7 +102,13 @@ abstract class _$$AlbumImplCopyWith<$Res> implements $AlbumCopyWith<$Res> {
       __$$AlbumImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String name, String id, String artist_id, String image});
+  $Res call(
+      {String name,
+      String id,
+      String artist_id,
+      String description,
+      String image,
+      List<String> songIds});
 }
 
 /// @nodoc
@@ -101,7 +125,9 @@ class __$$AlbumImplCopyWithImpl<$Res>
     Object? name = null,
     Object? id = null,
     Object? artist_id = null,
+    Object? description = null,
     Object? image = null,
+    Object? songIds = null,
   }) {
     return _then(_$AlbumImpl(
       name: null == name
@@ -116,10 +142,18 @@ class __$$AlbumImplCopyWithImpl<$Res>
           ? _value.artist_id
           : artist_id // ignore: cast_nullable_to_non_nullable
               as String,
+      description: null == description
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String,
       image: null == image
           ? _value.image
           : image // ignore: cast_nullable_to_non_nullable
               as String,
+      songIds: null == songIds
+          ? _value._songIds
+          : songIds // ignore: cast_nullable_to_non_nullable
+              as List<String>,
     ));
   }
 }
@@ -128,26 +162,44 @@ class __$$AlbumImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$AlbumImpl implements _Album {
   const _$AlbumImpl(
-      {required this.name,
-      required this.id,
-      required this.artist_id,
-      required this.image});
+      {this.name = "",
+      this.id = "",
+      this.artist_id = "",
+      this.description = "",
+      this.image = "",
+      final List<String> songIds = const []})
+      : _songIds = songIds;
 
   factory _$AlbumImpl.fromJson(Map<String, dynamic> json) =>
       _$$AlbumImplFromJson(json);
 
   @override
+  @JsonKey()
   final String name;
   @override
+  @JsonKey()
   final String id;
   @override
+  @JsonKey()
   final String artist_id;
   @override
+  @JsonKey()
+  final String description;
+  @override
+  @JsonKey()
   final String image;
+  final List<String> _songIds;
+  @override
+  @JsonKey()
+  List<String> get songIds {
+    if (_songIds is EqualUnmodifiableListView) return _songIds;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_songIds);
+  }
 
   @override
   String toString() {
-    return 'Album(name: $name, id: $id, artist_id: $artist_id, image: $image)';
+    return 'Album(name: $name, id: $id, artist_id: $artist_id, description: $description, image: $image, songIds: $songIds)';
   }
 
   @override
@@ -159,12 +211,16 @@ class _$AlbumImpl implements _Album {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.artist_id, artist_id) ||
                 other.artist_id == artist_id) &&
-            (identical(other.image, image) || other.image == image));
+            (identical(other.description, description) ||
+                other.description == description) &&
+            (identical(other.image, image) || other.image == image) &&
+            const DeepCollectionEquality().equals(other._songIds, _songIds));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, name, id, artist_id, image);
+  int get hashCode => Object.hash(runtimeType, name, id, artist_id, description,
+      image, const DeepCollectionEquality().hash(_songIds));
 
   @JsonKey(ignore: true)
   @override
@@ -182,10 +238,12 @@ class _$AlbumImpl implements _Album {
 
 abstract class _Album implements Album {
   const factory _Album(
-      {required final String name,
-      required final String id,
-      required final String artist_id,
-      required final String image}) = _$AlbumImpl;
+      {final String name,
+      final String id,
+      final String artist_id,
+      final String description,
+      final String image,
+      final List<String> songIds}) = _$AlbumImpl;
 
   factory _Album.fromJson(Map<String, dynamic> json) = _$AlbumImpl.fromJson;
 
@@ -196,7 +254,11 @@ abstract class _Album implements Album {
   @override
   String get artist_id;
   @override
+  String get description;
+  @override
   String get image;
+  @override
+  List<String> get songIds;
   @override
   @JsonKey(ignore: true)
   _$$AlbumImplCopyWith<_$AlbumImpl> get copyWith =>
