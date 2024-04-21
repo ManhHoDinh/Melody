@@ -168,7 +168,7 @@ class _UploadSongPageState extends State<UploadSongPage> {
                             width: 209,
                           )
                         : Image.file(
-                            File(choosedImage!.path!),
+                            File(choosedImage!.path),
                             width: 209,
                             height: 209,
                             fit: BoxFit.cover,

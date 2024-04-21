@@ -128,7 +128,7 @@ class _EditSongState extends State<EditSong> {
                                         fit: BoxFit.cover,
                                       )
                                     : Image.file(
-                                        File(choosedImage!.path!),
+                                        File(choosedImage!.path),
                                         width: 209,
                                         height: 209,
                                         fit: BoxFit.cover,

@@ -1,26 +1,24 @@
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-import 'package:melody/melody/controller/songController.dart';
-import 'package:melody/melody/core/helper/firebase_helper.dart';
-import 'package:melody/melody/core/models/firebase/playlist_request.dart';
-import 'package:melody/melody/core/models/song/song.dart';
-import 'package:melody/melody/presentations/screens/playing/playlist_provider.dart';
+import 'package:melody/melody/core/helper/image_helper.dart';
 import 'package:provider/provider.dart';
 
-class SongItem extends StatelessWidget {
+import '../../../../core/helper/firebase_helper.dart';
+import '../../../../core/models/song/song.dart';
+import '../../playing/playlist_provider.dart';
+
+class SongItemInAlbum extends StatelessWidget {
   Song song;
   PlaylistProvider? playlistProvider;
-  bool? isInPlaylist;
-  Function? onTap = () {};
-  String? playlistId;
-  SongItem(
+  SongItemInAlbum(
       {super.key,
       required this.song,
-      this.isInPlaylist,
-      this.playlistId,
+      this.onDeleteTap,
+      this.onAddTap,
       this.onTap});
+  Function? onDeleteTap = () {};
+  Function? onAddTap = () {};
+  Function? onTap = () {};
 
   @override
   Widget build(BuildContext context) {
@@ -31,13 +29,13 @@ class SongItem extends StatelessWidget {
           SizedBox(
             height: 2.5,
           ),
-          GestureDetector(
+          InkWell(
             onTap: () {
-              if (isInPlaylist != null) onTap!();
+              onTap!();
             },
             child: Row(
               children: [
-                Image.network(
+                ImageHelper.loadFromNetwork(
                   song.songImagePath,
                   width: 49,
                   height: 49,
@@ -57,24 +55,41 @@ class SongItem extends StatelessWidget {
                 SizedBox(
                   width: 10,
                 ),
-                Image.asset(
-                  "assets/images/fav.png",
-                  height: 21,
-                  width: 21,
-                ),
-                SizedBox(
-                  width: 17,
-                ),
-                GestureDetector(
-                  onTap: () {
-                    _showOptions(context);
-                  },
-                  child: Image.asset(
-                    "assets/images/option.png",
-                    height: 24,
-                    width: 24,
-                  ),
-                ),
+                ...onAddTap == null
+                    ? [
+                        Image.asset(
+                          "assets/images/fav.png",
+                          height: 21,
+                          width: 21,
+                        ),
+                        SizedBox(
+                          width: 17,
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            _showOptions(context);
+                          },
+                          child: Image.asset(
+                            "assets/images/option.png",
+                            height: 24,
+                            width: 24,
+                          ),
+                        ),
+                      ]
+                    : [
+                        GestureDetector(
+                          onTap: () {
+                            onAddTap!();
+                          },
+                          child: Icon(
+                            Icons.add,
+                            size: 30,
+                          ),
+                        ),
+                        SizedBox(
+                          width: 17,
+                        ),
+                      ],
               ],
             ),
           ),
@@ -97,22 +112,20 @@ class SongItem extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              isInPlaylist != null
-                  ? Container()
-                  : ListTile(
-                      leading: Icon(Icons.edit),
-                      title: Text('Edit'),
-                      onTap: () {
-                        Navigator.pop(context); // Close the bottom sheet
-                        Get.toNamed('/editSong', arguments: song.songId);
-                      },
-                    ),
               ListTile(
-                leading: Icon(Icons.delete),
-                title: Text('Delete'),
+                leading: Icon(Icons.edit),
+                title: Text('Edit'),
                 onTap: () {
                   Navigator.pop(context); // Close the bottom sheet
-                  _showDeleteConfirmationDialog(context);
+                  Get.toNamed('/editSong', arguments: song.songId);
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.delete),
+                title: Text('Remove from this album'),
+                onTap: () {
+                  Navigator.pop(context); // Close the bottom sheet
+                  onDeleteTap!();
                 },
               ),
             ],
@@ -138,8 +151,9 @@ class SongItem extends StatelessWidget {
             ),
             TextButton(
               onPressed: () async {
-                await deleteSong(song.songId);
+                //await deleteSong(song.songId);
                 Navigator.of(context).pop();
+                onDeleteTap!;
               },
               child: Text(
                 "Delete",
@@ -154,12 +168,7 @@ class SongItem extends StatelessWidget {
 
   Future<void> deleteSong(String songId) async {
     try {
-      if (isInPlaylist != null) {
-        SongController songController = Get.find();
-        await PlaylistRequest.removeSongFromPlaylist(playlistId!, songId);
-        songController.updateSongOfPlaylist(playlistId!);
-      } else
-        await FirebaseHelper.songCollection.doc(songId).delete();
+      await FirebaseHelper.songCollection.doc(songId).delete();
 
       Get.snackbar(
         "Success",

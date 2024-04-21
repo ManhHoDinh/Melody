@@ -127,7 +127,7 @@ class _ComposerPageState extends State<ComposerPage> {
                         SizedBox(
                           height: 8,
                         ),
-                        ReadMoreText(text: composer.about, maxLines: 6),
+                        ReadMoreText(text: composer.about, maxLines: 5),
                         SizedBox(
                           height: 13,
                         ),
@@ -170,7 +170,8 @@ class _ComposerPageState extends State<ComposerPage> {
                             ),
                             Spacer(),
                             StreamBuilder<List<Song>>(
-                              stream: SongRequest.getAll(composer.composerId),
+                              stream: SongRequest.getAllByArtistId(
+                                  composer.composerId),
                               builder: (context, snapshot) {
                                 if (snapshot.connectionState ==
                                     ConnectionState.waiting) {
@@ -195,7 +196,8 @@ class _ComposerPageState extends State<ComposerPage> {
                         ),
                         SizedBox(height: 25),
                         StreamBuilder<List<Song>>(
-                          stream: SongRequest.getAll(composer.composerId),
+                          stream:
+                              SongRequest.getAllByArtistId(composer.composerId),
                           builder: (context, snapshot) {
                             if (snapshot.connectionState ==
                                 ConnectionState.waiting) {

@@ -44,7 +44,7 @@ class _BottomBarViewState extends State<WindouBottomBarView>
             return Transform(
               transform: Matrix4.translationValues(0.0, 0.0, 0.0),
               child: PhysicalShape(
-                color: Colors.white,
+                color: ColorPalette.primaryColor,
                 elevation: 16.0,
                 clipper: TabClipper(
                     radius: Tween<double>(begin: 0.0, end: 1.0)
@@ -65,7 +65,6 @@ class _BottomBarViewState extends State<WindouBottomBarView>
                             Expanded(
                               child: TabIcons(
                                   tabIconData: widget.tabIconsList?[0],
-                                  
                                   removeAllSelect: () {
                                     setRemoveAllSelection(
                                         widget.tabIconsList?[0]);
@@ -254,9 +253,12 @@ class _TabIconsState extends State<TabIcons> with TickerProviderStateMixin {
                           parent: widget.tabIconData!.animationController!,
                           curve:
                               Interval(0.1, 1.0, curve: Curves.fastOutSlowIn))),
-                  child: ImageHelper.loadFromAsset(widget.tabIconData!.isSelected
-                      ? widget.tabIconData!.selectedImagePath
-                      : widget.tabIconData!.imagePath, height: 35, width: 35),
+                  child: ImageHelper.loadFromAsset(
+                      widget.tabIconData!.isSelected
+                          ? widget.tabIconData!.selectedImagePath
+                          : widget.tabIconData!.imagePath,
+                      height: 35,
+                      width: 35),
                 ),
                 Positioned(
                   top: 4,

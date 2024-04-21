@@ -12,27 +12,27 @@ class ComposerItem extends StatelessWidget {
     return Container(
       child: Column(
         mainAxisSize: MainAxisSize.max,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Flexible(
-            child: Container(
-              width: double.infinity,
-              height: 70,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  image: DecorationImage(
-                      fit: BoxFit.fitWidth,
-                      image: NetworkImage(composer.portrait))),
-            ),
+          Container(
+            width: 110,
+            height: 110,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                image: DecorationImage(
+                    fit: BoxFit.cover, image: NetworkImage(composer.portrait))),
+          ),
+          SizedBox(
+            height: 6,
           ),
           Align(
-            alignment: Alignment.center,
+            alignment: Alignment.bottomLeft,
             child: Text(
               composer.composerName,
               style: TextStyle(
                   fontWeight: FontWeight.w600,
                   fontSize: 14,
-                  color: Colors.white),
+                  color: Colors.black),
             ),
           ),
         ],

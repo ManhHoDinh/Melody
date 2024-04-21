@@ -144,7 +144,7 @@ class _ArtistPageState extends State<ArtistPage> {
                             ),
                             Spacer(),
                             StreamBuilder<List<Song>>(
-                              stream: SongRequest.getAll(artistId),
+                              stream: SongRequest.getAllByArtistId(artistId),
                               builder: (context, snapshot) {
                                 if (snapshot.connectionState ==
                                     ConnectionState.waiting) {
@@ -169,7 +169,7 @@ class _ArtistPageState extends State<ArtistPage> {
                         ),
                         SizedBox(height: 25),
                         StreamBuilder<List<Song>>(
-                          stream: SongRequest.getAll(artistId),
+                          stream: SongRequest.getAllByArtistId(artistId),
                           builder: (context, snapshot) {
                             if (snapshot.connectionState ==
                                 ConnectionState.waiting) {
@@ -214,7 +214,7 @@ class _ArtistPageState extends State<ArtistPage> {
     if (playlistProvider != null && songList != null) {
       List<Song> copiedSongList = List.from(songList!);
       playlistProvider.playlist.clear();
-      playlistProvider.setPlaylist(copiedSongList!);
+      playlistProvider.setPlaylist(copiedSongList);
       playlistProvider.playAllFromIndex(0);
       Get.toNamed('/playing');
     }

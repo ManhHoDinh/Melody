@@ -101,6 +101,7 @@ class _HomeScreenState extends State<HomeScreen>
   late AnimationController _animationController;
   late Animation<Alignment> _topAlignmentAnimation;
   late Animation<Alignment> _bottomAlignmentAnimation;
+
   @override
   void initState() {
     super.initState();
@@ -176,15 +177,16 @@ class _HomeScreenState extends State<HomeScreen>
   }
 
   @override
+  void dispose() {
+    print(_animationController);
+    _animationController?.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.centerLeft,
-          end: Alignment.centerRight,
-          colors: [Color(0xff6D0B14), Color(0xff4059F1)],
-        ),
-      ),
+      decoration: const BoxDecoration(color: Color(0xffF7F7F7)),
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         backgroundColor: Colors.transparent,
@@ -194,11 +196,15 @@ class _HomeScreenState extends State<HomeScreen>
             alignment: Alignment.centerLeft,
             child: Text(
               'Home',
-              style: TextStyle(fontSize: 25).whiteTextColor,
+              style: TextStyle(
+                  fontSize: 32,
+                  color: Colors.black,
+                  fontWeight: FontWeight.w800),
             ),
           ),
           actions: [
             IconButton(
+              padding: EdgeInsets.only(right: 20),
               onPressed: () {
                 Get.toNamed(DiscoveryScreen.routeName);
               },
@@ -210,74 +216,58 @@ class _HomeScreenState extends State<HomeScreen>
             ),
           ],
         ),
-        body: Container(
-          padding: EdgeInsets.symmetric(horizontal: 16),
-          child: Column(
-            children: [
-              TextField(
-                onChanged: (value) {
-                  setState(() {
-                    searchValue = value;
-                  });
-                },
-                controller: searchController,
-                style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
-                decoration: InputDecoration(
-                  filled: true,
-                  hintStyle: TextStyle(color: Color.fromARGB(255, 0, 0, 0)),
-                  fillColor: Color(0xffFFFFFF),
-                  border: OutlineInputBorder(
-                    borderSide: BorderSide.none,
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  hintText: 'Search Song, Composer, Instrument',
-                  prefixIconColor: Color.fromARGB(255, 0, 0, 0),
-                  prefixIcon: Icon(Icons.search),
+        body: SingleChildScrollView(
+          child: Container(
+            height: 950, // Them cai nay de cuon duoc qua cai bottom navigation
+            padding: EdgeInsets.symmetric(horizontal: 20),
+            child: Column(
+              children: [
+                SizedBox(
+                  height: 5,
                 ),
-              ),
-              SizedBox(height: 10),
-              MusicSection(
-                title: 'Instrument',
-                albums: albums, // Pass your list of popular songs here
-              ),
-              Expanded(
-                child: GridView.builder(
-                  physics: NeverScrollableScrollPhysics(),
-                  itemCount: searchInstrument(instrument, searchValue).length,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 3,
-                    crossAxisSpacing: 10,
-                    mainAxisSpacing: 10,
-                    childAspectRatio: 5 / 6,
-                  ),
-                  itemBuilder: (context, index) {
-                    return InstrumentItem(
-                      instrument:
-                          searchInstrument(instrument, searchValue)[index],
-                    );
+                TextField(
+                  onChanged: (value) {
+                    setState(() {
+                      searchValue = value;
+                    });
                   },
+                  controller: searchController,
+                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
+                  decoration: InputDecoration(
+                    contentPadding: EdgeInsets.symmetric(horizontal: 5),
+                    filled: true,
+                    hintStyle: TextStyle(color: Color(0xff198FB4)),
+                    fillColor: Color(0xffB6E0ED),
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide.none,
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    hintText: 'Search Song, Composer, Instrument',
+                    prefixIconColor: Color(0xff198FB4),
+                    prefixIcon: Icon(Icons.search),
+                  ),
                 ),
-              ),
-              MusicSection(
-                title: 'Composer',
-                albums: albums,
-              ),
-              StreamBuilder<List<Composer>>(
-                stream: ComposerRequest.getAll(),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  } else if (snapshot.hasError) {
-                    return Center(
-                      child: Text('Error loading composer list'),
-                    );
-                  } else {
-                    List<Composer> composer = snapshot.data!;
-                    return Flexible(
-                      child: GridView.builder(
+                SizedBox(height: 7),
+                MusicSection(
+                  title: 'Composer',
+                  albums: albums,
+                ),
+                StreamBuilder<List<Composer>>(
+                  stream: ComposerRequest.getAll(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    } else if (snapshot.hasError) {
+                      return Center(
+                        child: Text('Error loading composer list'),
+                      );
+                    } else {
+                      List<Composer> composer = snapshot.data!;
+                      return GridView.builder(
                         physics: NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
                         itemCount: searchComposer(composer, searchValue).length,
                         gridDelegate:
                             const SliverGridDelegateWithFixedCrossAxisCount(
@@ -298,19 +288,18 @@ class _HomeScreenState extends State<HomeScreen>
                             ),
                           );
                         },
-                      ),
-                    );
-                  }
-                },
-              ),
-              MusicSection(
-                title: 'Perfomer',
-                albums: albums,
-              ),
-              Expanded(
-                child: GridView.builder(
+                      );
+                    }
+                  },
+                ),
+                MusicSection(
+                  title: 'Instrument',
+                  albums: albums, // Pass your list of popular songs here
+                ),
+                GridView.builder(
+                  shrinkWrap: true,
                   physics: NeverScrollableScrollPhysics(),
-                  itemCount: perfomer.length,
+                  itemCount: searchInstrument(instrument, searchValue).length,
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 3,
                     crossAxisSpacing: 10,
@@ -318,18 +307,39 @@ class _HomeScreenState extends State<HomeScreen>
                     childAspectRatio: 5 / 6,
                   ),
                   itemBuilder: (context, index) {
+                    return InstrumentItem(
+                      instrument:
+                          searchInstrument(instrument, searchValue)[index],
+                    );
+                  },
+                ),
+                MusicSection(
+                  title: 'Artist',
+                  albums: albums,
+                ),
+                GridView.builder(
+                  physics: NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount: perfomer.length,
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 3,
+                    crossAxisSpacing: 10,
+                    mainAxisSpacing: 10,
+                    childAspectRatio: 3 / 3,
+                  ),
+                  itemBuilder: (context, index) {
                     return PerfomerItem.PerformerItem(
                       perfomer: perfomer[index],
                     );
                   },
                 ),
-              ),
-              MusicSection(
-                title: 'Event',
-                albums: albums,
-              ),
-              Expanded(
-                child: ListView.separated(
+                MusicSection(
+                  title: 'Event',
+                  albums: albums,
+                ),
+                ListView.separated(
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
                     scrollDirection: Axis.vertical,
                     itemBuilder: ((context, index) {
                       return EventItem(
@@ -341,9 +351,9 @@ class _HomeScreenState extends State<HomeScreen>
                         height: 10,
                       );
                     }),
-                    itemCount: event.length),
-              )
-            ],
+                    itemCount: event.length)
+              ],
+            ),
           ),
         ),
       ),

@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:melody/melody/core/models/composer/composer.dart';
@@ -13,28 +14,30 @@ class InstrumentItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: Column(
-        mainAxisSize: MainAxisSize.max,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
+        // mainAxisSize: MainAxisSize.max,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Flexible(
+          Expanded(
             child: Container(
-              width: double.infinity,
-              height: 70,
+              width: 110,
+              height: 110,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                   image: DecorationImage(
-                      fit: BoxFit.fitWidth,
-                      image: AssetImage(instrument.image))),
+                      fit: BoxFit.cover, image: AssetImage(instrument.image))),
             ),
           ),
+          SizedBox(
+            height: 6,
+          ),
           Align(
-            alignment: Alignment.center,
+            alignment: Alignment.topLeft,
             child: Text(
               instrument.name,
               style: TextStyle(
                   fontWeight: FontWeight.w600,
                   fontSize: 14,
-                  color: Colors.white),
+                  color: Colors.black),
             ),
           ),
         ],

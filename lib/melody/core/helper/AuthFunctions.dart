@@ -28,6 +28,7 @@ class AuthServices {
         Id: uid,
         Name: name,
         Email: email,
+        position: 'User',
       );
       Artist userArtistInfo = Artist(
           artistId: uid,
@@ -51,7 +52,10 @@ class AuthServices {
                   task: 'Create User',
                 );
               }))
-          .whenComplete(() => Navigator.of(buildContext).pop());
+          .whenComplete(() async {
+        await UpdateCurrentUser();
+        Navigator.of(buildContext).pop();
+      });
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         ScaffoldMessenger.of(buildContext).showSnackBar(
@@ -101,7 +105,7 @@ class AuthServices {
   static bool CurrentUserIsManager() {
     try {
       bool result = false;
-      //if (AuthServices.CurrentUser!.Position == 'Manager') result = true;
+      if (AuthServices.CurrentUser!.position == 'Manager') result = true;
       return result;
     } catch (e) {
       return false;
@@ -118,6 +122,7 @@ class AuthServices {
         Id: value['Id'],
         Name: value['Name'],
         Email: value['Email'],
+        // position: value['position'],
       );
     });
   }

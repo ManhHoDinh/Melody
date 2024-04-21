@@ -98,8 +98,8 @@ class _AllPlaylistScreenState extends State<AllPlaylistScreen> {
                             itemBuilder: ((context, index) {
                               return GestureDetector(
                                 onTap: () {
-                                  Get.to(DetailPlaylistScreen(),
-                                      arguments: snapshot.data![index].id);
+                                  Get.to(() => DetailPlaylistScreen(
+                                      playlist: snapshot.data![index]));
                                 },
                                 child: PlaylistItem(
                                   playlist: snapshot.data![index],

@@ -2,9 +2,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../core/helper/AuthFunctions.dart';
+
 class UserScreen extends StatefulWidget {
   AnimationController? animationController;
-  UserScreen({super.key, required this.animationController});
+  UserScreen({super.key, this.animationController});
 
   @override
   State<UserScreen> createState() => _UserScreenState();
@@ -18,17 +20,17 @@ class _UserScreenState extends State<UserScreen> {
         title: Text('User Screen'),
         centerTitle: true,
       ),
-      body: Center(
-          child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+      body: Column(
         children: [
-          ElevatedButton(
-            onPressed: () {
-              // Pass userId to get to specific artist profile
-              Get.toNamed("/artistPage",
-                  arguments: FirebaseAuth.instance.currentUser!.uid);
-            },
-            child: Text('Go to Artist Page'),
+          Center(
+            child: ElevatedButton(
+              onPressed: () {
+                // Pass userId to get to specific artist profile
+                Get.toNamed("/artistPage",
+                    arguments: "0UBAPBKaLYeFRNvpywpHqPJLSlG2");
+              },
+              child: Text('Go to Artist Page'),
+            ),
           ),
           ElevatedButton(
             onPressed: () {
@@ -39,8 +41,18 @@ class _UserScreenState extends State<UserScreen> {
             },
             child: Text('Go to Upload Composer Page'),
           ),
+          AuthServices.CurrentUserIsManager()
+              ? Center(
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Get.toNamed("/createInstrument");
+                    },
+                    child: Text('Create Instrument'),
+                  ),
+                )
+              : Container(),
         ],
-      )),
+      ),
     );
   }
 }
