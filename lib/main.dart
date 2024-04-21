@@ -6,6 +6,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:melody/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:melody/di.dart';
 import 'package:melody/melody/core/helper/local_storage_helper.dart';
 import 'package:melody/melody/core/models/artist/artist.dart';
 import 'package:melody/melody/core/models/firebase/artist_request.dart';
@@ -26,6 +27,7 @@ import 'package:melody/melody/presentations/screens/Discovery/discovery_screen.d
 import 'package:melody/melody/presentations/screens/Home/home_screen.dart';
 import 'package:melody/melody/presentations/screens/instrument/create_instrument_screen.dart';
 import 'package:melody/melody/presentations/screens/splash/splash_screen.dart';
+import 'package:melody/melody/presentations/screens/statistic/statistic_screen.dart';
 import 'package:provider/provider.dart';
 import 'melody/presentations/screens/playing/playlist_provider.dart';
 import 'navigation_home_screen.dart';
@@ -69,9 +71,10 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         platform: TargetPlatform.iOS,
       ),
-      // initialRoute: Routes.createInstrument,
-      home: melodyApp(),
 
+      // initialRoute: Routes.stistic,
+      home: melodyApp(),
+      initialBinding: MyBindings(),
       getPages: [
         GetPage(name: Routes.allAlbum, page: () => AllAlbumScreen()),
         GetPage(name: Routes.allEvent, page: () => AllEventScreen()),
@@ -84,6 +87,8 @@ class MyApp extends StatelessWidget {
         GetPage(name: Routes.playing, page: () => Playing()),
         GetPage(name: Routes.queue, page: () => Queue()),
         GetPage(name: Routes.editSong, page: () => EditSong()),
+        GetPage(name: Routes.editSong, page: () => EditSong()),
+        GetPage(name: Routes.statistic, page: () => StatisticScreen()),
       ],
     );
   }

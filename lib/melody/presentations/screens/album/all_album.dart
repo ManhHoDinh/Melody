@@ -20,16 +20,9 @@ class AllAlbumScreen extends StatefulWidget {
 
 class _AllAlbumScreenState extends State<AllAlbumScreen>
     with TickerProviderStateMixin {
-  AnimationController? animationController;
   @override
   void initState() {
     super.initState();
-  }
-
-  @override
-  void dispose() {
-    animationController!.dispose();
-    super.dispose();
   }
 
   TextEditingController searchController = TextEditingController();
@@ -116,7 +109,8 @@ class _AllAlbumScreenState extends State<AllAlbumScreen>
 
                       if (result != null) {
                         Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => AlbumDetailScreen(album: result)));
+                            builder: (context) =>
+                                AlbumDetailScreen(album: result)));
                       }
                     },
                     child: Text(

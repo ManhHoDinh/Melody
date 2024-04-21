@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:melody/melody/presentations/library/all_playlist_screen.dart';
 import 'package:melody/melody/presentations/screens/Discovery/discovery_screen.dart';
 import 'package:melody/melody/presentations/screens/Home/home_screen.dart';
 import 'package:melody/melody/presentations/screens/album/all_album.dart';
@@ -113,6 +114,15 @@ class _BottomHomeScreenState extends State<BottomHomeScreen>
                 });
               });
             } else if (index == 3) {
+              animationController?.reverse().then<dynamic>((data) {
+                if (!mounted) {
+                  return;
+                }
+                setState(() {
+                  tabBody = AllPlaylistScreen();
+                });
+              });
+            } else if (index == 4) {
               animationController?.reverse().then<dynamic>((data) {
                 if (!mounted) {
                   return;

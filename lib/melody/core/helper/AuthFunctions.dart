@@ -122,7 +122,7 @@ class AuthServices {
         Id: value['Id'],
         Name: value['Name'],
         Email: value['Email'],
-        position: value['position'],
+        // position: value['position'],
       );
     });
   }

@@ -1,29 +1,49 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'package:melody/melody/controller/songController.dart';
 import 'package:melody/melody/core/constants/color_palatte.dart';
 import 'package:melody/melody/core/models/firebase/playlist_request.dart';
 import 'package:melody/melody/core/models/playlist/playlist.dart';
+import 'package:melody/melody/core/models/song/song.dart';
 import 'package:melody/melody/presentations/library/edit_playlist_screen.dart';
+import 'package:melody/melody/presentations/library/widgets/song_sheet.dart';
+import 'package:melody/melody/presentations/screens/artist/widgets/song_item.dart';
+import 'package:melody/melody/presentations/screens/playing/playing.dart';
+import 'package:melody/melody/presentations/screens/playing/playlist_provider.dart';
 import 'package:melody/melody/presentations/widgets/appbar_widget.dart';
+import 'package:provider/provider.dart';
 
 class DetailPlaylistScreen extends StatefulWidget {
-  const DetailPlaylistScreen({super.key});
+  final Playlist playlist;
+  const DetailPlaylistScreen({super.key, required this.playlist});
 
   @override
   State<DetailPlaylistScreen> createState() => _DetailPlaylistScreenState();
 }
 
 class _DetailPlaylistScreenState extends State<DetailPlaylistScreen> {
+  SongController songController = Get.find();
+  late PlaylistProvider playlistProvider;
+  List<Song> songInAlbum = [];
+  List<Song> songNotInAlbum = [];
+  bool canModify = false;
+  @override
+  void initState() {
+    super.initState();
+    playlistProvider = Provider.of<PlaylistProvider>(context, listen: false);
+  }
+
   @override
   Widget build(BuildContext context) {
-    String id = Get.arguments;
+    songController.updateSongOfPlaylist(widget.playlist.id);
     return Scaffold(
       appBar: AppbarWidget(
         'Playlist',
       ),
       body: FutureBuilder<Playlist>(
-          future: PlaylistRequest.getById(id),
+          future: PlaylistRequest.getById(widget.playlist.id),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               return Padding(
@@ -71,7 +91,9 @@ class _DetailPlaylistScreenState extends State<DetailPlaylistScreen> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             IconButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  _playAll();
+                                },
                                 icon: Icon(
                                   Icons.play_circle,
                                   size: 60,
@@ -102,7 +124,7 @@ class _DetailPlaylistScreenState extends State<DetailPlaylistScreen> {
                                 IconButton(
                                     onPressed: () {
                                       Get.to(EditPlaylistScreen(),
-                                          arguments: id);
+                                          arguments: widget.playlist.id);
                                     },
                                     icon: Icon(
                                       Icons.edit,
@@ -132,7 +154,42 @@ class _DetailPlaylistScreenState extends State<DetailPlaylistScreen> {
                               fontSize: 16, fontWeight: FontWeight.w600),
                         )
                       ],
-                    )
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 40),
+                      child: ElevatedButton(
+                          onPressed: () {
+                            Get.bottomSheet(
+                                isScrollControlled: true,
+                                SongSheet(
+                                  playlistId: widget.playlist.id,
+                                ));
+                          },
+                          child: Text(
+                            'Add song to this playlist',
+                            style: TextStyle(fontSize: 16, color: Colors.white),
+                          ),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: ColorPalette.primaryColor,
+                          )),
+                    ),
+                    Obx(() {
+                      return Expanded(
+                          child: ListView.separated(
+                              itemBuilder: (context, index) => SongItem(
+                                    onTap: () {
+                                      _onSongInAlbumTap(
+                                          songController.songOfPlaylist[index]);
+                                    },
+                                    isInPlaylist: true,
+                                    playlistId: widget.playlist.id,
+                                    song: songController.songOfPlaylist[index],
+                                  ),
+                              separatorBuilder: (context, index) => SizedBox(
+                                    height: 10,
+                                  ),
+                              itemCount: songController.songOfPlaylist.length));
+                    })
                   ],
                 ),
               );
@@ -140,5 +197,25 @@ class _DetailPlaylistScreenState extends State<DetailPlaylistScreen> {
             return Container();
           }),
     );
+  }
+
+  void _playAll() {
+    List<Song> copiedSongList = List.from(songController.songOfPlaylist);
+    playlistProvider.playlist.clear();
+    playlistProvider.setPlaylist(copiedSongList);
+    playlistProvider.playAllFromIndex(0);
+    Navigator.of(context).pushNamed(Playing.routeName);
+  }
+
+  void _onSongInAlbumTap(Song song) {
+    List<Song> copiedSongList = List.from(songController.songOfPlaylist);
+
+    // Set the copiedSongList to the playlistProvider
+    playlistProvider.playlist.clear();
+    playlistProvider.setPlaylist(copiedSongList);
+
+    // Set the currentSongIndex and navigate to the playing screen
+    playlistProvider.currentSongIndex = copiedSongList.indexOf(song);
+    Navigator.of(context).pushNamed(Playing.routeName);
   }
 }

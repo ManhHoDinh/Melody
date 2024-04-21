@@ -17,13 +17,24 @@ class SongRequest {
     Song song = Song.fromJson(doc.data()!);
     return Future.value(song);
   }
-  static List<Song> AllSongs = [];
-  
-  static Stream<List<Song>> getAllSongs() =>
-      FirebaseFirestore.instance
-          .collection('Songs')
-          .snapshots()
-          .map((event) =>
-              event.docs.map((e) => Song.fromJson(e.data())).toList());
 
+  static List<Song> AllSongs = [];
+
+  static List<Timestamp> _sendAtToJson(List<DateTime> times) =>
+      times.map((time) => Timestamp.fromDate(time)).toList();
+  static Stream<List<Song>> getAllSongs() => FirebaseFirestore.instance
+      .collection('Songs')
+      .snapshots()
+      .map((event) => event.docs.map((e) => Song.fromJson(e.data())).toList());
+  static Future<void> updateCount(String songId) async {
+    var songDoc =
+        await FirebaseFirestore.instance.collection('Songs').doc(songId).get();
+    Song song = Song.fromJson(songDoc.data()!);
+    List<DateTime> times = song.times;
+    times.add(DateTime.now());
+    FirebaseFirestore.instance
+        .collection('Songs')
+        .doc(songId)
+        .update({"times": _sendAtToJson(times)});
+  }
 }

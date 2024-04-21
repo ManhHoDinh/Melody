@@ -25,6 +25,8 @@ mixin _$Song {
   String get songName => throw _privateConstructorUsedError;
   String get artistName => throw _privateConstructorUsedError;
   String get songImagePath => throw _privateConstructorUsedError;
+  @JsonKey(name: "times", fromJson: _sendAtFromJson, toJson: _sendAtToJson)
+  List<DateTime> get times => throw _privateConstructorUsedError;
   String get audioPath => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -43,6 +45,8 @@ abstract class $SongCopyWith<$Res> {
       String songName,
       String artistName,
       String songImagePath,
+      @JsonKey(name: "times", fromJson: _sendAtFromJson, toJson: _sendAtToJson)
+      List<DateTime> times,
       String audioPath});
 }
 
@@ -64,6 +68,7 @@ class _$SongCopyWithImpl<$Res, $Val extends Song>
     Object? songName = null,
     Object? artistName = null,
     Object? songImagePath = null,
+    Object? times = null,
     Object? audioPath = null,
   }) {
     return _then(_value.copyWith(
@@ -87,6 +92,10 @@ class _$SongCopyWithImpl<$Res, $Val extends Song>
           ? _value.songImagePath
           : songImagePath // ignore: cast_nullable_to_non_nullable
               as String,
+      times: null == times
+          ? _value.times
+          : times // ignore: cast_nullable_to_non_nullable
+              as List<DateTime>,
       audioPath: null == audioPath
           ? _value.audioPath
           : audioPath // ignore: cast_nullable_to_non_nullable
@@ -108,6 +117,8 @@ abstract class _$$SongImplCopyWith<$Res> implements $SongCopyWith<$Res> {
       String songName,
       String artistName,
       String songImagePath,
+      @JsonKey(name: "times", fromJson: _sendAtFromJson, toJson: _sendAtToJson)
+      List<DateTime> times,
       String audioPath});
 }
 
@@ -126,6 +137,7 @@ class __$$SongImplCopyWithImpl<$Res>
     Object? songName = null,
     Object? artistName = null,
     Object? songImagePath = null,
+    Object? times = null,
     Object? audioPath = null,
   }) {
     return _then(_$SongImpl(
@@ -149,6 +161,10 @@ class __$$SongImplCopyWithImpl<$Res>
           ? _value.songImagePath
           : songImagePath // ignore: cast_nullable_to_non_nullable
               as String,
+      times: null == times
+          ? _value._times
+          : times // ignore: cast_nullable_to_non_nullable
+              as List<DateTime>,
       audioPath: null == audioPath
           ? _value.audioPath
           : audioPath // ignore: cast_nullable_to_non_nullable
@@ -162,11 +178,14 @@ class __$$SongImplCopyWithImpl<$Res>
 class _$SongImpl implements _Song {
   const _$SongImpl(
       {required this.songId,
-      required this.artistId,
-      required this.songName,
-      required this.artistName,
-      required this.songImagePath,
-      required this.audioPath});
+      this.artistId = "",
+      this.songName = "",
+      this.artistName = "",
+      this.songImagePath = "",
+      @JsonKey(name: "times", fromJson: _sendAtFromJson, toJson: _sendAtToJson)
+      final List<DateTime> times = const [],
+      this.audioPath = ""})
+      : _times = times;
 
   factory _$SongImpl.fromJson(Map<String, dynamic> json) =>
       _$$SongImplFromJson(json);
@@ -174,19 +193,33 @@ class _$SongImpl implements _Song {
   @override
   final String songId;
   @override
+  @JsonKey()
   final String artistId;
   @override
+  @JsonKey()
   final String songName;
   @override
+  @JsonKey()
   final String artistName;
   @override
+  @JsonKey()
   final String songImagePath;
+  final List<DateTime> _times;
   @override
+  @JsonKey(name: "times", fromJson: _sendAtFromJson, toJson: _sendAtToJson)
+  List<DateTime> get times {
+    if (_times is EqualUnmodifiableListView) return _times;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_times);
+  }
+
+  @override
+  @JsonKey()
   final String audioPath;
 
   @override
   String toString() {
-    return 'Song(songId: $songId, artistId: $artistId, songName: $songName, artistName: $artistName, songImagePath: $songImagePath, audioPath: $audioPath)';
+    return 'Song(songId: $songId, artistId: $artistId, songName: $songName, artistName: $artistName, songImagePath: $songImagePath, times: $times, audioPath: $audioPath)';
   }
 
   @override
@@ -203,14 +236,22 @@ class _$SongImpl implements _Song {
                 other.artistName == artistName) &&
             (identical(other.songImagePath, songImagePath) ||
                 other.songImagePath == songImagePath) &&
+            const DeepCollectionEquality().equals(other._times, _times) &&
             (identical(other.audioPath, audioPath) ||
                 other.audioPath == audioPath));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, songId, artistId, songName,
-      artistName, songImagePath, audioPath);
+  int get hashCode => Object.hash(
+      runtimeType,
+      songId,
+      artistId,
+      songName,
+      artistName,
+      songImagePath,
+      const DeepCollectionEquality().hash(_times),
+      audioPath);
 
   @JsonKey(ignore: true)
   @override
@@ -229,11 +270,13 @@ class _$SongImpl implements _Song {
 abstract class _Song implements Song {
   const factory _Song(
       {required final String songId,
-      required final String artistId,
-      required final String songName,
-      required final String artistName,
-      required final String songImagePath,
-      required final String audioPath}) = _$SongImpl;
+      final String artistId,
+      final String songName,
+      final String artistName,
+      final String songImagePath,
+      @JsonKey(name: "times", fromJson: _sendAtFromJson, toJson: _sendAtToJson)
+      final List<DateTime> times,
+      final String audioPath}) = _$SongImpl;
 
   factory _Song.fromJson(Map<String, dynamic> json) = _$SongImpl.fromJson;
 
@@ -247,6 +290,9 @@ abstract class _Song implements Song {
   String get artistName;
   @override
   String get songImagePath;
+  @override
+  @JsonKey(name: "times", fromJson: _sendAtFromJson, toJson: _sendAtToJson)
+  List<DateTime> get times;
   @override
   String get audioPath;
   @override
