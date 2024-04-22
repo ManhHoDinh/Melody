@@ -214,11 +214,12 @@ class _ComposerPageState extends State<ComposerPage> {
                                 child: ListView.builder(
                                   itemCount: songList!.length,
                                   itemBuilder: (context, index) {
-                                    return GestureDetector(
+                                    return SongItem(
+                                      song: songList![index],
                                       onTap: () {
+                                        print('hha');
                                         _onSongTap(index);
                                       },
-                                      child: SongItem(song: songList![index]),
                                     );
                                   },
                                 ),

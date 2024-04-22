@@ -30,7 +30,7 @@ class SongRequest {
     var songDoc =
         await FirebaseFirestore.instance.collection('Songs').doc(songId).get();
     Song song = Song.fromJson(songDoc.data()!);
-    List<DateTime> times = song.times;
+    List<DateTime> times = List.from(song.times);
     times.add(DateTime.now());
     FirebaseFirestore.instance
         .collection('Songs')
