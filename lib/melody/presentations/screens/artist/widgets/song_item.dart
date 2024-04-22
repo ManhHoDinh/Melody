@@ -33,7 +33,7 @@ class SongItem extends StatelessWidget {
           ),
           GestureDetector(
             onTap: () {
-              if (isInPlaylist != null) onTap!();
+              onTap!();
             },
             child: Row(
               children: [
