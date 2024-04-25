@@ -1,10 +1,12 @@
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:melody/melody/controller/songController.dart';
 import 'package:melody/melody/core/helper/firebase_helper.dart';
 import 'package:melody/melody/core/models/firebase/playlist_request.dart';
+import 'package:melody/melody/core/models/playlist/playlist.dart';
 import 'package:melody/melody/core/models/song/song.dart';
 import 'package:melody/melody/presentations/screens/playing/playlist_provider.dart';
 import 'package:provider/provider.dart';
@@ -13,18 +15,23 @@ class SongItem extends StatelessWidget {
   Song song;
   PlaylistProvider? playlistProvider;
   bool? isInPlaylist;
+  String? playlistType;
   Function? onTap = () {};
   String? playlistId;
   SongItem(
       {super.key,
       required this.song,
       this.isInPlaylist,
+      this.playlistType,
       this.playlistId,
       this.onTap});
 
   @override
   Widget build(BuildContext context) {
     playlistProvider = Provider.of<PlaylistProvider>(context, listen: false);
+
+    SongController songController = Get.find();
+    songController.initFavoriteSong();
     return Container(
       child: Column(
         children: [
@@ -36,45 +43,70 @@ class SongItem extends StatelessWidget {
               onTap!();
             },
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                FadeInImage(
-                  placeholder: AssetImage("assets/images/defaultartwork.jpg"),
-                  image: NetworkImage(song.songImagePath),
-                  width: 49,
-                  height: 49,
-                  fit: BoxFit.cover,
+                Row(
+                  children: [
+                    FadeInImage(
+                      placeholder:
+                          AssetImage("assets/images/defaultartwork.jpg"),
+                      image: NetworkImage(song.songImagePath),
+                      width: 49,
+                      height: 49,
+                      fit: BoxFit.cover,
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Container(
+                      child: Text(
+                        song.songName,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.w500),
+                      ),
+                    ),
+                  ],
                 ),
-                SizedBox(
-                  width: 10,
-                ),
-                Container(
-                  width: 210,
-                  child: Text(
-                    song.songName,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
-                  ),
-                ),
-                SizedBox(
-                  width: 10,
-                ),
-                Image.asset(
-                  "assets/images/fav.png",
-                  height: 21,
-                  width: 21,
-                ),
-                SizedBox(
-                  width: 17,
-                ),
-                GestureDetector(
-                  onTap: () {
-                    _showOptions(context);
-                  },
-                  child: Image.asset(
-                    "assets/images/option.png",
-                    height: 24,
-                    width: 24,
-                  ),
+                Row(
+                  children: [
+                    Obx(() {
+                      return playlistType == null
+                          ? IconButton(
+                              onPressed: () async {
+                                if (songController.favoriteSongs
+                                    .contains(song)) {
+                                  await PlaylistRequest.removeSongFromFavorite(
+                                      song.songId);
+                                  songController.initFavoriteSong();
+                                } else {
+                                  await PlaylistRequest.addSongToFavorite(
+                                      song.songId);
+                                  songController.initFavoriteSong();
+                                }
+                              },
+                              icon: Icon(Icons.favorite,
+                                  size: 21,
+                                  color: songController.favoriteSongs
+                                          .contains(song)
+                                      ? Colors.red
+                                      : Colors.black))
+                          : Container();
+                    }),
+                    SizedBox(
+                      width: 17,
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        _showOptions(context);
+                      },
+                      child: Image.asset(
+                        "assets/images/option.png",
+                        height: 24,
+                        width: 24,
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),

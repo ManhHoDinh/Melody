@@ -22,25 +22,24 @@ class _AllPlaylistScreenState extends State<AllPlaylistScreen> {
   TextEditingController nameController = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    print(FirebaseHelper.userId);
     return Scaffold(
         appBar: AppBar(
-        title: RichText(
-          text: const TextSpan(
-            text: 'Libr',
-            style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: Color(0xff6D0B14)),
-            children: <TextSpan>[
-              TextSpan(
-                text: 'aries',
-                style: TextStyle(fontSize: 20, color: Color(0xff4059F1)),
-              ),
-            ],
+          title: RichText(
+            text: const TextSpan(
+              text: 'Libr',
+              style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Color(0xff6D0B14)),
+              children: <TextSpan>[
+                TextSpan(
+                  text: 'aries',
+                  style: TextStyle(fontSize: 20, color: Color(0xff4059F1)),
+                ),
+              ],
+            ),
           ),
-          
-        ),
-       
           centerTitle: true,
           actions: [
             IconButton(
@@ -77,6 +76,7 @@ class _AllPlaylistScreenState extends State<AllPlaylistScreen> {
                                 Playlist playlist = Playlist(
                                   name: nameController.value.text,
                                   id: id,
+                                  userId: FirebaseHelper.userId,
                                   image:
                                       "https://firebasestorage.googleapis.com/v0/b/melody-bf3aa.appspot.com/o/images%2Fdefault_playlist.png?alt=media&token=9912901b-1122-4e73-9046-ce6c1238abc8",
                                 );
@@ -104,7 +104,7 @@ class _AllPlaylistScreenState extends State<AllPlaylistScreen> {
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: StreamBuilder<List<Playlist>>(
-                    stream: PlaylistRequest.getAll(),
+                    stream: PlaylistRequest.getAll(FirebaseHelper.userId),
                     builder: (context, snapshot) {
                       if (snapshot.hasData)
                         return ListView.separated(
