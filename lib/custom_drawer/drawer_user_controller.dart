@@ -53,7 +53,9 @@ class _DrawerUserControllerState extends State<DrawerUserController>
             setState(() {
               scrolloffset = 1.0;
               try {
-                widget.drawerIsOpen!(true);
+                if (widget.drawerIsOpen != null) {
+                  widget.drawerIsOpen!(true);
+                }
               } catch (_) {}
             });
           }
@@ -71,7 +73,9 @@ class _DrawerUserControllerState extends State<DrawerUserController>
             setState(() {
               scrolloffset = 0.0;
               try {
-                widget.drawerIsOpen!(false);
+                if (widget.drawerIsOpen != null) {
+                  widget.drawerIsOpen!(true);
+                }
               } catch (_) {}
             });
           }

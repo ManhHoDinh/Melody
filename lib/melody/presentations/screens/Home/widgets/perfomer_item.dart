@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:melody/melody/core/models/composer/composer.dart';
@@ -12,12 +13,13 @@ class PerfomerItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: Column(
-        mainAxisSize: MainAxisSize.max,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
+        // mainAxisSize: MainAxisSize.max,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Flexible(
+          Align(
+            alignment: Alignment.center,
             child: Container(
-              width: 80,
+              width: 70,
               height: 70,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
@@ -28,6 +30,9 @@ class PerfomerItem extends StatelessWidget {
               ),
             ),
           ),
+          SizedBox(
+            height: 6,
+          ),
           Align(
             alignment: Alignment.center,
             child: Text(
@@ -35,7 +40,7 @@ class PerfomerItem extends StatelessWidget {
               style: TextStyle(
                   fontWeight: FontWeight.w600,
                   fontSize: 14,
-                  color: Colors.white),
+                  color: Colors.black),
             ),
           ),
         ],

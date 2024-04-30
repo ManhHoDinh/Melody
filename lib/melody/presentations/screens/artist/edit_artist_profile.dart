@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -9,8 +10,8 @@ import 'package:get/get.dart';
 import 'package:melody/melody/core/helper/firebase_helper.dart';
 import 'package:melody/melody/core/models/artist/artist.dart';
 import 'package:melody/melody/core/models/firebase/artist_request.dart';
-import 'package:melody/melody/presentations/screens/artist/widgets/custom_button.dart';
-import 'package:melody/melody/presentations/screens/artist/widgets/custom_textfield.dart';
+import 'package:melody/melody/presentations/widgets/custom_button.dart';
+import 'package:melody/melody/presentations/widgets/custom_textfield.dart';
 import 'package:path/path.dart' as path;
 
 class EditArtist extends StatefulWidget {
@@ -100,7 +101,7 @@ class _EditArtistState extends State<EditArtist> {
                         maxLines: 1,
                         controller: nameController,
                         readOnly: false,
-                        hintText: "Name your song",
+                        hintText: "Enter your artist name",
                       ),
                       SizedBox(
                         height: 13,
@@ -147,7 +148,7 @@ class _EditArtistState extends State<EditArtist> {
                                     width: 209,
                                   )
                                 : Image.file(
-                                    File(choosedImage!.path!),
+                                    File(choosedImage!.path),
                                     width: 209,
                                     height: 209,
                                     fit: BoxFit.cover,
@@ -226,8 +227,22 @@ class _EditArtistState extends State<EditArtist> {
                                     .whenComplete(
                                         () => Navigator.of(context).pop());
 
+                                Map<String, dynamic> updatedArtistName = {
+                                  'artistName': nameController.text
+                                };
+
+                                QuerySnapshot songsQuery = await FirebaseHelper
+                                    .songCollection
+                                    .where('artistId', isEqualTo: artistId)
+                                    .get();
+
+                                songsQuery.docs.forEach((songDoc) {
+                                  songDoc.reference.update(
+                                      {'artistName': nameController.text});
+                                });
+
                                 Fluttertoast.showToast(
-                                    msg: "Upload artist profile successfully!");
+                                    msg: "Update artist profile successfully!");
 
                                 Get.back();
                               } catch (e) {

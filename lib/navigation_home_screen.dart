@@ -6,6 +6,7 @@ import 'package:melody/help_screen.dart';
 import 'package:melody/home_screen.dart';
 import 'package:melody/invite_friend_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:melody/melody/presentations/screens/Home/home_screen.dart';
 
 class NavigationHomeScreen extends StatefulWidget {
   @override
@@ -19,7 +20,7 @@ class _NavigationHomeScreenState extends State<NavigationHomeScreen> {
   @override
   void initState() {
     drawerIndex = DrawerIndex.HOME;
-    screenView = const MyHomePage();
+    screenView = const HomeScreen();
     super.initState();
   }
 

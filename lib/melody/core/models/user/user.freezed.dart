@@ -23,7 +23,7 @@ mixin _$UserModel {
   String get Id => throw _privateConstructorUsedError;
   String get Name => throw _privateConstructorUsedError;
   String get Email => throw _privateConstructorUsedError;
-  String? get position => throw _privateConstructorUsedError;
+  String get position => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -36,7 +36,7 @@ abstract class $UserModelCopyWith<$Res> {
   factory $UserModelCopyWith(UserModel value, $Res Function(UserModel) then) =
       _$UserModelCopyWithImpl<$Res, UserModel>;
   @useResult
-  $Res call({String Id, String Name, String Email, String? position});
+  $Res call({String Id, String Name, String Email, String position});
 }
 
 /// @nodoc
@@ -55,7 +55,7 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
     Object? Id = null,
     Object? Name = null,
     Object? Email = null,
-    Object? position = freezed,
+    Object? position = null,
   }) {
     return _then(_value.copyWith(
       Id: null == Id
@@ -70,10 +70,10 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
           ? _value.Email
           : Email // ignore: cast_nullable_to_non_nullable
               as String,
-      position: freezed == position
+      position: null == position
           ? _value.position
           : position // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
     ) as $Val);
   }
 }
@@ -86,7 +86,7 @@ abstract class _$$UserModelImplCopyWith<$Res>
       __$$UserModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String Id, String Name, String Email, String? position});
+  $Res call({String Id, String Name, String Email, String position});
 }
 
 /// @nodoc
@@ -103,7 +103,7 @@ class __$$UserModelImplCopyWithImpl<$Res>
     Object? Id = null,
     Object? Name = null,
     Object? Email = null,
-    Object? position = freezed,
+    Object? position = null,
   }) {
     return _then(_$UserModelImpl(
       Id: null == Id
@@ -118,10 +118,10 @@ class __$$UserModelImplCopyWithImpl<$Res>
           ? _value.Email
           : Email // ignore: cast_nullable_to_non_nullable
               as String,
-      position: freezed == position
+      position: null == position
           ? _value.position
           : position // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
     ));
   }
 }
@@ -133,7 +133,7 @@ class _$UserModelImpl with DiagnosticableTreeMixin implements _UserModel {
       {required this.Id,
       required this.Name,
       required this.Email,
-      this.position});
+      this.position = ""});
 
   factory _$UserModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$UserModelImplFromJson(json);
@@ -145,7 +145,8 @@ class _$UserModelImpl with DiagnosticableTreeMixin implements _UserModel {
   @override
   final String Email;
   @override
-  final String? position;
+  @JsonKey()
+  final String position;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
@@ -198,7 +199,7 @@ abstract class _UserModel implements UserModel {
       {required final String Id,
       required final String Name,
       required final String Email,
-      final String? position}) = _$UserModelImpl;
+      final String position}) = _$UserModelImpl;
 
   factory _UserModel.fromJson(Map<String, dynamic> json) =
       _$UserModelImpl.fromJson;
@@ -210,7 +211,7 @@ abstract class _UserModel implements UserModel {
   @override
   String get Email;
   @override
-  String? get position;
+  String get position;
   @override
   @JsonKey(ignore: true)
   _$$UserModelImplCopyWith<_$UserModelImpl> get copyWith =>

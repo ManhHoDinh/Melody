@@ -1,6 +1,7 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:melody/melody/core/models/firebase/song_request.dart';
 import 'package:melody/melody/core/models/song/song.dart';
 import 'dart:math';
 
@@ -19,7 +20,7 @@ class PlaylistProvider extends ChangeNotifier {
   bool _isRepeatOne = false;
   // Biến để lưu trữ thông tin của bài hát đang phát
   Song? _currentSong;
-
+  bool isNearEnd = false;
   // AUDIO PLAYER
 
   // audio player
@@ -40,11 +41,7 @@ class PlaylistProvider extends ChangeNotifier {
   void shufflePlaylist() {
     _playlist.clear();
     _playlist.addAll(List<Song>.from(_originalPlaylist)..shuffle());
-    print(playlist[0].songName +
-        "\n" +
-        playlist[1].songName +
-        "\n" +
-        playlist[2].songName);
+
     notifyListeners();
   }
 
@@ -179,12 +176,20 @@ class PlaylistProvider extends ChangeNotifier {
 
     // listen for current duration
     _audioPlayer.onPositionChanged.listen((newPosition) {
+      if (newPosition.inSeconds - _currentDuration.inSeconds > 10) {
+        isNearEnd = true;
+      } else {
+        isNearEnd = false;
+      }
       _currentDuration = newPosition;
       notifyListeners();
     });
 
     // listen for song completion
     _audioPlayer.onPlayerComplete.listen((event) {
+      print(playlist[currentSongIndex!].songId);
+      if (isNearEnd) {}
+      SongRequest.updateCount(playlist[currentSongIndex!].songId);
       if (_isRepeatOne) {
         // if repeat mode is on, repeat the current song
         currentSongIndex = _currentSongIndex;
@@ -203,6 +208,7 @@ class PlaylistProvider extends ChangeNotifier {
   bool get isPlaying => _isPlaying;
   Duration get currentDuration => _currentDuration;
   Duration get totalDuration => _totalDuration;
+  AudioPlayer get audioPlayer => _audioPlayer;
   bool get isShuffle => _isShuffle;
   // RepeatMode get repeatMode => _repeatMode;
   bool get isRepeatOne => _isRepeatOne;

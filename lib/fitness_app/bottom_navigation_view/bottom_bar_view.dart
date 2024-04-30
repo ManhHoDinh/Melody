@@ -32,6 +32,12 @@ class _BottomBarViewState extends State<BottomBarView>
     animationController?.forward();
     super.initState();
   }
+  @override
+  void dispose() {
+    animationController?.dispose();
+    super.dispose();
+  }
+
 
   @override
   Widget build(BuildContext context) {

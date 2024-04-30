@@ -8,12 +8,14 @@ import 'package:melody/melody/core/models/firebase/artist_request.dart';
 import 'package:melody/melody/core/models/firebase/song_request.dart';
 import 'package:melody/melody/core/models/song/song.dart';
 import 'package:melody/melody/presentations/screens/artist/upload_song_page.dart';
-import 'package:melody/melody/presentations/screens/artist/widgets/edit_button.dart';
-import 'package:melody/melody/presentations/screens/artist/widgets/play_all_button.dart';
+import 'package:melody/melody/presentations/widgets/edit_button.dart';
+import 'package:melody/melody/presentations/widgets/play_all_button.dart';
 import 'package:melody/melody/presentations/screens/artist/widgets/song_item.dart';
-import 'package:melody/melody/presentations/screens/artist/widgets/upload_button.dart';
+import 'package:melody/melody/presentations/widgets/upload_button.dart';
 import 'package:melody/melody/presentations/screens/playing/playlist_provider.dart';
 import 'package:provider/provider.dart';
+
+import '../playing/playing.dart';
 
 class ArtistPage extends StatefulWidget {
   ArtistPage({Key? key}) : super(key: key);
@@ -73,11 +75,18 @@ class _ArtistPageState extends State<ArtistPage> {
                           children: [
                             ClipRRect(
                               borderRadius: BorderRadius.circular(360),
-                              child: Image.network(
-                                artist.avatar,
+                              child: FadeInImage(
+                                placeholder: AssetImage(
+                                    "assets/images/default-avatar.jpg"),
+                                image: NetworkImage(artist.avatar),
                                 height: 120,
                                 width: 120,
                               ),
+                              // child: Image.network(
+                              //  ,
+                              //   height: 120,
+                              //   width: 120,
+                              // ),
                             ),
                             SizedBox(width: 24),
                             Column(
@@ -108,7 +117,10 @@ class _ArtistPageState extends State<ArtistPage> {
                             Spacer(),
                             GestureDetector(
                               onTap: () {
-                                Get.toNamed('/uploadSong');
+                                Get.toNamed('/uploadSong', arguments: {
+                                  'authorId': artistId,
+                                  'authorName': artist.artistName
+                                });
                               },
                               child: UploadButton(),
                             ),
@@ -204,7 +216,7 @@ class _ArtistPageState extends State<ArtistPage> {
     if (playlistProvider != null && songList != null) {
       List<Song> copiedSongList = List.from(songList!);
       playlistProvider.playlist.clear();
-      playlistProvider.setPlaylist(copiedSongList!);
+      playlistProvider.setPlaylist(copiedSongList);
       playlistProvider.playAllFromIndex(0);
       Get.toNamed('/playing');
     }
@@ -221,7 +233,7 @@ class _ArtistPageState extends State<ArtistPage> {
 
       // Set the currentSongIndex and navigate to the playing screen
       playlistProvider.currentSongIndex = index;
-      Get.toNamed('/playing');
+      Navigator.of(context).pushNamed(Playing.routeName);
     }
   }
 }

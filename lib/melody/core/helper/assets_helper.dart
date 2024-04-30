@@ -32,4 +32,7 @@ class AssetHelper {
   static const String icoTab3s = imgAssets + 'tab3s.png';
   static const String icoTab4 = imgAssets + 'tab4.png';
   static const String icoTab4s = imgAssets + 'tab4s.png';
+  static const String playlistIcon = imgAssets + 'playlist_icon.png';
+  static const String selectedPlaylistIcon =
+      imgAssets + 'selected_playlist_icon.png';
 }

@@ -20,10 +20,10 @@ Composer _$ComposerFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Composer {
-  String get name => throw _privateConstructorUsedError;
-  int get id => throw _privateConstructorUsedError;
-  String get music => throw _privateConstructorUsedError;
-  String get image => throw _privateConstructorUsedError;
+  String get composerId => throw _privateConstructorUsedError;
+  String get composerName => throw _privateConstructorUsedError;
+  String get about => throw _privateConstructorUsedError;
+  String get portrait => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -36,7 +36,8 @@ abstract class $ComposerCopyWith<$Res> {
   factory $ComposerCopyWith(Composer value, $Res Function(Composer) then) =
       _$ComposerCopyWithImpl<$Res, Composer>;
   @useResult
-  $Res call({String name, int id, String music, String image});
+  $Res call(
+      {String composerId, String composerName, String about, String portrait});
 }
 
 /// @nodoc
@@ -52,27 +53,27 @@ class _$ComposerCopyWithImpl<$Res, $Val extends Composer>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? name = null,
-    Object? id = null,
-    Object? music = null,
-    Object? image = null,
+    Object? composerId = null,
+    Object? composerName = null,
+    Object? about = null,
+    Object? portrait = null,
   }) {
     return _then(_value.copyWith(
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
+      composerId: null == composerId
+          ? _value.composerId
+          : composerId // ignore: cast_nullable_to_non_nullable
               as String,
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int,
-      music: null == music
-          ? _value.music
-          : music // ignore: cast_nullable_to_non_nullable
+      composerName: null == composerName
+          ? _value.composerName
+          : composerName // ignore: cast_nullable_to_non_nullable
               as String,
-      image: null == image
-          ? _value.image
-          : image // ignore: cast_nullable_to_non_nullable
+      about: null == about
+          ? _value.about
+          : about // ignore: cast_nullable_to_non_nullable
+              as String,
+      portrait: null == portrait
+          ? _value.portrait
+          : portrait // ignore: cast_nullable_to_non_nullable
               as String,
     ) as $Val);
   }
@@ -86,7 +87,8 @@ abstract class _$$ComposerImplCopyWith<$Res>
       __$$ComposerImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String name, int id, String music, String image});
+  $Res call(
+      {String composerId, String composerName, String about, String portrait});
 }
 
 /// @nodoc
@@ -100,27 +102,27 @@ class __$$ComposerImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? name = null,
-    Object? id = null,
-    Object? music = null,
-    Object? image = null,
+    Object? composerId = null,
+    Object? composerName = null,
+    Object? about = null,
+    Object? portrait = null,
   }) {
     return _then(_$ComposerImpl(
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
+      composerId: null == composerId
+          ? _value.composerId
+          : composerId // ignore: cast_nullable_to_non_nullable
               as String,
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int,
-      music: null == music
-          ? _value.music
-          : music // ignore: cast_nullable_to_non_nullable
+      composerName: null == composerName
+          ? _value.composerName
+          : composerName // ignore: cast_nullable_to_non_nullable
               as String,
-      image: null == image
-          ? _value.image
-          : image // ignore: cast_nullable_to_non_nullable
+      about: null == about
+          ? _value.about
+          : about // ignore: cast_nullable_to_non_nullable
+              as String,
+      portrait: null == portrait
+          ? _value.portrait
+          : portrait // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
@@ -130,26 +132,26 @@ class __$$ComposerImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$ComposerImpl with DiagnosticableTreeMixin implements _Composer {
   const _$ComposerImpl(
-      {required this.name,
-      required this.id,
-      required this.music,
-      required this.image});
+      {required this.composerId,
+      required this.composerName,
+      required this.about,
+      required this.portrait});
 
   factory _$ComposerImpl.fromJson(Map<String, dynamic> json) =>
       _$$ComposerImplFromJson(json);
 
   @override
-  final String name;
+  final String composerId;
   @override
-  final int id;
+  final String composerName;
   @override
-  final String music;
+  final String about;
   @override
-  final String image;
+  final String portrait;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Composer(name: $name, id: $id, music: $music, image: $image)';
+    return 'Composer(composerId: $composerId, composerName: $composerName, about: $about, portrait: $portrait)';
   }
 
   @override
@@ -157,10 +159,10 @@ class _$ComposerImpl with DiagnosticableTreeMixin implements _Composer {
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'Composer'))
-      ..add(DiagnosticsProperty('name', name))
-      ..add(DiagnosticsProperty('id', id))
-      ..add(DiagnosticsProperty('music', music))
-      ..add(DiagnosticsProperty('image', image));
+      ..add(DiagnosticsProperty('composerId', composerId))
+      ..add(DiagnosticsProperty('composerName', composerName))
+      ..add(DiagnosticsProperty('about', about))
+      ..add(DiagnosticsProperty('portrait', portrait));
   }
 
   @override
@@ -168,15 +170,19 @@ class _$ComposerImpl with DiagnosticableTreeMixin implements _Composer {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ComposerImpl &&
-            (identical(other.name, name) || other.name == name) &&
-            (identical(other.id, id) || other.id == id) &&
-            (identical(other.music, music) || other.music == music) &&
-            (identical(other.image, image) || other.image == image));
+            (identical(other.composerId, composerId) ||
+                other.composerId == composerId) &&
+            (identical(other.composerName, composerName) ||
+                other.composerName == composerName) &&
+            (identical(other.about, about) || other.about == about) &&
+            (identical(other.portrait, portrait) ||
+                other.portrait == portrait));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, name, id, music, image);
+  int get hashCode =>
+      Object.hash(runtimeType, composerId, composerName, about, portrait);
 
   @JsonKey(ignore: true)
   @override
@@ -194,22 +200,22 @@ class _$ComposerImpl with DiagnosticableTreeMixin implements _Composer {
 
 abstract class _Composer implements Composer {
   const factory _Composer(
-      {required final String name,
-      required final int id,
-      required final String music,
-      required final String image}) = _$ComposerImpl;
+      {required final String composerId,
+      required final String composerName,
+      required final String about,
+      required final String portrait}) = _$ComposerImpl;
 
   factory _Composer.fromJson(Map<String, dynamic> json) =
       _$ComposerImpl.fromJson;
 
   @override
-  String get name;
+  String get composerId;
   @override
-  int get id;
+  String get composerName;
   @override
-  String get music;
+  String get about;
   @override
-  String get image;
+  String get portrait;
   @override
   @JsonKey(ignore: true)
   _$$ComposerImplCopyWith<_$ComposerImpl> get copyWith =>

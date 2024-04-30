@@ -24,11 +24,24 @@ class _AllPlaylistScreenState extends State<AllPlaylistScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          leading: IconButton(
-            onPressed: () {},
-            icon: Icon(Icons.arrow_back),
+        title: RichText(
+          text: const TextSpan(
+            text: 'Libr',
+            style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: Color(0xff6D0B14)),
+            children: <TextSpan>[
+              TextSpan(
+                text: 'aries',
+                style: TextStyle(fontSize: 20, color: Color(0xff4059F1)),
+              ),
+            ],
           ),
-          title: Text('Library'),
+          
+        ),
+       
+          centerTitle: true,
           actions: [
             IconButton(
                 onPressed: () {
@@ -98,8 +111,8 @@ class _AllPlaylistScreenState extends State<AllPlaylistScreen> {
                             itemBuilder: ((context, index) {
                               return GestureDetector(
                                 onTap: () {
-                                  Get.to(DetailPlaylistScreen(),
-                                      arguments: snapshot.data![index].id);
+                                  Get.to(() => DetailPlaylistScreen(
+                                      playlist: snapshot.data![index]));
                                 },
                                 child: PlaylistItem(
                                   playlist: snapshot.data![index],
