@@ -15,6 +15,7 @@ import 'package:melody/melody/presentations/screens/Home/widgets/composer_item.d
 import 'package:melody/melody/presentations/screens/Home/widgets/event_item.dart';
 import 'package:melody/melody/presentations/screens/Home/widgets/instrument_item.dart';
 import 'package:melody/melody/presentations/screens/Home/widgets/perfomer_item.dart';
+import 'package:melody/melody/presentations/screens/music_recognition/music_recognition_screen.dart';
 import '../../../core/models/instrumentModel/instrumentModel.dart';
 import '../../../core/models/music/music.dart';
 import 'widgets/music_item.dart';
@@ -206,7 +207,15 @@ class _HomeScreenState extends State<HomeScreen>
           
         ),
        centerTitle: true,
-          
+          actions: [IconButton(
+          onPressed: () {
+            Navigator.pushNamed(context, MusicRecognition.routeName);
+            },
+          icon: Icon(
+            Icons.mic,
+            color: ColorPalette.secondColor,
+          ),
+        ),],
         ),
         body: SingleChildScrollView(
           child: Container(
