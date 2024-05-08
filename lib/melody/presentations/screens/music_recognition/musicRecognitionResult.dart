@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:melody/melody/core/models/musicRecognitionResponse/music_recognition.dart';
-import 'package:dio/dio.dart';
-
+import 'dart:io';
+import 'package:http/http.dart' as http;
 class MusicRecognitionResultScreen extends StatefulWidget {
   MusicRecognitionResultScreen({super.key, required this.path});
   String path;
@@ -23,42 +23,36 @@ class _MusicRecognitionResultScreenState
     uploadAudioAndCallAuddAPI(path, apiToken);
   }
 
-  Future<void> uploadAudioAndCallAuddAPI(
-      String filePath, String apiToken) async {
-    // URL provided by the API documentation
-    final String apiUrl = 'https://api.audd.io/';
+Future<void> uploadAudioAndCallAuddAPI(String filePath, String apiToken) async {
+  // URL provided by the API documentation
+  final String apiUrl = 'https://api.audd.io/';
 
-    Dio dio = Dio();
+  // Prepare the API request
+  var uri = Uri.parse(apiUrl);
+  var request = http.MultipartRequest('POST', uri)
+    ..fields['return'] = 'apple_music,spotify'
+    ..fields['api_token'] = apiToken;
 
-    // Prepare the API request
-    FormData formData = FormData.fromMap({
-      'return': 'spotify',
-      'api_token': apiToken,
-      'file': await MultipartFile.fromFile(filePath),
+  // Add the file to the request
+  var file = await http.MultipartFile.fromPath('file', filePath);
+  request.files.add(file);
+
+  // Send the request
+  try {
+    var response = await request.send();
+
+    // Listen for the response
+    response.stream.transform(utf8.decoder).listen((value) {
+      print(value);
+      musicRecognitionResponse=MusicRecognitionResponse.fromJson(jsonDecode(value));
+      // Process the response here. You may want to pass a callback to handle the response.
     });
-
-    // Send the request
-    try {
-      Response response = await dio.post(
-        apiUrl,
-        data: formData,
-      );
-
-      // Process the response
-      setState(() {
-        print(response.data);
-        musicRecognitionResponse =
-            MusicRecognitionResponse.fromJson(jsonDecode(response.data));
-      });
-    } catch (e) {
-      // Handle any exceptions here
-      print('Failed to upload file: $e');
-      setState(() {
-        error = 'Failed to upload file: $e';
-      });
-    }
+  } catch (e) {
+    // Handle any exceptions here
+    print('Failed to upload file: $e');
+    error = 'Failed to upload file: $e';
   }
-
+}
   @override
   Widget build(BuildContext context) {
     return Scaffold(
