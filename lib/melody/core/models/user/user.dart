@@ -10,6 +10,7 @@ class UserModel with _$UserModel {
     required String Name,
     required String Email,
     @Default("") String position,
+    @Default([]) List<String> songIds,
   }) = _UserModel;
 
   factory UserModel.fromJson(Map<String, Object?> json) =>

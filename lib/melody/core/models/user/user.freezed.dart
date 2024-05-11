@@ -24,6 +24,7 @@ mixin _$UserModel {
   String get Name => throw _privateConstructorUsedError;
   String get Email => throw _privateConstructorUsedError;
   String get position => throw _privateConstructorUsedError;
+  List<String> get songIds => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -36,7 +37,12 @@ abstract class $UserModelCopyWith<$Res> {
   factory $UserModelCopyWith(UserModel value, $Res Function(UserModel) then) =
       _$UserModelCopyWithImpl<$Res, UserModel>;
   @useResult
-  $Res call({String Id, String Name, String Email, String position});
+  $Res call(
+      {String Id,
+      String Name,
+      String Email,
+      String position,
+      List<String> songIds});
 }
 
 /// @nodoc
@@ -56,6 +62,7 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
     Object? Name = null,
     Object? Email = null,
     Object? position = null,
+    Object? songIds = null,
   }) {
     return _then(_value.copyWith(
       Id: null == Id
@@ -74,6 +81,10 @@ class _$UserModelCopyWithImpl<$Res, $Val extends UserModel>
           ? _value.position
           : position // ignore: cast_nullable_to_non_nullable
               as String,
+      songIds: null == songIds
+          ? _value.songIds
+          : songIds // ignore: cast_nullable_to_non_nullable
+              as List<String>,
     ) as $Val);
   }
 }
@@ -86,7 +97,12 @@ abstract class _$$UserModelImplCopyWith<$Res>
       __$$UserModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String Id, String Name, String Email, String position});
+  $Res call(
+      {String Id,
+      String Name,
+      String Email,
+      String position,
+      List<String> songIds});
 }
 
 /// @nodoc
@@ -104,6 +120,7 @@ class __$$UserModelImplCopyWithImpl<$Res>
     Object? Name = null,
     Object? Email = null,
     Object? position = null,
+    Object? songIds = null,
   }) {
     return _then(_$UserModelImpl(
       Id: null == Id
@@ -122,6 +139,10 @@ class __$$UserModelImplCopyWithImpl<$Res>
           ? _value.position
           : position // ignore: cast_nullable_to_non_nullable
               as String,
+      songIds: null == songIds
+          ? _value._songIds
+          : songIds // ignore: cast_nullable_to_non_nullable
+              as List<String>,
     ));
   }
 }
@@ -133,7 +154,9 @@ class _$UserModelImpl with DiagnosticableTreeMixin implements _UserModel {
       {required this.Id,
       required this.Name,
       required this.Email,
-      this.position = ""});
+      this.position = "",
+      final List<String> songIds = const []})
+      : _songIds = songIds;
 
   factory _$UserModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$UserModelImplFromJson(json);
@@ -147,10 +170,18 @@ class _$UserModelImpl with DiagnosticableTreeMixin implements _UserModel {
   @override
   @JsonKey()
   final String position;
+  final List<String> _songIds;
+  @override
+  @JsonKey()
+  List<String> get songIds {
+    if (_songIds is EqualUnmodifiableListView) return _songIds;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_songIds);
+  }
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'UserModel(Id: $Id, Name: $Name, Email: $Email, position: $position)';
+    return 'UserModel(Id: $Id, Name: $Name, Email: $Email, position: $position, songIds: $songIds)';
   }
 
   @override
@@ -161,7 +192,8 @@ class _$UserModelImpl with DiagnosticableTreeMixin implements _UserModel {
       ..add(DiagnosticsProperty('Id', Id))
       ..add(DiagnosticsProperty('Name', Name))
       ..add(DiagnosticsProperty('Email', Email))
-      ..add(DiagnosticsProperty('position', position));
+      ..add(DiagnosticsProperty('position', position))
+      ..add(DiagnosticsProperty('songIds', songIds));
   }
 
   @override
@@ -173,12 +205,14 @@ class _$UserModelImpl with DiagnosticableTreeMixin implements _UserModel {
             (identical(other.Name, Name) || other.Name == Name) &&
             (identical(other.Email, Email) || other.Email == Email) &&
             (identical(other.position, position) ||
-                other.position == position));
+                other.position == position) &&
+            const DeepCollectionEquality().equals(other._songIds, _songIds));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, Id, Name, Email, position);
+  int get hashCode => Object.hash(runtimeType, Id, Name, Email, position,
+      const DeepCollectionEquality().hash(_songIds));
 
   @JsonKey(ignore: true)
   @override
@@ -199,7 +233,8 @@ abstract class _UserModel implements UserModel {
       {required final String Id,
       required final String Name,
       required final String Email,
-      final String position}) = _$UserModelImpl;
+      final String position,
+      final List<String> songIds}) = _$UserModelImpl;
 
   factory _UserModel.fromJson(Map<String, dynamic> json) =
       _$UserModelImpl.fromJson;
@@ -212,6 +247,8 @@ abstract class _UserModel implements UserModel {
   String get Email;
   @override
   String get position;
+  @override
+  List<String> get songIds;
   @override
   @JsonKey(ignore: true)
   _$$UserModelImplCopyWith<_$UserModelImpl> get copyWith =>

@@ -1,3 +1,7 @@
+import 'dart:collection';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:melody/melody/core/constants/color_palatte.dart';
@@ -12,6 +16,7 @@ import 'package:melody/melody/core/models/music/music.dart';
 import 'package:get/get.dart';
 import 'package:melody/melody/core/models/perfomer/perfomer.dart';
 import 'package:melody/melody/core/models/song/song.dart';
+import 'package:melody/melody/core/models/user/user.dart';
 import 'package:melody/melody/presentations/screens/Home/item_screen.dart';
 import 'package:melody/melody/presentations/screens/Discovery/discovery_screen.dart';
 import 'package:melody/melody/presentations/screens/Home/widgets/composer_item.dart';
@@ -22,6 +27,7 @@ import 'package:melody/melody/presentations/screens/Home/widgets/song_item.dart'
 import 'package:melody/melody/presentations/screens/playing/playing.dart';
 import 'package:melody/melody/presentations/screens/playing/playlist_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../core/models/instrumentModel/instrumentModel.dart';
 import '../../../core/models/music/music.dart';
@@ -48,6 +54,7 @@ class _HomeScreenState extends State<HomeScreen>
   void initState() {
     super.initState();
     playlistProvider = Provider.of<PlaylistProvider>(context, listen: false);
+    loadUserRecentSongs();
   }
 
   TextEditingController searchController = TextEditingController();
@@ -374,19 +381,21 @@ class _HomeScreenState extends State<HomeScreen>
         element.songName.toLowerCase().contains(value.toLowerCase())).toList();
   }
 
-  void addToRecentSearch(Song song) {
-    setState(() {
-      recentSongs.add(song);
-    });
-  }
+  // void addToRecentSearch(Song song) {
+  //   setState(() {
+  //     recentSongs.add(song);
+  //   });
+  // }
 
   void _onSongTap(int index) {
     print('Song at index $index was tapped');
     print('playlistProvider: $playlistProvider');
     print('songList: $songList');
-     setState(() {
-    recentSongs.add(searchSong(songList!, searchValue)[index]);
-  });
+    Song tappedSong = searchSong(songList!, searchValue)[index];
+    setState(() {
+      recentSongs.add(tappedSong);
+    });
+    addSongIdToUser(tappedSong.songId);
     if (playlistProvider != null && songList != null) {
       List<Song> copiedSongList = List.from(songList!);
       playlistProvider.playlist.clear();
@@ -399,9 +408,38 @@ class _HomeScreenState extends State<HomeScreen>
     }
   }
 
+  void addSongIdToUser(String songId) async {
+    String userId = FirebaseAuth.instance.currentUser!.uid;
+    FirebaseFirestore.instance.collection('Users').doc(userId).update({
+      'songIds': FieldValue.arrayUnion([songId])
+    });
+  }
+
+  Future<Song> getSongById(String songId) async {
+    DocumentSnapshot songDoc =
+        await FirebaseFirestore.instance.collection('Songs').doc(songId).get();
+    return Song.fromJson(songDoc.data() as Map<String, dynamic>);
+  }
+
+  void loadUserRecentSongs() async {
+    String userId = FirebaseAuth.instance.currentUser!.uid;
+    DocumentSnapshot userDoc =
+        await FirebaseFirestore.instance.collection('Users').doc(userId).get();
+    UserModel user = UserModel.fromJson(userDoc.data() as Map<String, dynamic>);
+
+    for (String songId in user.songIds) {
+      Song song = await getSongById(songId);
+      setState(() {
+        recentSongs.add(song);
+      });
+    }
+    recentSongs.sort((a, b) => a.times[0].compareTo(b.times[0]));
+  }
+
   List<Event> searchEvents(List<Event> events, String value) {
     return events.where((element) => element.name.contains(value)).toList();
   }
+
   List<Perfomer> searchPerfomer(List<Perfomer> perfomer, String value) {
     return perfomer
         .where((element) =>

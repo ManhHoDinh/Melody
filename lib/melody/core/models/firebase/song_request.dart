@@ -21,7 +21,10 @@ class SongRequest {
     Song song = Song.fromJson(doc.data()!);
     return Future.value(song);
   }
-
+Future<Song> getSongById(String songId) async {
+  DocumentSnapshot songDoc = await FirebaseFirestore.instance.collection('Songs').doc(songId).get();
+  return Song.fromJson(songDoc.data() as Map<String, dynamic>);
+}
   static List<Song> AllSongs = [];
 
   static List<Timestamp> _sendAtToJson(List<DateTime> times) =>
