@@ -43,15 +43,13 @@ class StatisticRequest {
       while (count <= 30) {
         DateTime timeData = dateTime.subtract(Duration(days: count));
         int plays = 0;
-        print(timeData);
+
         for (QueryDocumentSnapshot<Map<String, dynamic>> documentSnapshot
             in querySnapshot.docs) {
           Song song = Song.fromJson(documentSnapshot.data());
           List<DateTime> times = song.times;
 
           times.forEach((time) {
-            print(time);
-
             if (time.year == timeData.year &&
                 time.month == timeData.month &&
                 time.day == timeData.day) {

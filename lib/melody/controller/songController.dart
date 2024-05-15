@@ -27,6 +27,9 @@ class SongController extends GetxController {
   }
 
   void updateSongOfPlaylist(String playlistId) async {
+    var binh = await PlaylistRequest.getSongOfPlaylist(playlistId);
+    print("update");
+    print(binh);
     songOfPlaylist.value = await PlaylistRequest.getSongOfPlaylist(playlistId);
   }
 }

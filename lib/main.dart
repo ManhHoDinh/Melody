@@ -75,8 +75,8 @@ class MyApp extends StatelessWidget {
         platform: TargetPlatform.iOS,
       ),
 
-      initialRoute: Routes.statistic,
-      // home: melodyApp(),
+      // initialRoute: Routes.statistic,
+      home: melodyApp(),
       initialBinding: MyBindings(),
       getPages: [
         GetPage(name: Routes.allAlbum, page: () => AllAlbumScreen()),

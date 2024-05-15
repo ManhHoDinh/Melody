@@ -38,6 +38,7 @@ class _DetailPlaylistScreenState extends State<DetailPlaylistScreen> {
   @override
   Widget build(BuildContext context) {
     songController.updateSongOfPlaylist(widget.playlist.id);
+    print(songController.songOfPlaylist);
     return Scaffold(
       appBar: AppbarWidget(
         'Playlist',
