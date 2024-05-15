@@ -11,9 +11,8 @@ import 'package:melody/melody/core/models/song/song.dart';
 import 'package:melody/melody/presentations/screens/playing/playlist_provider.dart';
 import 'package:provider/provider.dart';
 
-class SongItem extends StatelessWidget {
+class SongItem extends StatefulWidget {
   Song song;
-  PlaylistProvider? playlistProvider;
   bool? isInPlaylist;
   String? playlistType;
   Function? onTap = () {};
@@ -27,11 +26,18 @@ class SongItem extends StatelessWidget {
       this.onTap});
 
   @override
+  State<SongItem> createState() => _SongItemState();
+}
+
+class _SongItemState extends State<SongItem> {
+  PlaylistProvider? playlistProvider;
+  @override
   Widget build(BuildContext context) {
     playlistProvider = Provider.of<PlaylistProvider>(context, listen: false);
 
     SongController songController = Get.find();
     songController.initFavoriteSong();
+    Song song = widget.song;
     return Container(
       child: Column(
         children: [
@@ -40,7 +46,7 @@ class SongItem extends StatelessWidget {
           ),
           GestureDetector(
             onTap: () {
-              onTap!();
+              widget.onTap!();
             },
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -70,29 +76,29 @@ class SongItem extends StatelessWidget {
                 ),
                 Row(
                   children: [
-                    Obx(() {
-                      return playlistType == null
-                          ? IconButton(
-                              onPressed: () async {
-                                if (songController.favoriteSongs
-                                    .contains(song)) {
-                                  await PlaylistRequest.removeSongFromFavorite(
-                                      song.songId);
-                                  songController.initFavoriteSong();
-                                } else {
-                                  await PlaylistRequest.addSongToFavorite(
-                                      song.songId);
-                                  songController.initFavoriteSong();
-                                }
-                              },
-                              icon: Icon(Icons.favorite,
-                                  size: 21,
-                                  color: songController.favoriteSongs
-                                          .contains(song)
-                                      ? Colors.red
-                                      : Colors.black))
-                          : Container();
-                    }),
+                    widget.playlistType == null
+                        ? Obx(() {
+                            return IconButton(
+                                onPressed: () async {
+                                  if (songController.favoriteSongs
+                                      .contains(song)) {
+                                    await PlaylistRequest
+                                        .removeSongFromFavorite(song.songId);
+                                    songController.initFavoriteSong();
+                                  } else {
+                                    await PlaylistRequest.addSongToFavorite(
+                                        song.songId);
+                                    songController.initFavoriteSong();
+                                  }
+                                },
+                                icon: Icon(Icons.favorite,
+                                    size: 21,
+                                    color: songController.favoriteSongs
+                                            .contains(song)
+                                        ? Colors.red
+                                        : Colors.black));
+                          })
+                        : Container(),
                     SizedBox(
                       width: 17,
                     ),
@@ -130,14 +136,14 @@ class SongItem extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              isInPlaylist != null
+              widget.isInPlaylist != null
                   ? Container()
                   : ListTile(
                       leading: Icon(Icons.edit),
                       title: Text('Edit'),
                       onTap: () {
                         Navigator.pop(context); // Close the bottom sheet
-                        Get.toNamed('/editSong', arguments: song.songId);
+                        Get.toNamed('/editSong', arguments: widget.song.songId);
                       },
                     ),
               ListTile(
@@ -171,7 +177,7 @@ class SongItem extends StatelessWidget {
             ),
             TextButton(
               onPressed: () async {
-                await deleteSong(song.songId);
+                await deleteSong(widget.song.songId);
                 Navigator.of(context).pop();
               },
               child: Text(
@@ -187,10 +193,11 @@ class SongItem extends StatelessWidget {
 
   Future<void> deleteSong(String songId) async {
     try {
-      if (isInPlaylist != null) {
+      if (widget.isInPlaylist != null) {
         SongController songController = Get.find();
-        await PlaylistRequest.removeSongFromPlaylist(playlistId!, songId);
-        songController.updateSongOfPlaylist(playlistId!);
+        await PlaylistRequest.removeSongFromPlaylist(
+            widget.playlistId!, songId);
+        songController.updateSongOfPlaylist(widget.playlistId!);
       } else
         await FirebaseHelper.songCollection.doc(songId).delete();
 

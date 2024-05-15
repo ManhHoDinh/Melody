@@ -77,8 +77,10 @@ class PlaylistRequest {
   }
 
   static Future<Playlist?> getFavoritePlaylist() async {
-    DocumentSnapshot<Map<String, dynamic>> userDoc =
-        await FirebaseHelper.userCollection.doc(FirebaseHelper.userId).get();
+    DocumentSnapshot<Map<String, dynamic>> userDoc = await FirebaseHelper
+        .userCollection
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .get();
     UserModel user = UserModel.fromJson(userDoc.data()!);
 
     for (String playlistId in user.playlistIds) {

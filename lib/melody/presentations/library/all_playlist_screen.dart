@@ -10,6 +10,7 @@ import 'package:melody/melody/core/models/playlist/playlist.dart';
 import 'package:melody/melody/presentations/library/detail_playlist_screen.dart';
 import 'package:melody/melody/presentations/library/widgets/playlist_item.dart';
 import 'package:melody/melody/presentations/screens/instrument/detail_instrument_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class AllPlaylistScreen extends StatefulWidget {
   const AllPlaylistScreen({super.key});
@@ -22,7 +23,6 @@ class _AllPlaylistScreenState extends State<AllPlaylistScreen> {
   TextEditingController nameController = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    print(FirebaseHelper.userId);
     return Scaffold(
         appBar: AppBar(
           title: RichText(
@@ -76,7 +76,8 @@ class _AllPlaylistScreenState extends State<AllPlaylistScreen> {
                                 Playlist playlist = Playlist(
                                   name: nameController.value.text,
                                   id: id,
-                                  userId: FirebaseHelper.userId,
+                                  userId:
+                                      FirebaseAuth.instance.currentUser!.uid,
                                   image:
                                       "https://firebasestorage.googleapis.com/v0/b/melody-bf3aa.appspot.com/o/images%2Fdefault_playlist.png?alt=media&token=9912901b-1122-4e73-9046-ce6c1238abc8",
                                 );
@@ -104,7 +105,8 @@ class _AllPlaylistScreenState extends State<AllPlaylistScreen> {
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: StreamBuilder<List<Playlist>>(
-                    stream: PlaylistRequest.getAll(FirebaseHelper.userId),
+                    stream: PlaylistRequest.getAll(
+                        FirebaseAuth.instance.currentUser!.uid),
                     builder: (context, snapshot) {
                       if (snapshot.hasData)
                         return ListView.separated(

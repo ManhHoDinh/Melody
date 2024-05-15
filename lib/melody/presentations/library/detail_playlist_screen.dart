@@ -183,7 +183,7 @@ class _DetailPlaylistScreenState extends State<DetailPlaylistScreen> {
                                           songController.songOfPlaylist[index]);
                                     },
                                     isInPlaylist: true,
-                                    playlistType: widget.playlist.type,
+                                    // playlistType: widget.playlist.type,
                                     playlistId: widget.playlist.id,
                                     song: songController.songOfPlaylist[index],
                                   ),
