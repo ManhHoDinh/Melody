@@ -55,9 +55,7 @@ class SongItem extends StatelessWidget {
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
                   ),
                 ),
-                SizedBox(
-                  width: 10,
-                ),
+                Spacer(),
                 Image.asset(
                   "assets/images/fav.png",
                   height: 21,

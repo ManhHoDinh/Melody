@@ -52,9 +52,7 @@ class SongItemInAlbum extends StatelessWidget {
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
                   ),
                 ),
-                SizedBox(
-                  width: 10,
-                ),
+                Spacer(),
                 ...onAddTap == null
                     ? [
                         Image.asset(

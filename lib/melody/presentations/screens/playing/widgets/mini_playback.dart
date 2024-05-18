@@ -20,7 +20,7 @@ class MiniPlaybackBar extends StatelessWidget {
             Get.toNamed('/playing');
           },
           child: Container(
-            margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 0),
+            margin: const EdgeInsets.only(right: 15, left: 15, bottom: 10),
             padding: const EdgeInsets.symmetric(horizontal: 15),
             height: 75,
             decoration: BoxDecoration(

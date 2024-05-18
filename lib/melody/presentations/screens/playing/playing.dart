@@ -149,7 +149,8 @@ class Playing extends StatelessWidget {
 
                           // download icon
                           IconButton(
-                              onPressed: () {}, icon: Icon(Icons.download)),
+                              onPressed: value.downloadCurrentSong,
+                              icon: Icon(Icons.download)),
                           // end time
                           Text(formatTime(value.totalDuration))
                         ],
