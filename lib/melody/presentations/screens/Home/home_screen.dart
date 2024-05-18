@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:melody/melody/core/constants/color_palatte.dart';
 import 'package:melody/melody/core/helper/assets_helper.dart';
 import 'package:melody/melody/core/helper/text_styles.dart';
@@ -15,6 +16,7 @@ import 'package:melody/melody/presentations/screens/Home/widgets/composer_item.d
 import 'package:melody/melody/presentations/screens/Home/widgets/event_item.dart';
 import 'package:melody/melody/presentations/screens/Home/widgets/instrument_item.dart';
 import 'package:melody/melody/presentations/screens/Home/widgets/perfomer_item.dart';
+import 'package:melody/melody/presentations/screens/playing/widgets/mini_playback.dart';
 import '../../../core/models/instrumentModel/instrumentModel.dart';
 import '../../../core/models/music/music.dart';
 import 'widgets/music_item.dart';
@@ -189,77 +191,114 @@ class _HomeScreenState extends State<HomeScreen>
       decoration: const BoxDecoration(color: Color(0xffF7F7F7)),
       child: Scaffold(
         appBar: AppBar(
-        title: RichText(
-          text: const TextSpan(
-            text: 'Ho',
-            style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: Color(0xff6D0B14)),
-            children: <TextSpan>[
-              TextSpan(
-                text: 'me',
-                style: TextStyle(fontSize: 20, color: Color(0xff4059F1)),
-              ),
-            ],
+          title: RichText(
+            text: const TextSpan(
+              text: 'Ho',
+              style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Color(0xff6D0B14)),
+              children: <TextSpan>[
+                TextSpan(
+                  text: 'me',
+                  style: TextStyle(fontSize: 20, color: Color(0xff4059F1)),
+                ),
+              ],
+            ),
           ),
-          
+          centerTitle: true,
         ),
-       centerTitle: true,
-          
-        ),
-        body: SingleChildScrollView(
-          child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 20),
-            child: Column(
-              children: [
-                SizedBox(
-                  height: 5,
-                ),
-                TextField(
-                  onChanged: (value) {
-                    setState(() {
-                      searchValue = value;
-                    });
-                  },
-                  controller: searchController,
-                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
-                  decoration: InputDecoration(
-                    contentPadding: EdgeInsets.symmetric(horizontal: 5),
-                    filled: true,
-                    hintStyle: TextStyle(color: Color(0xffFFFFFF)),
-                    fillColor: Color(0xff198FB4),
-                    border: OutlineInputBorder(
-                      borderSide: BorderSide.none,
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    hintText: 'Search Song, Composer, Instrument',
-                    prefixIconColor: Color(0xffffffff),
-                    prefixIcon: Icon(Icons.search),
-                  ),
-                ),
-                SizedBox(height: 7),
-                MusicSection(
-                  title: 'Composer',
-                  albums: albums,
-                ),
-                StreamBuilder<List<Composer>>(
-                  stream: ComposerRequest.getAll(),
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    } else if (snapshot.hasError) {
-                      return Center(
-                        child: Text('Error loading composer list'),
-                      );
-                    } else {
-                      List<Composer> composer = snapshot.data!;
-                      return GridView.builder(
-                        physics: NeverScrollableScrollPhysics(),
+        body: Column(
+          children: [
+            Expanded(
+              child: SingleChildScrollView(
+                child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        height: 5,
+                      ),
+                      TextField(
+                        onChanged: (value) {
+                          setState(() {
+                            searchValue = value;
+                          });
+                        },
+                        controller: searchController,
+                        style: TextStyle(
+                            fontSize: 14, fontWeight: FontWeight.w400),
+                        decoration: InputDecoration(
+                          contentPadding: EdgeInsets.symmetric(horizontal: 5),
+                          filled: true,
+                          hintStyle: TextStyle(color: Color(0xffFFFFFF)),
+                          fillColor: Color(0xff198FB4),
+                          border: OutlineInputBorder(
+                            borderSide: BorderSide.none,
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          hintText: 'Search Song, Composer, Instrument',
+                          prefixIconColor: Color(0xffffffff),
+                          prefixIcon: Icon(Icons.search),
+                        ),
+                      ),
+                      SizedBox(height: 7),
+                      MusicSection(
+                        title: 'Composer',
+                        albums: albums,
+                      ),
+                      StreamBuilder<List<Composer>>(
+                        stream: ComposerRequest.getAll(),
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          } else if (snapshot.hasError) {
+                            return Center(
+                              child: Text('Error loading composer list'),
+                            );
+                          } else {
+                            List<Composer> composer = snapshot.data!;
+                            return GridView.builder(
+                              physics: NeverScrollableScrollPhysics(),
+                              shrinkWrap: true,
+                              itemCount:
+                                  searchComposer(composer, searchValue).length,
+                              gridDelegate:
+                                  const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 3,
+                                crossAxisSpacing: 10,
+                                mainAxisSpacing: 10,
+                                childAspectRatio: 5 / 6,
+                              ),
+                              itemBuilder: (context, index) {
+                                return GestureDetector(
+                                  onTap: () {
+                                    Get.toNamed('/composerPage',
+                                        arguments: composer[index].composerId);
+                                  },
+                                  child: ComposerItem(
+                                    composer: searchComposer(
+                                        composer, searchValue)[index],
+                                  ),
+                                );
+                              },
+                            );
+                          }
+                        },
+                      ),
+                      SizedBox(height: 7),
+                      MusicSection(
+                        title: 'Instrument',
+                        albums: albums, // Pass your list of popular songs here
+                      ),
+                      GridView.builder(
                         shrinkWrap: true,
-                        itemCount: searchComposer(composer, searchValue).length,
+                        physics: NeverScrollableScrollPhysics(),
+                        itemCount:
+                            searchInstrument(instrument, searchValue).length,
                         gridDelegate:
                             const SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 3,
@@ -268,88 +307,64 @@ class _HomeScreenState extends State<HomeScreen>
                           childAspectRatio: 5 / 6,
                         ),
                         itemBuilder: (context, index) {
-                          return GestureDetector(
-                            onTap: () {
-                              Get.toNamed('/composerPage',
-                                  arguments: composer[index].composerId);
-                            },
-                            child: ComposerItem(
-                              composer:
-                                  searchComposer(composer, searchValue)[index],
-                            ),
+                          return InstrumentItem(
+                            instrument: searchInstrument(
+                                instrument, searchValue)[index],
                           );
                         },
-                      );
-                    }
-                  },
-                ),
-                SizedBox(height: 7),  
-                MusicSection(
-                  title: 'Instrument',
-                  albums: albums, // Pass your list of popular songs here
-                ),
-                GridView.builder(
-                  shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
-                  itemCount: searchInstrument(instrument, searchValue).length,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 3,
-                    crossAxisSpacing: 10,
-                    mainAxisSpacing: 10,
-                    childAspectRatio: 5 / 6,
+                      ),
+                      SizedBox(height: 7),
+                      MusicSection(
+                        title: 'Artist',
+                        albums: albums,
+                      ),
+                      GridView.builder(
+                        physics: NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        itemCount: perfomer.length,
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 3,
+                          crossAxisSpacing: 10,
+                          mainAxisSpacing: 10,
+                          childAspectRatio: 3 / 3,
+                        ),
+                        itemBuilder: (context, index) {
+                          return PerfomerItem.PerformerItem(
+                            perfomer: perfomer[index],
+                          );
+                        },
+                      ),
+                      MusicSection(
+                        title: 'Event',
+                        albums: albums,
+                      ),
+                      ListView.separated(
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          scrollDirection: Axis.vertical,
+                          itemBuilder: ((context, index) {
+                            return EventItem(
+                              event: event[index],
+                            );
+                          }),
+                          separatorBuilder: ((context, index) {
+                            return SizedBox(
+                              height: 10,
+                            );
+                          }),
+                          itemCount: event.length),
+                      SizedBox(
+                        height: 70,
+                      )
+                    ],
                   ),
-                  itemBuilder: (context, index) {
-                    return InstrumentItem(
-                      instrument:
-                          searchInstrument(instrument, searchValue)[index],
-                    );
-                  },
                 ),
-                SizedBox(height: 7),  
-                
-                MusicSection(
-                  title: 'Artist',
-                  albums: albums,
-                ),
-                GridView.builder(
-                  physics: NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  itemCount: perfomer.length,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 3,
-                    crossAxisSpacing: 10,
-                    mainAxisSpacing: 10,
-                    childAspectRatio: 3 / 3,
-                  ),
-                  itemBuilder: (context, index) {
-                    return PerfomerItem.PerformerItem(
-                      perfomer: perfomer[index],
-                    );
-                  },
-                ),
-                MusicSection(
-                  title: 'Event',
-                  albums: albums,
-                ),
-                ListView.separated(
-                    shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-                    scrollDirection: Axis.vertical,
-                    itemBuilder: ((context, index) {
-                      return EventItem(
-                        event: event[index],
-                      );
-                    }),
-                    separatorBuilder: ((context, index) {
-                      return SizedBox(
-                        height: 10,
-                      );
-                    }),
-                    itemCount: event.length),
-                    SizedBox(height: 70,)
-              ],
+              ),
             ),
-          ),
+            Padding(
+                padding: EdgeInsets.only(bottom: 70), child: MiniPlaybackBar()),
+          ],
         ),
       ),
     );
