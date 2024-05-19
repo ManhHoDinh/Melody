@@ -190,9 +190,11 @@ class _ArtistPageState extends State<ArtistPage> {
                                   itemBuilder: (context, index) {
                                     return GestureDetector(
                                       onTap: () {
-                                        _onSongTap(index);
+                                       
                                       },
-                                      child: SongItem(song: songList![index]),
+                                      child: SongItem(song: songList![index], onTap: () {
+ _onSongTap(index);
+                                      }),
                                     );
                                   },
                                 ),

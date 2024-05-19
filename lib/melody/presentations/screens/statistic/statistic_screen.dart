@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:melody/melody/core/models/album/album.dart';
+import 'package:melody/melody/presentations/screens/statistic/tabs/album_statistic_screen.dart';
 import 'package:melody/melody/presentations/screens/statistic/tabs/song_statistic_screen.dart';
 
 class StatisticScreen extends StatefulWidget {
@@ -27,7 +29,7 @@ class _StatisticScreenState extends State<StatisticScreen> {
             ),
           ),
           body: TabBarView(
-            children: [Text("fff"), SongStatistic()],
+            children: [AlbumStatistic(), SongStatistic()],
           ),
         ));
   }

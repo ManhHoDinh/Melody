@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:melody/melody/core/models/artist/artist.dart';
+import 'package:melody/melody/core/models/firebase/playlist_request.dart';
+import 'package:melody/melody/core/models/playlist/playlist.dart';
 import 'package:melody/melody/core/models/user/user.dart';
 import 'package:melody/melody/presentations/screens/Home/home_screen.dart';
 import 'package:melody/melody/presentations/screens/Home/navigation_home.dart';
@@ -24,12 +26,14 @@ class AuthServices {
       UserCredential userCredential = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: email, password: password);
       String uid = userCredential.user!.uid;
+      List<String> initPlaylists = await PlaylistRequest.initPlaylist(uid);
+      print(initPlaylists);
       UserModel user = UserModel(
-        Id: uid,
-        Name: name,
-        Email: email,
-        position: 'User',
-      );
+          Id: uid,
+          Name: name,
+          Email: email,
+          position: 'User',
+          playlistIds: initPlaylists);
       Artist userArtistInfo = Artist(
           artistId: uid,
           artistName: name,
@@ -42,6 +46,7 @@ class AuthServices {
       await artist.set(userArtistInfo.toJson());
       DocumentReference doc =
           FirebaseFirestore.instance.collection("Users").doc(uid);
+
       await doc
           .set(user.toJson())
           .whenComplete(() => showDialog(

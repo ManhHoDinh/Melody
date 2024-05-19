@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:melody/melody/core/models/song/song.dart';
+import 'package:dio/dio.dart';
 
 class SongRequest {
   static Stream<List<Song>> getAllByArtistId(String artistId) =>
@@ -36,5 +37,15 @@ class SongRequest {
         .collection('Songs')
         .doc(songId)
         .update({"times": _sendAtToJson(times)});
+  }
+
+  static Future<String> getLyricsOfSong(String artist, String title) async {
+    final dio = Dio();
+    try {
+      var res = await dio.get("https://api.lyrics.ovh/v1/$artist/$title");
+      return res.data["lyrics"];
+    } catch (e) {
+      return 'No lyrics found';
+    }
   }
 }

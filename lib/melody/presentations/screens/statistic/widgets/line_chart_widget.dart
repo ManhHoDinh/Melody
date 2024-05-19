@@ -32,7 +32,6 @@ class _LineChartWidgetState extends State<LineChartWidget> {
                 stream: StatisticRequest.getPlayStatistic(),
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
-                    print(snapshot.data);
                     return LineChart(
                       mainData(snapshot.data!),
                     );
