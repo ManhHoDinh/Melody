@@ -25,10 +25,8 @@ mixin _$Event {
   String get image => throw _privateConstructorUsedError;
   String get location => throw _privateConstructorUsedError;
   String get description => throw _privateConstructorUsedError;
-  @JsonKey(name: "startAt", fromJson: _sendAtFromJson)
-  DateTime? get startAt => throw _privateConstructorUsedError;
-  @JsonKey(name: "endAt", fromJson: _sendAtFromJson)
-  DateTime? get endAt => throw _privateConstructorUsedError;
+  String get startAt => throw _privateConstructorUsedError;
+  String get endAt => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -46,8 +44,8 @@ abstract class $EventCopyWith<$Res> {
       String image,
       String location,
       String description,
-      @JsonKey(name: "startAt", fromJson: _sendAtFromJson) DateTime? startAt,
-      @JsonKey(name: "endAt", fromJson: _sendAtFromJson) DateTime? endAt});
+      String startAt,
+      String endAt});
 }
 
 /// @nodoc
@@ -68,8 +66,8 @@ class _$EventCopyWithImpl<$Res, $Val extends Event>
     Object? image = null,
     Object? location = null,
     Object? description = null,
-    Object? startAt = freezed,
-    Object? endAt = freezed,
+    Object? startAt = null,
+    Object? endAt = null,
   }) {
     return _then(_value.copyWith(
       name: null == name
@@ -92,14 +90,14 @@ class _$EventCopyWithImpl<$Res, $Val extends Event>
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String,
-      startAt: freezed == startAt
+      startAt: null == startAt
           ? _value.startAt
           : startAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      endAt: freezed == endAt
+              as String,
+      endAt: null == endAt
           ? _value.endAt
           : endAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
+              as String,
     ) as $Val);
   }
 }
@@ -117,8 +115,8 @@ abstract class _$$EventImplCopyWith<$Res> implements $EventCopyWith<$Res> {
       String image,
       String location,
       String description,
-      @JsonKey(name: "startAt", fromJson: _sendAtFromJson) DateTime? startAt,
-      @JsonKey(name: "endAt", fromJson: _sendAtFromJson) DateTime? endAt});
+      String startAt,
+      String endAt});
 }
 
 /// @nodoc
@@ -137,8 +135,8 @@ class __$$EventImplCopyWithImpl<$Res>
     Object? image = null,
     Object? location = null,
     Object? description = null,
-    Object? startAt = freezed,
-    Object? endAt = freezed,
+    Object? startAt = null,
+    Object? endAt = null,
   }) {
     return _then(_$EventImpl(
       name: null == name
@@ -161,14 +159,14 @@ class __$$EventImplCopyWithImpl<$Res>
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String,
-      startAt: freezed == startAt
+      startAt: null == startAt
           ? _value.startAt
           : startAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      endAt: freezed == endAt
+              as String,
+      endAt: null == endAt
           ? _value.endAt
           : endAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
+              as String,
     ));
   }
 }
@@ -182,8 +180,8 @@ class _$EventImpl implements _Event {
       required this.image,
       required this.location,
       required this.description,
-      @JsonKey(name: "startAt", fromJson: _sendAtFromJson) this.startAt,
-      @JsonKey(name: "endAt", fromJson: _sendAtFromJson) this.endAt});
+      required this.startAt,
+      required this.endAt});
 
   factory _$EventImpl.fromJson(Map<String, dynamic> json) =>
       _$$EventImplFromJson(json);
@@ -199,11 +197,9 @@ class _$EventImpl implements _Event {
   @override
   final String description;
   @override
-  @JsonKey(name: "startAt", fromJson: _sendAtFromJson)
-  final DateTime? startAt;
+  final String startAt;
   @override
-  @JsonKey(name: "endAt", fromJson: _sendAtFromJson)
-  final DateTime? endAt;
+  final String endAt;
 
   @override
   String toString() {
@@ -252,10 +248,8 @@ abstract class _Event implements Event {
       required final String image,
       required final String location,
       required final String description,
-      @JsonKey(name: "startAt", fromJson: _sendAtFromJson)
-      final DateTime? startAt,
-      @JsonKey(name: "endAt", fromJson: _sendAtFromJson)
-      final DateTime? endAt}) = _$EventImpl;
+      required final String startAt,
+      required final String endAt}) = _$EventImpl;
 
   factory _Event.fromJson(Map<String, dynamic> json) = _$EventImpl.fromJson;
 
@@ -270,11 +264,9 @@ abstract class _Event implements Event {
   @override
   String get description;
   @override
-  @JsonKey(name: "startAt", fromJson: _sendAtFromJson)
-  DateTime? get startAt;
+  String get startAt;
   @override
-  @JsonKey(name: "endAt", fromJson: _sendAtFromJson)
-  DateTime? get endAt;
+  String get endAt;
   @override
   @JsonKey(ignore: true)
   _$$EventImplCopyWith<_$EventImpl> get copyWith =>

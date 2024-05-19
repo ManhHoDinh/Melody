@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:melody/melody/presentations/screens/Home/bottom_navigation_home.dart';
+import 'package:melody/melody/presentations/screens/event/all_event_screen.dart';
 
 import '../../../../app_theme.dart';
 import '../../../../custom_drawer/drawer_user_controller.dart';
@@ -64,7 +65,7 @@ class _NavigationHomeState extends State<NavigationHome> {
           break;
         case DrawerIndex.Help:
           setState(() {
-            screenView = HelpScreen();
+            screenView = AllEventScreen();
           });
           break;
         case DrawerIndex.FeedBack:

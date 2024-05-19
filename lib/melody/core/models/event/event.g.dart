@@ -12,8 +12,8 @@ _$EventImpl _$$EventImplFromJson(Map<String, dynamic> json) => _$EventImpl(
       image: json['image'] as String,
       location: json['location'] as String,
       description: json['description'] as String,
-      startAt: _sendAtFromJson(json['startAt'] as Timestamp),
-      endAt: _sendAtFromJson(json['endAt'] as Timestamp),
+      startAt: json['startAt'] as String,
+      endAt: json['endAt'] as String,
     );
 
 Map<String, dynamic> _$$EventImplToJson(_$EventImpl instance) =>
@@ -23,6 +23,6 @@ Map<String, dynamic> _$$EventImplToJson(_$EventImpl instance) =>
       'image': instance.image,
       'location': instance.location,
       'description': instance.description,
-      'startAt': instance.startAt?.toIso8601String(),
-      'endAt': instance.endAt?.toIso8601String(),
+      'startAt': instance.startAt,
+      'endAt': instance.endAt,
     };

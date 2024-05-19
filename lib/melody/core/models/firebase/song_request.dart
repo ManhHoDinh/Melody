@@ -11,14 +11,21 @@ class SongRequest {
           .snapshots()
           .map((event) =>
               event.docs.map((e) => Song.fromJson(e.data())).toList());
-
+  static Stream<List<Song>> getAll() => FirebaseFirestore.instance
+      .collection('Songs')
+      .snapshots()
+      .map((event) =>
+          event.docs.map((e) => Song.fromJson(e.data())).toList());
   static Future<Song> getById(String id) async {
     DocumentSnapshot<Map<String, dynamic>> doc =
         await FirebaseFirestore.instance.collection('Songs').doc(id).get();
     Song song = Song.fromJson(doc.data()!);
     return Future.value(song);
   }
-
+Future<Song> getSongById(String songId) async {
+  DocumentSnapshot songDoc = await FirebaseFirestore.instance.collection('Songs').doc(songId).get();
+  return Song.fromJson(songDoc.data() as Map<String, dynamic>);
+}
   static List<Song> AllSongs = [];
 
   static List<Timestamp> _sendAtToJson(List<DateTime> times) =>

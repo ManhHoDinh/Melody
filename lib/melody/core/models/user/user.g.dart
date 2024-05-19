@@ -16,6 +16,10 @@ _$UserModelImpl _$$UserModelImplFromJson(Map<String, dynamic> json) =>
               .toList() ??
           const [],
       position: json['position'] as String? ?? "",
+      songIds: (json['songIds'] as List<dynamic>?)
+              ?.map((e) => e as String)
+              .toList() ??
+          const [],
     );
 
 Map<String, dynamic> _$$UserModelImplToJson(_$UserModelImpl instance) =>
@@ -25,4 +29,5 @@ Map<String, dynamic> _$$UserModelImplToJson(_$UserModelImpl instance) =>
       'Email': instance.Email,
       'playlistIds': instance.playlistIds,
       'position': instance.position,
+      'songIds': instance.songIds,
     };
