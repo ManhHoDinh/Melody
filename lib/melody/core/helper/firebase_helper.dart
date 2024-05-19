@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class FirebaseHelper {
   static var playlistCollection =
@@ -13,4 +14,5 @@ class FirebaseHelper {
       FirebaseFirestore.instance.collection("Artists");
   static var composerCollection =
       FirebaseFirestore.instance.collection("Composers");
+  static String userId = FirebaseAuth.instance.currentUser!.uid;
 }

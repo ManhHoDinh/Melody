@@ -38,6 +38,7 @@ class _DetailPlaylistScreenState extends State<DetailPlaylistScreen> {
   @override
   Widget build(BuildContext context) {
     songController.updateSongOfPlaylist(widget.playlist.id);
+    print(songController.songOfPlaylist);
     return Scaffold(
       appBar: AppbarWidget(
         'Playlist',
@@ -182,6 +183,7 @@ class _DetailPlaylistScreenState extends State<DetailPlaylistScreen> {
                                           songController.songOfPlaylist[index]);
                                     },
                                     isInPlaylist: true,
+                                    // playlistType: widget.playlist.type,
                                     playlistId: widget.playlist.id,
                                     song: songController.songOfPlaylist[index],
                                   ),

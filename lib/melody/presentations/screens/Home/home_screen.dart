@@ -24,6 +24,7 @@ import 'package:melody/melody/presentations/screens/Home/widgets/event_item.dart
 import 'package:melody/melody/presentations/screens/Home/widgets/instrument_item.dart';
 import 'package:melody/melody/presentations/screens/Home/widgets/perfomer_item.dart';
 import 'package:melody/melody/presentations/screens/Home/widgets/song_item.dart';
+import 'package:melody/melody/presentations/screens/chatbot/chatbot.dart';
 import 'package:melody/melody/presentations/screens/playing/playing.dart';
 import 'package:melody/melody/presentations/screens/playing/playlist_provider.dart';
 import 'package:provider/provider.dart';
@@ -132,6 +133,24 @@ class _HomeScreenState extends State<HomeScreen>
             ),
           ),
           centerTitle: true,
+          actions: [
+            Padding(
+              padding:
+                  EdgeInsets.only(right: 8.0),
+              child: IconButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => ChatPage()),
+                  );
+                },
+                icon: Icon(
+                  Icons.message_sharp,
+                  color: ColorPalette.secondColor,
+                ),
+              ),
+            ),
+          ],
         ),
         body: SingleChildScrollView(
           child: Container(
