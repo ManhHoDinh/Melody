@@ -39,13 +39,9 @@ abstract class $UserModelCopyWith<$Res> {
       _$UserModelCopyWithImpl<$Res, UserModel>;
   @useResult
   $Res call(
-      
       {String Id,
-     
       String Name,
-     
       String Email,
-     
       List<String> playlistIds,
       String position,
       List<String> songIds});
@@ -109,13 +105,9 @@ abstract class _$$UserModelImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      
       {String Id,
-     
       String Name,
-     
       String Email,
-     
       List<String> playlistIds,
       String position,
       List<String> songIds});
@@ -171,16 +163,16 @@ class __$$UserModelImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$UserModelImpl with DiagnosticableTreeMixin implements _UserModel {
-  _$UserModelImpl({
-    required this.Id,
-    required this.Name,
-    required this.Email,
-    List<String> playlistIds = const [],
-    this.position = "",
-    List<String> songIds = const [],
-  }) : _playlistIds = playlistIds,
-      _songIds = songIds;
-     
+  const _$UserModelImpl(
+      {required this.Id,
+      required this.Name,
+      required this.Email,
+      final List<String> playlistIds = const [],
+      this.position = "",
+      final List<String> songIds = const []})
+      : _playlistIds = playlistIds,
+        _songIds = songIds;
+
   factory _$UserModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$UserModelImplFromJson(json);
 
@@ -246,8 +238,13 @@ class _$UserModelImpl with DiagnosticableTreeMixin implements _UserModel {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, Id, Name, Email,
-      const DeepCollectionEquality().hash(_playlistIds), position,
+  int get hashCode => Object.hash(
+      runtimeType,
+      Id,
+      Name,
+      Email,
+      const DeepCollectionEquality().hash(_playlistIds),
+      position,
       const DeepCollectionEquality().hash(_songIds));
 
   @JsonKey(ignore: true)

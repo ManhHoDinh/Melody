@@ -6,6 +6,7 @@ import 'package:melody/melody/presentations/screens/account/sign_up_screen.dart'
 import 'package:melody/melody/presentations/screens/account/sign_up_screen.dart';
 import 'package:melody/melody/presentations/screens/album/modify_album.dart';
 import 'package:melody/melody/presentations/screens/album/detail_album.dart';
+import 'package:melody/melody/presentations/screens/music_recognition/music_recognition_screen.dart';
 import 'package:melody/melody/presentations/screens/playing/playing.dart';
 import 'package:melody/melody/presentations/screens/splash/splash_screen.dart';
 import 'package:melody/melody/presentations/screens/statistic/statistic_screen.dart';
@@ -19,6 +20,7 @@ final Map<String, WidgetBuilder> routes = {
   ModifyAlbum.routeName: (context) => ModifyAlbum(),
   Playing.routeName: (context) => Playing(),
   StatisticScreen.routeName: (context) => StatisticScreen(),
+  MusicRecognition.routeName: (context) => MusicRecognition(),
 };
 
 class Routes {

@@ -35,15 +35,15 @@ class _HomeDrawerState extends State<HomeDrawer> {
         icon: Icon(Icons.home),
       ),
       DrawerList(
-        index: DrawerIndex.Help,
-        labelName: 'Help',
+        index: DrawerIndex.Events,
+        labelName: 'Events',
         isAssetsImage: true,
         imageName: 'assets/images/supportIcon.png',
       ),
       DrawerList(
-        index: DrawerIndex.FeedBack,
-        labelName: 'FeedBack',
-        icon: Icon(Icons.help),
+        index: DrawerIndex.Recognize,
+        labelName: 'Recognize Music',
+        icon: Icon(Icons.mic),
       ),
       DrawerList(
         index: DrawerIndex.Invite,
@@ -301,8 +301,8 @@ class _HomeDrawerState extends State<HomeDrawer> {
 
 enum DrawerIndex {
   HOME,
-  FeedBack,
-  Help,
+  Events,
+  Recognize,
   Share,
   About,
   Invite,

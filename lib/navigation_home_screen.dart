@@ -57,12 +57,12 @@ class _NavigationHomeScreenState extends State<NavigationHomeScreen> {
             screenView = const MyHomePage();
           });
           break;
-        case DrawerIndex.Help:
+        case DrawerIndex.Events:
           setState(() {
             screenView = HelpScreen();
           });
           break;
-        case DrawerIndex.FeedBack:
+        case DrawerIndex.Recognize:
           setState(() {
             screenView = FeedbackScreen();
           });

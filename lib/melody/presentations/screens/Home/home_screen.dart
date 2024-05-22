@@ -30,6 +30,7 @@ import 'package:melody/melody/presentations/screens/playing/playlist_provider.da
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'package:melody/melody/presentations/screens/music_recognition/music_recognition_screen.dart';
 import '../../../core/models/instrumentModel/instrumentModel.dart';
 import '../../../core/models/music/music.dart';
 import 'widgets/music_item.dart';

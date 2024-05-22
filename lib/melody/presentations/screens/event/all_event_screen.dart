@@ -35,13 +35,7 @@ class _AllEventScreenState extends State<AllEventScreen> {
             'All Events',
             style: TextStyle(fontSize: 20).whiteTextColor,
           ),
-          leading: IconButton(
-            onPressed: () {},
-            icon: Icon(
-              Icons.arrow_back,
-              color: ColorPalette.secondColor,
-            ),
-          ),
+          centerTitle: true,
           actions: [
             IconButton(
               onPressed: () {

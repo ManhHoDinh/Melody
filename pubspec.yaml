@@ -68,7 +68,7 @@ dependencies:
     file_picker: 8.0.0+1
     firebase_storage: ^11.6.9
     firebase_core: ^2.27.0
-    audioplayers: ^6.0.0
+    audioplayers: ^5.2.1
     cached_network_image: ^3.3.1
     flutter_chat_ui: ^1.6.12
     open_file: ^3.3.2
