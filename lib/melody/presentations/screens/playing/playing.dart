@@ -44,7 +44,7 @@ class Playing extends StatelessWidget {
                           onPressed: () {
                             Navigator.of(context).pop();
                           },
-                          icon: Icon(Icons.arrow_back)),
+                          icon: Icon(Icons.keyboard_arrow_down)),
                       // title
                       Text("P L A Y I N G"),
                       // menu button
@@ -151,7 +151,8 @@ class Playing extends StatelessWidget {
 
                             // download icon
                             IconButton(
-                                onPressed: () {}, icon: Icon(Icons.download)),
+                                onPressed: value.downloadCurrentSong,
+                                icon: Icon(Icons.download)),
                             // end time
                             Text(formatTime(value.totalDuration))
                           ],

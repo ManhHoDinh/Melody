@@ -65,6 +65,7 @@ class _SongItemState extends State<SongItem> {
                       width: 10,
                     ),
                     Container(
+                      width: 200,
                       child: Text(
                         song.songName,
                         overflow: TextOverflow.ellipsis,

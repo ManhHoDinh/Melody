@@ -6,6 +6,10 @@
 <string>Perrmission to use speech recognition</string>
 <key>NSMicrophoneUsageDescription</key>
 <string>Privacy - Microphone Usage Description</string>
+<key>NSPhotoLibraryAddUsageDescription</key>
+<string>We need your permission to save songs to your library</string>
+<key>NSPhotoLibraryUsageDescription</key>
+<string>We need your permission to access your photo library</string>
 
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>

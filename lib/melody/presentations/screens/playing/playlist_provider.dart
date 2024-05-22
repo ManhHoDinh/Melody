@@ -14,7 +14,11 @@ class PlaylistProvider extends ChangeNotifier {
   int? _currentSongIndex;
   // Shuffle mode
   bool _isShuffle = false;
+  // Loading state
+  bool _isLoading = false;
 
+  // Getter for loading state
+  bool get isLoading => _isLoading;
   // Repeat mode
   // RepeatMode _repeatMode = RepeatMode.none;
   bool _isRepeatOne = false;
@@ -99,9 +103,13 @@ class PlaylistProvider extends ChangeNotifier {
 
   // play the song
   void play() async {
+    _isLoading = true;
+    notifyListeners();
+
     final String path = _playlist[_currentSongIndex!].audioPath;
     await _audioPlayer.stop();
     await _audioPlayer.play(UrlSource(path));
+    _isLoading = false;
     _isPlaying = true;
     notifyListeners();
   }
@@ -199,6 +207,11 @@ class PlaylistProvider extends ChangeNotifier {
     });
   }
 
+  Future<void> downloadCurrentSong() async {
+    if (_currentSongIndex == null) return;
+    final currentSong = _playlist[_currentSongIndex!];
+    await SongRequest.downloadSong(currentSong.audioPath, currentSong.songName);
+  }
   // dispose audio player
 
   // Getters

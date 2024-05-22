@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:melody/melody/core/constants/color_palatte.dart';
 import 'package:melody/melody/core/helper/assets_helper.dart';
 import 'package:melody/melody/core/helper/text_styles.dart';
@@ -23,6 +24,7 @@ import 'package:melody/melody/presentations/screens/Home/widgets/composer_item.d
 import 'package:melody/melody/presentations/screens/Home/widgets/event_item.dart';
 import 'package:melody/melody/presentations/screens/Home/widgets/instrument_item.dart';
 import 'package:melody/melody/presentations/screens/Home/widgets/perfomer_item.dart';
+import 'package:melody/melody/presentations/screens/playing/widgets/mini_playback.dart';
 import 'package:melody/melody/presentations/screens/Home/widgets/song_item.dart';
 import 'package:melody/melody/presentations/screens/chatbot/chatbot.dart';
 import 'package:melody/melody/presentations/screens/playing/playing.dart';
@@ -110,9 +112,6 @@ class _HomeScreenState extends State<HomeScreen>
         image: AssetHelper.imgArtist),
   ];
 
-  // ];
-
-  @override
   Widget build(BuildContext context) {
     return Container(
       decoration: const BoxDecoration(color: Color(0xffF7F7F7)),
@@ -136,8 +135,7 @@ class _HomeScreenState extends State<HomeScreen>
           centerTitle: true,
           actions: [
             Padding(
-              padding:
-                  EdgeInsets.only(right: 8.0),
+              padding: EdgeInsets.only(right: 8.0),
               child: IconButton(
                 onPressed: () {
                   Navigator.push(
@@ -153,48 +151,169 @@ class _HomeScreenState extends State<HomeScreen>
             ),
           ],
         ),
-        body: SingleChildScrollView(
-          child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 20),
-            child: Column(
-              children: [
-                SizedBox(
-                  height: 5,
-                ),
-                TextField(
-                  onChanged: (value) {
-                    setState(() {
-                      searchValue = value;
-                      recentSearches.add(value);
-                    });
-                  },
-                  controller: searchController,
-                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
-                  decoration: InputDecoration(
-                    contentPadding: EdgeInsets.symmetric(horizontal: 5),
-                    filled: true,
-                    hintStyle: TextStyle(color: Color(0xffFFFFFF)),
-                    fillColor: Color(0xff198FB4),
-                    border: OutlineInputBorder(
-                      borderSide: BorderSide.none,
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    hintText: 'Search Song, Composer, Instrument',
-                    prefixIconColor: Color(0xffffffff),
-                    prefixIcon: Icon(Icons.search),
-                  ),
-                ),
-                SizedBox(height: 7),
-                MusicSection(
-                  title: 'Recent Song',
-                  albums: albums,
-                ),
-                recentSongs.isEmpty
-                    ? Text('No recent songs')
-                    : GridView.builder(
-                        physics: NeverScrollableScrollPhysics(),
+        body: Column(
+          children: [
+            Expanded(
+              child: SingleChildScrollView(
+                child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        height: 5,
+                      ),
+                      TextField(
+                        onChanged: (value) {
+                          setState(() {
+                            searchValue = value;
+                            recentSearches.add(value);
+                          });
+                        },
+                        controller: searchController,
+                        style: TextStyle(
+                            fontSize: 14, fontWeight: FontWeight.w400),
+                        decoration: InputDecoration(
+                          contentPadding: EdgeInsets.symmetric(horizontal: 5),
+                          filled: true,
+                          hintStyle: TextStyle(color: Color(0xffFFFFFF)),
+                          fillColor: Color(0xff198FB4),
+                          border: OutlineInputBorder(
+                            borderSide: BorderSide.none,
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          hintText: 'Search Song, Composer, Instrument',
+                          prefixIconColor: Color(0xffffffff),
+                          prefixIcon: Icon(Icons.search),
+                        ),
+                      ),
+                      SizedBox(height: 7),
+                      MusicSection(
+                        title: 'Recent Song',
+                        albums: albums,
+                      ),
+                      recentSongs.isEmpty
+                          ? Text('No recent songs')
+                          : GridView.builder(
+                              physics: NeverScrollableScrollPhysics(),
+                              shrinkWrap: true,
+                              itemCount: recentSongs.length,
+                              gridDelegate:
+                                  const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 3,
+                                crossAxisSpacing: 10,
+                                mainAxisSpacing: 10,
+                                childAspectRatio: 5 / 6,
+                              ),
+                              itemBuilder: (context, index) {
+                                return SongItem(
+                                  song: recentSongs[index],
+                                );
+                              },
+                            ),
+                      MusicSection(
+                        title: 'Songs',
+                        albums: albums,
+                      ),
+                      StreamBuilder<List<Song>>(
+                        stream: SongRequest.getAll(),
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          } else if (snapshot.hasError) {
+                            return Center(
+                              child: Text('Error loading composer list'),
+                            );
+                          } else {
+                            songList = snapshot.data!;
+                            return GridView.builder(
+                              physics: NeverScrollableScrollPhysics(),
+                              shrinkWrap: true,
+                              itemCount:
+                                  searchSong(songList!, searchValue).length,
+                              gridDelegate:
+                                  const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 3,
+                                crossAxisSpacing: 10,
+                                mainAxisSpacing: 10,
+                                childAspectRatio: 5 / 6,
+                              ),
+                              itemBuilder: (context, index) {
+                                return GestureDetector(
+                                  onTap: () {
+                                    _onSongTap(index);
+                                    recentSongs.add(searchSong(
+                                        songList!, searchValue)[index]);
+                                  },
+                                  child: SongItem(
+                                    song: searchSong(
+                                        songList!, searchValue)[index],
+                                  ),
+                                );
+                              },
+                            );
+                          }
+                        },
+                      ),
+                      SizedBox(height: 7),
+                      MusicSection(
+                        title: 'Composer',
+                        albums: albums,
+                      ),
+                      StreamBuilder<List<Composer>>(
+                        stream: ComposerRequest.getAll(),
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          } else if (snapshot.hasError) {
+                            return Center(
+                              child: Text('Error loading composer list'),
+                            );
+                          } else {
+                            List<Composer> composer = snapshot.data!;
+                            return GridView.builder(
+                              physics: NeverScrollableScrollPhysics(),
+                              shrinkWrap: true,
+                              itemCount:
+                                  searchComposer(composer, searchValue).length,
+                              gridDelegate:
+                                  const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 3,
+                                crossAxisSpacing: 10,
+                                mainAxisSpacing: 10,
+                                childAspectRatio: 5 / 6,
+                              ),
+                              itemBuilder: (context, index) {
+                                return GestureDetector(
+                                  onTap: () {
+                                    Get.toNamed('/composerPage',
+                                        arguments: composer[index].composerId);
+                                  },
+                                  child: ComposerItem(
+                                    composer: searchComposer(
+                                        composer, searchValue)[index],
+                                  ),
+                                );
+                              },
+                            );
+                          }
+                        },
+                      ),
+                      SizedBox(height: 7),
+                      MusicSection(
+                        title: 'Instrument',
+                        albums: albums,
+                      ),
+                      GridView.builder(
                         shrinkWrap: true,
-                        itemCount: recentSongs.length,
+                        physics: NeverScrollableScrollPhysics(),
+                        itemCount:
+                            searchInstrument(instrument, searchValue).length,
                         gridDelegate:
                             const SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 3,
@@ -203,179 +322,76 @@ class _HomeScreenState extends State<HomeScreen>
                           childAspectRatio: 5 / 6,
                         ),
                         itemBuilder: (context, index) {
-                          return SongItem(
-                            song: recentSongs[index],
+                          return InstrumentItem(
+                            instrument: searchInstrument(
+                                instrument, searchValue)[index],
                           );
                         },
                       ),
-                MusicSection(
-                  title: 'Songs',
-                  albums: albums,
-                ),
-                StreamBuilder<List<Song>>(
-                  stream: SongRequest.getAll(),
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    } else if (snapshot.hasError) {
-                      return Center(
-                        child: Text('Error loading composer list'),
-                      );
-                    } else {
-                      songList = snapshot.data!;
-                      return GridView.builder(
+                      SizedBox(height: 7),
+                      MusicSection(
+                        title: 'Artist',
+                        albums: albums,
+                      ),
+                      GridView.builder(
                         physics: NeverScrollableScrollPhysics(),
                         shrinkWrap: true,
-                        itemCount: searchSong(songList!, searchValue).length,
+                        itemCount: perfomer.length,
                         gridDelegate:
                             const SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 3,
                           crossAxisSpacing: 10,
                           mainAxisSpacing: 10,
-                          childAspectRatio: 5 / 6,
+                          childAspectRatio: 3 / 3,
                         ),
                         itemBuilder: (context, index) {
-                          return GestureDetector(
-                            onTap: () {
-                              _onSongTap(index);
-                              recentSongs.add(
-                                  searchSong(songList!, searchValue)[index]);
-                            },
-                            child: SongItem(
-                              song: searchSong(songList!, searchValue)[index],
-                            ),
+                          return PerfomerItem.PerformerItem(
+                            perfomer: perfomer[index],
                           );
                         },
-                      );
-                    }
-                  },
-                ),
-                SizedBox(height: 7),
-                MusicSection(
-                  title: 'Composer',
-                  albums: albums,
-                ),
-                StreamBuilder<List<Composer>>(
-                  stream: ComposerRequest.getAll(),
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    } else if (snapshot.hasError) {
-                      return Center(
-                        child: Text('Error loading composer list'),
-                      );
-                    } else {
-                      List<Composer> composer = snapshot.data!;
-                      return GridView.builder(
-                        physics: NeverScrollableScrollPhysics(),
-                        shrinkWrap: true,
-                        itemCount: searchComposer(composer, searchValue).length,
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 3,
-                          crossAxisSpacing: 10,
-                          mainAxisSpacing: 10,
-                          childAspectRatio: 5 / 6,
-                        ),
-                        itemBuilder: (context, index) {
-                          return GestureDetector(
-                            onTap: () {
-                              Get.toNamed('/composerPage',
-                                  arguments: composer[index].composerId);
-                            },
-                            child: ComposerItem(
-                              composer:
-                                  searchComposer(composer, searchValue)[index],
-                            ),
-                          );
+                      ),
+                      MusicSection(
+                        title: 'Event',
+                        albums: albums,
+                      ),
+                      StreamBuilder<List<Event>>(
+                        stream: EventRequest.search(searchValue),
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return CircularProgressIndicator();
+                          } else if (snapshot.hasError) {
+                            return Text('Error: ${snapshot.error}');
+                          } else {
+                            return ListView.separated(
+                              shrinkWrap: true,
+                              scrollDirection: Axis.vertical,
+                              itemBuilder: ((context, index) {
+                                return EventItem(
+                                  event: snapshot.data![index],
+                                );
+                              }),
+                              separatorBuilder: ((context, index) {
+                                return SizedBox(
+                                  height: 10,
+                                );
+                              }),
+                              itemCount: snapshot.data!.length,
+                            );
+                          }
                         },
-                      );
-                    }
-                  },
-                ),
-                SizedBox(height: 7),
-                MusicSection(
-                  title: 'Instrument',
-                  albums: albums,
-                ),
-                GridView.builder(
-                  shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
-                  itemCount: searchInstrument(instrument, searchValue).length,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 3,
-                    crossAxisSpacing: 10,
-                    mainAxisSpacing: 10,
-                    childAspectRatio: 5 / 6,
+                      ),
+                      SizedBox(
+                        height: 70,
+                      )
+                    ],
                   ),
-                  itemBuilder: (context, index) {
-                    return InstrumentItem(
-                      instrument:
-                          searchInstrument(instrument, searchValue)[index],
-                    );
-                  },
                 ),
-                SizedBox(height: 7),
-                MusicSection(
-                  title: 'Artist',
-                  albums: albums,
-                ),
-                GridView.builder(
-                  physics: NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  itemCount: perfomer.length,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 3,
-                    crossAxisSpacing: 10,
-                    mainAxisSpacing: 10,
-                    childAspectRatio: 3 / 3,
-                  ),
-                  itemBuilder: (context, index) {
-                    return PerfomerItem.PerformerItem(
-                      perfomer: perfomer[index],
-                    );
-                  },
-                ),
-                MusicSection(
-                  title: 'Event',
-                  albums: albums,
-                ),
-                StreamBuilder<List<Event>>(
-                  stream: EventRequest.search(searchValue),
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return CircularProgressIndicator();
-                    } else if (snapshot.hasError) {
-                      return Text('Error: ${snapshot.error}');
-                    } else {
-                      return ListView.separated(
-                        shrinkWrap: true,
-                        scrollDirection: Axis.vertical,
-                        itemBuilder: ((context, index) {
-                          return EventItem(
-                            event: snapshot.data![index],
-                          );
-                        }),
-                        separatorBuilder: ((context, index) {
-                          return SizedBox(
-                            height: 10,
-                          );
-                        }),
-                        itemCount: snapshot.data!.length,
-                      );
-                    }
-                  },
-                ),
-                SizedBox(
-                  height: 70,
-                )
-              ],
+              ),
             ),
-          ),
+            Padding(
+                padding: EdgeInsets.only(bottom: 70), child: MiniPlaybackBar()),
+          ],
         ),
       ),
     );

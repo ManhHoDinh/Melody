@@ -87,7 +87,11 @@ class MyApp extends StatelessWidget {
         GetPage(name: Routes.uploadSong, page: () => UploadSongPage()),
         GetPage(name: Routes.artistPage, page: () => ArtistPage()),
         GetPage(name: Routes.editArtist, page: () => EditArtist()),
-        GetPage(name: Routes.playing, page: () => Playing()),
+        GetPage(
+          name: Routes.playing,
+          page: () => Playing(),
+          transition: Transition.downToUp,
+        ),
         GetPage(name: Routes.queue, page: () => Queue()),
         GetPage(name: Routes.editSong, page: () => EditSong()),
         GetPage(name: Routes.uploadComposer, page: () => UploadComposerPage()),
