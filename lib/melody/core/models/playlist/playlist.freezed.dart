@@ -25,6 +25,8 @@ mixin _$Playlist {
   String get id => throw _privateConstructorUsedError;
   List<String> get songIds => throw _privateConstructorUsedError;
   String get image => throw _privateConstructorUsedError;
+  String get type => throw _privateConstructorUsedError;
+  String get userId => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -42,7 +44,9 @@ abstract class $PlaylistCopyWith<$Res> {
       String description,
       String id,
       List<String> songIds,
-      String image});
+      String image,
+      String type,
+      String userId});
 }
 
 /// @nodoc
@@ -63,6 +67,8 @@ class _$PlaylistCopyWithImpl<$Res, $Val extends Playlist>
     Object? id = null,
     Object? songIds = null,
     Object? image = null,
+    Object? type = null,
+    Object? userId = null,
   }) {
     return _then(_value.copyWith(
       name: null == name
@@ -85,6 +91,14 @@ class _$PlaylistCopyWithImpl<$Res, $Val extends Playlist>
           ? _value.image
           : image // ignore: cast_nullable_to_non_nullable
               as String,
+      type: null == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as String,
+      userId: null == userId
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
+              as String,
     ) as $Val);
   }
 }
@@ -102,7 +116,9 @@ abstract class _$$PlaylistImplCopyWith<$Res>
       String description,
       String id,
       List<String> songIds,
-      String image});
+      String image,
+      String type,
+      String userId});
 }
 
 /// @nodoc
@@ -121,6 +137,8 @@ class __$$PlaylistImplCopyWithImpl<$Res>
     Object? id = null,
     Object? songIds = null,
     Object? image = null,
+    Object? type = null,
+    Object? userId = null,
   }) {
     return _then(_$PlaylistImpl(
       name: null == name
@@ -143,6 +161,14 @@ class __$$PlaylistImplCopyWithImpl<$Res>
           ? _value.image
           : image // ignore: cast_nullable_to_non_nullable
               as String,
+      type: null == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as String,
+      userId: null == userId
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -151,22 +177,26 @@ class __$$PlaylistImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$PlaylistImpl implements _Playlist {
   const _$PlaylistImpl(
-      {required this.name,
+      {this.name = "",
       this.description = "",
-      required this.id,
+      this.id = "",
       final List<String> songIds = const [],
-      required this.image})
+      this.image = "",
+      this.type = "",
+      this.userId = ""})
       : _songIds = songIds;
 
   factory _$PlaylistImpl.fromJson(Map<String, dynamic> json) =>
       _$$PlaylistImplFromJson(json);
 
   @override
+  @JsonKey()
   final String name;
   @override
   @JsonKey()
   final String description;
   @override
+  @JsonKey()
   final String id;
   final List<String> _songIds;
   @override
@@ -178,11 +208,18 @@ class _$PlaylistImpl implements _Playlist {
   }
 
   @override
+  @JsonKey()
   final String image;
+  @override
+  @JsonKey()
+  final String type;
+  @override
+  @JsonKey()
+  final String userId;
 
   @override
   String toString() {
-    return 'Playlist(name: $name, description: $description, id: $id, songIds: $songIds, image: $image)';
+    return 'Playlist(name: $name, description: $description, id: $id, songIds: $songIds, image: $image, type: $type, userId: $userId)';
   }
 
   @override
@@ -195,13 +232,15 @@ class _$PlaylistImpl implements _Playlist {
                 other.description == description) &&
             (identical(other.id, id) || other.id == id) &&
             const DeepCollectionEquality().equals(other._songIds, _songIds) &&
-            (identical(other.image, image) || other.image == image));
+            (identical(other.image, image) || other.image == image) &&
+            (identical(other.type, type) || other.type == type) &&
+            (identical(other.userId, userId) || other.userId == userId));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, name, description, id,
-      const DeepCollectionEquality().hash(_songIds), image);
+      const DeepCollectionEquality().hash(_songIds), image, type, userId);
 
   @JsonKey(ignore: true)
   @override
@@ -219,11 +258,13 @@ class _$PlaylistImpl implements _Playlist {
 
 abstract class _Playlist implements Playlist {
   const factory _Playlist(
-      {required final String name,
+      {final String name,
       final String description,
-      required final String id,
+      final String id,
       final List<String> songIds,
-      required final String image}) = _$PlaylistImpl;
+      final String image,
+      final String type,
+      final String userId}) = _$PlaylistImpl;
 
   factory _Playlist.fromJson(Map<String, dynamic> json) =
       _$PlaylistImpl.fromJson;
@@ -238,6 +279,10 @@ abstract class _Playlist implements Playlist {
   List<String> get songIds;
   @override
   String get image;
+  @override
+  String get type;
+  @override
+  String get userId;
   @override
   @JsonKey(ignore: true)
   _$$PlaylistImplCopyWith<_$PlaylistImpl> get copyWith =>

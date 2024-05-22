@@ -211,7 +211,6 @@ class PlaylistProvider extends ChangeNotifier {
     if (_currentSongIndex == null) return;
     final currentSong = _playlist[_currentSongIndex!];
     await SongRequest.downloadSong(currentSong.audioPath, currentSong.songName);
-    Fluttertoast.showToast(msg: "Download started");
   }
   // dispose audio player
 

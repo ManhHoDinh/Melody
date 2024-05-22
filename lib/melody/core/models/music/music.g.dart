@@ -8,7 +8,7 @@ part of 'music.dart';
 
 _$MusicImpl _$$MusicImplFromJson(Map<String, dynamic> json) => _$MusicImpl(
       name: json['name'] as String,
-      id: json['id'] as int,
+      id: (json['id'] as num).toInt(),
       artist: json['artist'] as String,
       image: json['image'] as String,
     );

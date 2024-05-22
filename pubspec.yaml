@@ -71,6 +71,9 @@ dependencies:
     audioplayers: ^5.2.1
     cached_network_image: ^3.3.1
     path_provider: any
+    flutter_chat_ui: ^1.6.12
+    open_file: ^3.3.2
+    loading_animation_widget: ^1.2.1
 
 dev_dependencies:
     flutter_test:

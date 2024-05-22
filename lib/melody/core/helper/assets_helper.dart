@@ -35,4 +35,6 @@ class AssetHelper {
   static const String playlistIcon = imgAssets + 'playlist_icon.png';
   static const String selectedPlaylistIcon =
       imgAssets + 'selected_playlist_icon.png';
+  static const String favoriteSongImg =
+      "https://firebasestorage.googleapis.com/v0/b/melody-bf3aa.appspot.com/o/images%2Ffavorite_song_img.jpg?alt=media&token=318dc0ab-4929-45b7-ac3d-1475ca9b38bb";
 }

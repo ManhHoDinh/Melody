@@ -14,7 +14,7 @@ _$SongImpl _$$SongImplFromJson(Map<String, dynamic> json) => _$SongImpl(
       songImagePath: json['songImagePath'] as String? ?? "",
       times: json['times'] == null
           ? const []
-          : _sendAtFromJson(json['times'] as List<dynamic>),
+          : _sendAtFromJson(json['times'] as List),
       audioPath: json['audioPath'] as String? ?? "",
     );
 

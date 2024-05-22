@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:melody/melody/presentations/screens/Home/bottom_navigation_home.dart';
+import 'package:melody/melody/presentations/screens/event/all_event_screen.dart';
+import 'package:melody/melody/presentations/screens/music_recognition/music_recognition_screen.dart';
 
 import '../../../../app_theme.dart';
 import '../../../../custom_drawer/drawer_user_controller.dart';
@@ -62,14 +64,14 @@ class _NavigationHomeState extends State<NavigationHome> {
             screenView =  BottomHomeScreen();
           });
           break;
-        case DrawerIndex.Help:
+        case DrawerIndex.Events:
           setState(() {
-            screenView = HelpScreen();
+            screenView = AllEventScreen();
           });
           break;
-        case DrawerIndex.FeedBack:
+        case DrawerIndex.Recognize:
           setState(() {
-            screenView = FeedbackScreen();
+            screenView = MusicRecognition();
           });
           break;
         case DrawerIndex.Invite:
