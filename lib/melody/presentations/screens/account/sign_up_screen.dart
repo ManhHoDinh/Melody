@@ -11,7 +11,7 @@ import '../../../core/helper/image_helper.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
-  static final String routeName = 'sign_up_screen';
+  static const String routeName = 'sign_up_screen';
 
   @override
   State<SignUpScreen> createState() => _SignUpScreenState();
@@ -149,13 +149,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         return "Enter your password, please!";
                       } else if (input != null && input.length <= 6) {
                         return "Password is too short!";
-                      } 
-                      else if(_confirmPasswordController.text != _passwordController.text){
+                      } else if (_confirmPasswordController.text !=
+                          _passwordController.text) {
                         return "Password is not match!";
-                      }
-                      else
+                      } else
                         return null;
-                      },
+                    },
                     obscureText: !_confirmPasswordVisible,
                     controller: _confirmPasswordController,
                     decoration: InputDecoration(
@@ -201,12 +200,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     onTap: () async {
                       if (formSignInKey.currentState!.validate()) {
                         await AuthServices.signUpUser(
-                          name: _nameController.text,
-                          email: _emailController.text,
-                          password: _passwordController.text,
-                          buildContext: context);
+                            name: _nameController.text,
+                            email: _emailController.text,
+                            password: _passwordController.text,
+                            buildContext: context);
                       }
-                      },
+                    },
                   ),
                   SizedBox(
                     height: 20,

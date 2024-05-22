@@ -39,6 +39,8 @@ class _MusicRecognitionState extends State<MusicRecognition> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Music recognition screen'),
+        centerTitle: true,
+      
       ),
       body: Center(
         child: ElevatedButton(

@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:melody/melody/core/models/song/song.dart';
+import 'package:dio/dio.dart';
 
 class SongRequest {
   static Stream<List<Song>> getAllByArtistId(String artistId) =>
@@ -10,14 +11,21 @@ class SongRequest {
           .snapshots()
           .map((event) =>
               event.docs.map((e) => Song.fromJson(e.data())).toList());
-
+  static Stream<List<Song>> getAll() => FirebaseFirestore.instance
+      .collection('Songs')
+      .snapshots()
+      .map((event) =>
+          event.docs.map((e) => Song.fromJson(e.data())).toList());
   static Future<Song> getById(String id) async {
     DocumentSnapshot<Map<String, dynamic>> doc =
         await FirebaseFirestore.instance.collection('Songs').doc(id).get();
     Song song = Song.fromJson(doc.data()!);
     return Future.value(song);
   }
-
+Future<Song> getSongById(String songId) async {
+  DocumentSnapshot songDoc = await FirebaseFirestore.instance.collection('Songs').doc(songId).get();
+  return Song.fromJson(songDoc.data() as Map<String, dynamic>);
+}
   static List<Song> AllSongs = [];
 
   static List<Timestamp> _sendAtToJson(List<DateTime> times) =>
@@ -36,5 +44,15 @@ class SongRequest {
         .collection('Songs')
         .doc(songId)
         .update({"times": _sendAtToJson(times)});
+  }
+
+  static Future<String> getLyricsOfSong(String artist, String title) async {
+    final dio = Dio();
+    try {
+      var res = await dio.get("https://api.lyrics.ovh/v1/$artist/$title");
+      return res.data["lyrics"];
+    } catch (e) {
+      return 'No lyrics found';
+    }
   }
 }

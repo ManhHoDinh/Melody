@@ -61,11 +61,11 @@ _$AppleMusicImpl _$$AppleMusicImplFromJson(Map<String, dynamic> json) =>
           : Artwork.fromJson(json['artwork'] as Map<String, dynamic>),
       artistName: json['artistName'] as String?,
       url: json['url'] as String?,
-      discNumber: json['discNumber'] as int?,
+      discNumber: (json['discNumber'] as num?)?.toInt(),
       genreNames: (json['genreNames'] as List<dynamic>?)
           ?.map((e) => e as String)
           .toList(),
-      durationInMillis: json['durationInMillis'] as int?,
+      durationInMillis: (json['durationInMillis'] as num?)?.toInt(),
       releaseDate: json['releaseDate'] as String?,
       name: json['name'] as String?,
       isrc: json['isrc'] as String?,
@@ -73,7 +73,7 @@ _$AppleMusicImpl _$$AppleMusicImplFromJson(Map<String, dynamic> json) =>
       playParams: json['playParams'] == null
           ? null
           : PlayParams.fromJson(json['playParams'] as Map<String, dynamic>),
-      trackNumber: json['trackNumber'] as int?,
+      trackNumber: (json['trackNumber'] as num?)?.toInt(),
       composerName: json['composerName'] as String?,
     );
 
@@ -107,8 +107,8 @@ Map<String, dynamic> _$$PreviewsImplToJson(_$PreviewsImpl instance) =>
 
 _$ArtworkImpl _$$ArtworkImplFromJson(Map<String, dynamic> json) =>
     _$ArtworkImpl(
-      width: json['width'] as int?,
-      height: json['height'] as int?,
+      width: (json['width'] as num?)?.toInt(),
+      height: (json['height'] as num?)?.toInt(),
       url: json['url'] as String?,
       bgColor: json['bgColor'] as String?,
       textColor1: json['textColor1'] as String?,
@@ -172,8 +172,8 @@ _$SpotifyImpl _$$SpotifyImplFromJson(Map<String, dynamic> json) =>
       artists: (json['artists'] as List<dynamic>?)
           ?.map((e) => Artists.fromJson(e as Map<String, dynamic>))
           .toList(),
-      discNumber: json['disc_number'] as int?,
-      durationMs: json['duration_ms'] as int?,
+      discNumber: (json['disc_number'] as num?)?.toInt(),
+      durationMs: (json['duration_ms'] as num?)?.toInt(),
       explicit: json['explicit'] as bool?,
       externalIds: json['external_ids'] == null
           ? null
@@ -186,8 +186,8 @@ _$SpotifyImpl _$$SpotifyImplFromJson(Map<String, dynamic> json) =>
       id: json['id'] as String?,
       isLocal: json['is_local'] as bool?,
       name: json['name'] as String?,
-      popularity: json['popularity'] as int?,
-      trackNumber: json['track_number'] as int?,
+      popularity: (json['popularity'] as num?)?.toInt(),
+      trackNumber: (json['track_number'] as num?)?.toInt(),
       type: json['type'] as String?,
       uri: json['uri'] as String?,
     );
@@ -228,7 +228,7 @@ _$AlbumImpl _$$AlbumImplFromJson(Map<String, dynamic> json) => _$AlbumImpl(
       name: json['name'] as String?,
       releaseDate: json['release_date'] as String?,
       releaseDatePrecision: json['release_date_precision'] as String?,
-      totalTracks: json['total_tracks'] as int?,
+      totalTracks: (json['total_tracks'] as num?)?.toInt(),
       type: json['type'] as String?,
       uri: json['uri'] as String?,
     );
@@ -270,9 +270,9 @@ Map<String, dynamic> _$$ExternalIdsImplToJson(_$ExternalIdsImpl instance) =>
     };
 
 _$ImagesImpl _$$ImagesImplFromJson(Map<String, dynamic> json) => _$ImagesImpl(
-      height: json['height'] as int?,
+      height: (json['height'] as num?)?.toInt(),
       url: json['url'] as String?,
-      width: json['width'] as int?,
+      width: (json['width'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$$ImagesImplToJson(_$ImagesImpl instance) =>
