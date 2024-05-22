@@ -39,7 +39,7 @@ Future<String> getResponseFromCozeAPI(String userMessage) async {
   if (response.statusCode == 200) {
     var data = jsonDecode(response.body);
     if (data['messages'] != null && data['messages'].isNotEmpty) {
-      return data['messages'][1]['content'];
+     return data['messages'].firstWhere((message) => message['type'] == 'answer')['content'];
     } else {
       throw Exception('Response data does not contain expected fields');
     }

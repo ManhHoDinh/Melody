@@ -171,16 +171,16 @@ class __$$UserModelImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$UserModelImpl with DiagnosticableTreeMixin implements _UserModel {
-  const _$UserModelImpl(
-      {required this.Id,
-      required this.Name,
-      required this.Email,
-      final List<String> playlistIds = const [],
-      this.position = "",
-      final List<String> songIds = const []})
-      : _songIds = songIds
-      : _playlistIds = playlistIds;
-
+  _$UserModelImpl({
+    required this.Id,
+    required this.Name,
+    required this.Email,
+    List<String> playlistIds = const [],
+    this.position = "",
+    List<String> songIds = const [],
+  }) : _playlistIds = playlistIds,
+      _songIds = songIds;
+     
   factory _$UserModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$UserModelImplFromJson(json);
 
@@ -265,7 +265,7 @@ class _$UserModelImpl with DiagnosticableTreeMixin implements _UserModel {
 }
 
 abstract class _UserModel implements UserModel {
-  const factory _UserModel(
+   factory _UserModel(
       {required final String Id,
       required final String Name,
       required final String Email,
