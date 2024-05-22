@@ -262,7 +262,7 @@ class _$UserModelImpl with DiagnosticableTreeMixin implements _UserModel {
 }
 
 abstract class _UserModel implements UserModel {
-  const factory _UserModel(
+   factory _UserModel(
       {required final String Id,
       required final String Name,
       required final String Email,
