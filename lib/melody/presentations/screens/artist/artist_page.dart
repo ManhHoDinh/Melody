@@ -27,7 +27,8 @@ class ArtistPage extends StatefulWidget {
 
 class _ArtistPageState extends State<ArtistPage> {
   late PlaylistProvider playlistProvider;
-  String artistId = Get.arguments;
+  String artistId = "0UBAPBKaLYeFRNvpywpHqPJLSlG2";
+
   List<Song>? songList;
 
   @override
@@ -41,13 +42,8 @@ class _ArtistPageState extends State<ArtistPage> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          leading: IconButton(
-            onPressed: () {
-              Get.back();
-            },
-            icon: Icon(Icons.arrow_back),
-          ),
           title: Text('A R T I S T'),
+          centerTitle: true,
         ),
         body: Column(
           children: [
@@ -55,7 +51,7 @@ class _ArtistPageState extends State<ArtistPage> {
               child: SingleChildScrollView(
                 scrollDirection: Axis.vertical,
                 child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 25),
+                  padding: EdgeInsets.symmetric(horizontal: 20),
                   child: StreamBuilder<Artist?>(
                     stream: ArtistRequest.getStreamById(artistId),
                     builder: (context, snapshot) {

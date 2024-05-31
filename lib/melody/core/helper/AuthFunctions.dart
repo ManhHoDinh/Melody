@@ -92,6 +92,7 @@ class AuthServices {
                 })
             .whenComplete(() => Navigator.of(context).pushNamedAndRemoveUntil(
                 NavigationHome.routeName, (route) => false));
+                
       }
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
@@ -127,7 +128,7 @@ class AuthServices {
         Id: value['Id'],
         Name: value['Name'],
         Email: value['Email'],
-        // position: value['position'],
+        position: value['position'],
       );
     });
   }

@@ -8,6 +8,7 @@ import 'package:melody/melody/presentations/screens/user/user_screen.dart';
 import '../../../core/constants/color_palatte.dart';
 import '../../bottom_navigation_view/bottom_bar_view.dart';
 import '../../bottom_navigation_view/tabIconData.dart';
+import '../artist/artist_page.dart';
 
 class BottomHomeScreen extends StatefulWidget {
   @override
@@ -129,7 +130,7 @@ class _BottomHomeScreenState extends State<BottomHomeScreen>
                 }
                 setState(() {
                   tabBody =
-                      UserScreen(animationController: animationController);
+                      ArtistPage();
                 });
               });
             }

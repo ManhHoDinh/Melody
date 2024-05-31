@@ -3,6 +3,8 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:melody/app_theme.dart';
 import 'package:flutter/material.dart';
 
+import '../melody/core/helper/AuthFunctions.dart';
+
 class HomeDrawer extends StatefulWidget {
   const HomeDrawer(
       {Key? key,
@@ -28,6 +30,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
   }
 
   void setDrawerListArray() {
+    if (drawerList != null) drawerList!.clear();
     drawerList = <DrawerList>[
       DrawerList(
         index: DrawerIndex.HOME,
@@ -45,6 +48,37 @@ class _HomeDrawerState extends State<HomeDrawer> {
         labelName: 'Recognize Music',
         icon: Icon(Icons.mic),
       ),
+    ];
+    print(AuthServices.CurrentUser);
+    print(AuthServices.CurrentUserIsManager());
+    if (AuthServices.CurrentUserIsManager()) {
+      drawerList!.addAll([
+        DrawerList(
+          index: DrawerIndex.Statistic,
+          labelName: 'Statistic Music',
+          icon: Icon(Icons.report),
+        ),
+        DrawerList(
+          index: DrawerIndex.UploadComposer,
+          labelName: 'Upload Composer',
+          icon: Icon(Icons.upload_outlined),
+        ),
+      ]);
+    } else {
+      drawerList!.remove(
+        DrawerList(
+          index: DrawerIndex.Statistic,
+          labelName: 'Statistic Music',
+          icon: Icon(Icons.report),
+        ),
+      );
+      drawerList!.remove(DrawerList(
+        index: DrawerIndex.UploadComposer,
+        labelName: 'Upload Composer',
+        icon: Icon(Icons.upload_outlined),
+      ));
+    }
+    drawerList!.addAll([
       DrawerList(
         index: DrawerIndex.Invite,
         labelName: 'Invite Friend',
@@ -60,7 +94,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
         labelName: 'About Us',
         icon: Icon(Icons.info),
       ),
-    ];
+    ]);
   }
 
   @override
@@ -307,6 +341,8 @@ enum DrawerIndex {
   About,
   Invite,
   Testing,
+  Statistic,
+  UploadComposer
 }
 
 class DrawerList {
