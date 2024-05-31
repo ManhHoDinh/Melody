@@ -55,13 +55,8 @@ class _UploadComposerPageState extends State<UploadComposerPage> {
     return SafeArea(
         child: Scaffold(
             appBar: AppBar(
-              leading: IconButton(
-                onPressed: () {
-                  Get.back();
-                },
-                icon: Icon(Icons.arrow_back),
-              ),
               title: Text('U P L O A D'),
+              centerTitle: true,
             ),
             body: SingleChildScrollView(
               scrollDirection: Axis.vertical,

@@ -17,7 +17,8 @@ class _StatisticScreenState extends State<StatisticScreen> {
         length: 2,
         child: Scaffold(
           appBar: AppBar(
-            title: Text('Statistic'),
+            title: Text('S T A T I S T I C'),
+            centerTitle: true,
             bottom: TabBar(
               indicatorSize: TabBarIndicatorSize.tab,
               indicatorWeight: 4,
