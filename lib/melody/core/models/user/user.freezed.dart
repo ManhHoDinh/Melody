@@ -163,7 +163,7 @@ class __$$UserModelImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$UserModelImpl with DiagnosticableTreeMixin implements _UserModel {
-  const _$UserModelImpl(
+  _$UserModelImpl(
       {required this.Id,
       required this.Name,
       required this.Email,
@@ -262,7 +262,7 @@ class _$UserModelImpl with DiagnosticableTreeMixin implements _UserModel {
 }
 
 abstract class _UserModel implements UserModel {
-   factory _UserModel(
+  factory _UserModel(
       {required final String Id,
       required final String Name,
       required final String Email,

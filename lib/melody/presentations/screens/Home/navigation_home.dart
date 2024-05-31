@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:melody/melody/presentations/screens/Home/bottom_navigation_home.dart';
+import 'package:melody/melody/presentations/screens/composer/upload_composer_page.dart';
 import 'package:melody/melody/presentations/screens/event/all_event_screen.dart';
 import 'package:melody/melody/presentations/screens/music_recognition/music_recognition_screen.dart';
 
@@ -9,6 +10,7 @@ import '../../../../custom_drawer/home_drawer.dart';
 import '../../../../feedback_screen.dart';
 import '../../../../help_screen.dart';
 import '../../../../invite_friend_screen.dart';
+import '../statistic/statistic_screen.dart';
 
 class NavigationHome extends StatefulWidget {
   const NavigationHome({super.key});
@@ -72,6 +74,16 @@ class _NavigationHomeState extends State<NavigationHome> {
         case DrawerIndex.Recognize:
           setState(() {
             screenView = MusicRecognition();
+          });
+          break;
+        case DrawerIndex.Statistic:
+          setState(() {
+            screenView = StatisticScreen();
+          });
+          break;
+        case DrawerIndex.UploadComposer:
+          setState(() {
+            screenView = UploadComposerPage();
           });
           break;
         case DrawerIndex.Invite:
