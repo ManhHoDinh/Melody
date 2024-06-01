@@ -29,39 +29,41 @@ class EventItem extends StatelessWidget {
                 image: DecorationImage(
                     image: NetworkImage(event.image), fit: BoxFit.cover)),
           ),
-          Container(
-            margin: EdgeInsets.only(left: 20),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  format.format(DateTime.parse(event.startAt)),
-                  style: TextStyle(color: Colors.white),
-                ),
-                Text(
-                  event.name,
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
-                      fontWeight: FontWeight.w700),
-                ),
-                Row(
-                  children: [
-                    Icon(
-                      Icons.location_on,
-                      size: 18,
-                      color: ColorPalette.secondColor,
-                    ),
-                    Text(
-                      event.location,
-                      style: TextStyle(color: Colors.white, fontSize: 14),
-                    ),
-                  ],
-                )
-              ],
+         Expanded(
+            child: Container(
+              margin: EdgeInsets.only(left: 20),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    format.format(DateTime.parse(event.startAt)),
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  Text(
+                    event.name,
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w700),
+                  ),
+                  Row(
+                    children: [
+                      Icon(
+                        Icons.location_on,
+                        size: 18,
+                        color: ColorPalette.secondColor,
+                      ),
+                      Text(
+                        event.location,
+                        style: TextStyle(color: Colors.white, fontSize: 14),
+                      ),
+                    ],
+                  )
+                ],
+              ),
             ),
-          )
+          ),
         ],
       ),
     );
