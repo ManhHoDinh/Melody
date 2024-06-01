@@ -21,10 +21,18 @@ class EventItem extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all(16),
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(16),
-          boxShadow: [
-            BoxShadow(color: Color(0xff412C3A), spreadRadius: 2, blurRadius: 2)
-          ]),
+        color: Colors.white, // Change the color of the container
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: [
+          BoxShadow(
+            color:
+                Colors.grey.withOpacity(0.5), // Change the color of the shadow
+            spreadRadius: 5,
+            blurRadius: 7,
+            offset: Offset(0, 3), // changes position of shadow
+          ),
+        ],
+      ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -45,12 +53,12 @@ class EventItem extends StatelessWidget {
                 children: [
                   Text(
                     format.format(DateTime.parse(event.startAt)),
-                    style: TextStyle(color: Colors.white),
+                    style: TextStyle(color: Colors.black),
                   ),
                   Text(
                     event.name,
                     style: TextStyle(
-                        color: Colors.white,
+                        color: Colors.black,
                         fontSize: 18,
                         fontWeight: FontWeight.w700),
                   ),
@@ -63,7 +71,7 @@ class EventItem extends StatelessWidget {
                       ),
                       Text(
                         event.location,
-                        style: TextStyle(color: Colors.white, fontSize: 14),
+                        style: TextStyle(color: Colors.black, fontSize: 14),
                       ),
                     ],
                   )

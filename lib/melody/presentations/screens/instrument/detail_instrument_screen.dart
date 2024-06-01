@@ -8,7 +8,8 @@ import 'package:melody/melody/core/models/firebase/instrument_request.dart';
 import 'package:melody/melody/core/models/instrumentModel/instrumentModel.dart';
 
 class DetailInstrumentScreen extends StatefulWidget {
-  const DetailInstrumentScreen({super.key});
+  final InstrumentModel instrument;
+  const DetailInstrumentScreen({super.key, required this.instrument});
 
   @override
   State<DetailInstrumentScreen> createState() => _DetailInstrumentScreenState();
@@ -18,7 +19,7 @@ class _DetailInstrumentScreenState extends State<DetailInstrumentScreen> {
   var _controller = QuillController.basic();
   Future<void> loadQuill() async {
     String description =
-        await InstrumentRequest.getDescription("JLoV2c0srtrUvDiblND6");
+        await InstrumentRequest.getDescription(widget.instrument.id);
     setState(() {
       _controller = QuillController(
           document: Document.fromJson(jsonDecode(description)),
@@ -50,7 +51,7 @@ class _DetailInstrumentScreenState extends State<DetailInstrumentScreen> {
         child: Container(
           padding: EdgeInsets.symmetric(horizontal: 16),
           child: FutureBuilder<InstrumentModel>(
-              future: InstrumentRequest.getById("JLoV2c0srtrUvDiblND6"),
+              future: InstrumentRequest.getById(widget.instrument.id),
               builder: (context, snapshot) {
                 if (snapshot.hasData)
                   return Column(
@@ -75,16 +76,15 @@ class _DetailInstrumentScreenState extends State<DetailInstrumentScreen> {
                       ),
                       Container(
                         height: 350,
-                        // child: QuillEditor.basic(
-                        //   configurations: QuillEditorConfigurations(
-                        //     controller: _controller,
-                        //     readOnly: false,
-                        //     sharedConfigurations:
-                        //         const QuillSharedConfigurations(
-                        //       locale: Locale('de'),
-                        //     ),
-                        //   ),
-                        // ),
+                        child: QuillEditor.basic(
+                          configurations: QuillEditorConfigurations(
+                            controller: _controller,
+                            sharedConfigurations:
+                                const QuillSharedConfigurations(
+                              locale: Locale('de'),
+                            ),
+                          ),
+                        ),
                       ),
                       SizedBox(
                         height: 20,

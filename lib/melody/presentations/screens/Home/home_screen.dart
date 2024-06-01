@@ -12,6 +12,7 @@ import 'package:melody/melody/core/models/composer/composer.dart';
 import 'package:melody/melody/core/models/event/event.dart';
 import 'package:melody/melody/core/models/firebase/composer_request.dart';
 import 'package:melody/melody/core/models/firebase/event_request.dart';
+import 'package:melody/melody/core/models/firebase/instrument_request.dart';
 import 'package:melody/melody/core/models/firebase/song_request.dart';
 import 'package:melody/melody/core/models/music/music.dart';
 import 'package:get/get.dart';
@@ -24,6 +25,8 @@ import 'package:melody/melody/presentations/screens/Home/widgets/composer_item.d
 import 'package:melody/melody/presentations/screens/Home/widgets/event_item.dart';
 import 'package:melody/melody/presentations/screens/Home/widgets/instrument_item.dart';
 import 'package:melody/melody/presentations/screens/Home/widgets/perfomer_item.dart';
+import 'package:melody/melody/presentations/screens/event/all_event_screen.dart';
+import 'package:melody/melody/presentations/screens/instrument/detail_instrument_screen.dart';
 import 'package:melody/melody/presentations/screens/playing/widgets/mini_playback.dart';
 import 'package:melody/melody/presentations/screens/Home/widgets/song_item.dart';
 import 'package:melody/melody/presentations/screens/chatbot/chatbot.dart';
@@ -171,7 +174,9 @@ class _HomeScreenState extends State<HomeScreen>
                         },
                         controller: searchController,
                         style: TextStyle(
-                            fontSize: 14, fontWeight: FontWeight.w400),
+                            color: Colors.white,
+                            fontSize: 14,
+                            fontWeight: FontWeight.w400),
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.symmetric(horizontal: 5),
                           filled: true,
@@ -205,8 +210,13 @@ class _HomeScreenState extends State<HomeScreen>
                                 childAspectRatio: 5 / 6,
                               ),
                               itemBuilder: (context, index) {
-                                return SongItem(
-                                  song: recentSongs[index],
+                                return GestureDetector(
+                                  onTap: () {
+                                    _onSongTap(index);
+                                  },
+                                  child: SongItem(
+                                    song: recentSongs[index],
+                                  ),
                                 );
                               },
                             ),
@@ -309,25 +319,43 @@ class _HomeScreenState extends State<HomeScreen>
                         title: 'Instrument',
                         albums: albums,
                       ),
-                      GridView.builder(
-                        shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
-                        itemCount:
-                            searchInstrument(instrument, searchValue).length,
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 3,
-                          crossAxisSpacing: 10,
-                          mainAxisSpacing: 10,
-                          childAspectRatio: 5 / 6,
-                        ),
-                        itemBuilder: (context, index) {
-                          return InstrumentItem(
-                            instrument: searchInstrument(
-                                instrument, searchValue)[index],
-                          );
-                        },
-                      ),
+                      StreamBuilder<List<InstrumentModel>>(
+                          stream: InstrumentRequest.search(searchValue),
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              return Center(
+                                child: CircularProgressIndicator(),
+                              );
+                            } else if (snapshot.hasError) {
+                              return Center(
+                                child: Text('Error loading composer list'),
+                              );
+                            } else
+                              return GridView.builder(
+                                shrinkWrap: true,
+                                physics: NeverScrollableScrollPhysics(),
+                                itemCount: snapshot.data!.length,
+                                gridDelegate:
+                                    const SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 3,
+                                  crossAxisSpacing: 10,
+                                  mainAxisSpacing: 10,
+                                  childAspectRatio: 5 / 6,
+                                ),
+                                itemBuilder: (context, index) {
+                                  return GestureDetector(
+                                    onTap: () {
+                                      Get.to(() => DetailInstrumentScreen(
+                                          instrument: snapshot.data![index]));
+                                    },
+                                    child: InstrumentItem(
+                                      instrument: snapshot.data![index],
+                                    ),
+                                  );
+                                },
+                              );
+                          }),
                       SizedBox(height: 7),
                       MusicSection(
                         title: 'Artist',
@@ -351,8 +379,11 @@ class _HomeScreenState extends State<HomeScreen>
                         },
                       ),
                       MusicSection(
-                        title: 'Event',
+                        title: 'Events',
                         albums: albums,
+                        viewMoreAction: () {
+                          Get.to(() => AllEventScreen());
+                        },
                       ),
                       StreamBuilder<List<Event>>(
                         stream: EventRequest.search(searchValue),

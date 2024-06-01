@@ -7,6 +7,7 @@ import 'package:melody/home_screen.dart';
 import 'package:melody/invite_friend_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:melody/melody/presentations/screens/Home/home_screen.dart';
+import 'package:melody/melody/presentations/screens/instrument/create_instrument_screen.dart';
 
 class NavigationHomeScreen extends StatefulWidget {
   @override
@@ -70,6 +71,11 @@ class _NavigationHomeScreenState extends State<NavigationHomeScreen> {
         case DrawerIndex.Invite:
           setState(() {
             screenView = InviteFriend();
+          });
+          break;
+        case DrawerIndex.Share:
+          setState(() {
+            screenView = CreateInstrumentScreen();
           });
           break;
         default:

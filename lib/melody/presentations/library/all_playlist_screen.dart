@@ -12,6 +12,7 @@ import 'package:melody/melody/presentations/library/detail_playlist_screen.dart'
 import 'package:melody/melody/presentations/library/widgets/playlist_item.dart';
 import 'package:melody/melody/presentations/screens/instrument/detail_instrument_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:melody/melody/presentations/screens/playing/widgets/mini_playback.dart';
 
 class AllPlaylistScreen extends StatefulWidget {
   const AllPlaylistScreen({super.key});
@@ -161,6 +162,8 @@ class _AllPlaylistScreenState extends State<AllPlaylistScreen> {
                         itemCount: playlistController.playlists.length);
                   })),
             ),
+            Padding(
+                padding: EdgeInsets.only(bottom: 70), child: MiniPlaybackBar()),
           ],
         ));
   }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:melody/melody/presentations/screens/Home/bottom_navigation_home.dart';
 import 'package:melody/melody/presentations/screens/composer/upload_composer_page.dart';
 import 'package:melody/melody/presentations/screens/event/all_event_screen.dart';
+import 'package:melody/melody/presentations/screens/instrument/create_instrument_screen.dart';
 import 'package:melody/melody/presentations/screens/music_recognition/music_recognition_screen.dart';
 
 import '../../../../app_theme.dart';
@@ -63,7 +64,7 @@ class _NavigationHomeState extends State<NavigationHome> {
       switch (drawerIndex) {
         case DrawerIndex.HOME:
           setState(() {
-            screenView =  BottomHomeScreen();
+            screenView = BottomHomeScreen();
           });
           break;
         case DrawerIndex.Events:
@@ -91,9 +92,13 @@ class _NavigationHomeState extends State<NavigationHome> {
             screenView = InviteFriend();
           });
           break;
-        
+        case DrawerIndex.Share:
+          setState(() {
+            screenView = CreateInstrumentScreen();
+          });
+          break;
+
         default:
-          
           break;
       }
     }

@@ -7,6 +7,7 @@ import 'package:melody/melody/core/models/firebase/album_request.dart';
 import 'package:melody/melody/core/models/user/user.dart';
 import 'package:melody/melody/presentations/screens/album/detail_album.dart';
 import 'package:melody/melody/presentations/screens/album/modify_album.dart';
+import 'package:melody/melody/presentations/screens/playing/widgets/mini_playback.dart';
 import '../../../core/models/album/album.dart';
 import 'widgets/album_item.dart';
 
@@ -54,28 +55,27 @@ class _AllAlbumScreenState extends State<AllAlbumScreen>
         child: Column(
           children: [
             TextField(
-                  onChanged: (value) {
-                    setState(() {
-                      searchValue = value;
-                    });
-                  },
-                  controller: searchController,
-                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
-                  decoration: InputDecoration(
-                    contentPadding: EdgeInsets.symmetric(horizontal: 5),
-                    filled: true,
-                    hintStyle: TextStyle(color: Color(0xffFFFFFF)),
-                    fillColor: Color(0xff198FB4),
-                    border: OutlineInputBorder(
-                      borderSide: BorderSide.none,
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    hintText: 'Search albums...',
-                    prefixIconColor: Color(0xffffffff),
-                    prefixIcon: Icon(Icons.search),
-                  ),
+              onChanged: (value) {
+                setState(() {
+                  searchValue = value;
+                });
+              },
+              controller: searchController,
+              style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
+              decoration: InputDecoration(
+                contentPadding: EdgeInsets.symmetric(horizontal: 5),
+                filled: true,
+                hintStyle: TextStyle(color: Color(0xffFFFFFF)),
+                fillColor: Color(0xff198FB4),
+                border: OutlineInputBorder(
+                  borderSide: BorderSide.none,
+                  borderRadius: BorderRadius.circular(15),
                 ),
-                
+                hintText: 'Search albums...',
+                prefixIconColor: Color(0xffffffff),
+                prefixIcon: Icon(Icons.search),
+              ),
+            ),
             SizedBox(
               height: 20,
             ),
@@ -130,9 +130,10 @@ class _AllAlbumScreenState extends State<AllAlbumScreen>
                 ),
               ),
             ),
+            MiniPlaybackBar(),
             SizedBox(
               height: 80,
-            )
+            ),
           ],
         ),
       ),
