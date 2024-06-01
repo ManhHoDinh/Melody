@@ -21,6 +21,39 @@ class DiscoveryScreen extends StatefulWidget {
 
 class _DiscoveryScreenState extends State<DiscoveryScreen> {
   TextEditingController searchController = TextEditingController();
+  @override
+void initState() {
+  super.initState();
+  searchController.addListener(_onSearchChanged);
+}
+void _onSearchChanged() {
+  setState(() {
+    albums = searchAlbums(albums, searchController.text);
+  });
+}
+@override
+void dispose() {
+  searchController.removeListener(_onSearchChanged);
+  super.dispose();
+}
+  void _openDialog() {
+    showDialog(
+      context: context,
+      builder: (context) => ListeningDialog(
+        onSpeechEnd: (_wordSpoken) {
+          searchController.text = _wordSpoken;
+          searchValue = _wordSpoken;
+        },
+      ),
+    ).then((value) {
+      if (value != null) {
+        searchController.text =
+            value; // set the returned value to searchController
+        searchValue = value;
+      }
+    });
+  }
+
   bool isTextFieldVisible = false;
   String searchValue = '';
   List<Music> albums = [
@@ -40,22 +73,11 @@ class _DiscoveryScreenState extends State<DiscoveryScreen> {
         name: 'Symphony ',
         image: AssetHelper.imgArtist),
   ];
-  void _openDialog() {
-    showDialog(
-      context: context,
-      builder: (context) => ListeningDialog(
-        onSpeechEnd: (spokenText) {
-          searchController.text = spokenText;
-          searchValue = spokenText;
-        },
-      ),
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor:Color(0xffF7F7F7),
+      backgroundColor: Color(0xffF7F7F7),
       appBar: AppBar(
         title: RichText(
           text: const TextSpan(
@@ -71,20 +93,21 @@ class _DiscoveryScreenState extends State<DiscoveryScreen> {
               ),
             ],
           ),
-          
         ),
         centerTitle: true,
-        actions: [IconButton(
-          onPressed: () {
-            setState(() {
-              isTextFieldVisible = !isTextFieldVisible;
-            });
-          },
-          icon: Icon(
-            Icons.search,
-            color: ColorPalette.secondColor,
+        actions: [
+          IconButton(
+            onPressed: () {
+              setState(() {
+                isTextFieldVisible = !isTextFieldVisible;
+              });
+            },
+            icon: Icon(
+              Icons.search,
+              color: ColorPalette.secondColor,
+            ),
           ),
-        ),],
+        ],
       ),
       body: Container(
         padding: EdgeInsets.symmetric(horizontal: 16),
@@ -98,12 +121,10 @@ class _DiscoveryScreenState extends State<DiscoveryScreen> {
                       });
                     },
                     controller: searchController,
-                    style:
-                        TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
+                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
                     decoration: InputDecoration(
                       filled: true,
-                      hintStyle:
-                          TextStyle(color: Color.fromARGB(255, 0, 0, 0)),
+                      hintStyle: TextStyle(color: Color.fromARGB(255, 0, 0, 0)),
                       fillColor: Color.fromARGB(255, 254, 254, 254),
                       border: OutlineInputBorder(
                           borderSide: BorderSide.none,
@@ -140,10 +161,9 @@ class _DiscoveryScreenState extends State<DiscoveryScreen> {
                 );
               },
             ),
-             SizedBox(
+            SizedBox(
               height: 10,
             ),
-           
             MusicSection(
               title: 'New Release Songs',
               albums: albums,
@@ -163,10 +183,9 @@ class _DiscoveryScreenState extends State<DiscoveryScreen> {
                 );
               },
             ),
-             SizedBox(
+            SizedBox(
               height: 10,
             ),
-           
             MusicSection(
               title: 'Albums of the Month',
               albums: albums,
@@ -235,6 +254,8 @@ class _ListeningDialogState extends State<ListeningDialog> {
     if (widget.onSpeechEnd != null) {
       widget.onSpeechEnd(_wordSpoken);
     }
+    print("_wordSpoken");
+    Navigator.pop(context, _wordSpoken);
     setState(() {});
   }
 
@@ -242,6 +263,10 @@ class _ListeningDialogState extends State<ListeningDialog> {
     setState(() {
       _wordSpoken = result.recognizedWords;
     });
+
+    if (result.finalResult) {
+      _stopListening();
+    }
   }
 
   @override

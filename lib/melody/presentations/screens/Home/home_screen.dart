@@ -36,6 +36,8 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:melody/melody/presentations/screens/music_recognition/music_recognition_screen.dart';
+import 'package:speech_to_text/speech_recognition_result.dart';
+import 'package:speech_to_text/speech_to_text.dart';
 import '../../../core/models/instrumentModel/instrumentModel.dart';
 import '../../../core/models/music/music.dart';
 import 'widgets/music_item.dart';
@@ -56,12 +58,43 @@ class _HomeScreenState extends State<HomeScreen>
   List<Song> recentSongs = [];
   late PlaylistProvider playlistProvider;
   List<Song>? songList;
+  List<Song> song = [];
+  void _onSearchChanged() {
+    setState(() {
+      song = searchSong(song, searchController.text);
+    });
+  }
+
+  @override
+  void dispose() {
+    searchController.removeListener(_onSearchChanged);
+    super.dispose();
+  }
 
   @override
   void initState() {
     super.initState();
     playlistProvider = Provider.of<PlaylistProvider>(context, listen: false);
+    searchController.addListener(_onSearchChanged);
     loadUserRecentSongs();
+  }
+
+  void _openDialog() {
+    showDialog(
+      context: context,
+      builder: (context) => ListeningDialog(
+        onSpeechEnd: (_wordSpoken) {
+          searchController.text = _wordSpoken;
+          searchValue = _wordSpoken;
+        },
+      ),
+    ).then((value) {
+      if (value != null) {
+        searchController.text =
+            value; // set the returned value to searchController
+        searchValue = value;
+      }
+    });
   }
 
   TextEditingController searchController = TextEditingController();
@@ -189,6 +222,10 @@ class _HomeScreenState extends State<HomeScreen>
                           hintText: 'Search Song, Composer, Instrument',
                           prefixIconColor: Color(0xffffffff),
                           prefixIcon: Icon(Icons.search),
+                          suffixIcon: IconButton(
+                            icon: Icon(Icons.mic),
+                            onPressed: _openDialog,
+                          ),
                         ),
                       ),
                       SizedBox(height: 7),
@@ -443,10 +480,7 @@ class _HomeScreenState extends State<HomeScreen>
         .toList();
   }
 
-  List<Song> searchSong(List<Song> Song, String value) {
-    return Song.where((element) =>
-        element.songName.toLowerCase().contains(value.toLowerCase())).toList();
-  }
+  
 
   // void addToRecentSearch(Song song) {
   //   setState(() {
@@ -506,12 +540,102 @@ class _HomeScreenState extends State<HomeScreen>
   List<Event> searchEvents(List<Event> events, String value) {
     return events.where((element) => element.name.contains(value)).toList();
   }
-
+  List<Music> searchAlbums(List<Music> albums, String value) {
+    return albums
+        .where((element) =>
+            element.name.toLowerCase().contains(value.toLowerCase()) ||
+            element.artist.toLowerCase().contains(value.toLowerCase()))
+        .toList();
+  }
+List<Song> searchSong(List<Song> song, String value) {
+    return song.where((element) =>
+        element.songName.toLowerCase().contains(value.toLowerCase())).toList();
+  }
   List<Perfomer> searchPerfomer(List<Perfomer> perfomer, String value) {
     return perfomer
         .where((element) =>
             element.name.toLowerCase().contains(value.toLowerCase()) ||
             element.music.toLowerCase().contains(value.toLowerCase()))
         .toList();
+  }
+}
+
+class ListeningDialog extends StatefulWidget {
+  final Function(String) onSpeechEnd;
+
+  ListeningDialog({required this.onSpeechEnd});
+  @override
+  _ListeningDialogState createState() => _ListeningDialogState();
+}
+
+class _ListeningDialogState extends State<ListeningDialog> {
+  final SpeechToText _speechToText = SpeechToText();
+  bool _speechEnabled = false;
+  String _wordSpoken = '';
+
+  @override
+  void initState() {
+    super.initState();
+    initSpeech();
+  }
+
+  void initSpeech() async {
+    _speechEnabled = await _speechToText.initialize();
+    setState(() {});
+  }
+
+  void _startListening() async {
+    await _speechToText.listen(onResult: _onSpeechResult);
+    setState(() {});
+  }
+
+  void _stopListening() async {
+    await _speechToText.stop();
+    if (widget.onSpeechEnd != null) {
+      widget.onSpeechEnd(_wordSpoken);
+    }
+    print("_wordSpoken");
+    Navigator.pop(context, _wordSpoken);
+    setState(() {});
+  }
+
+  void _onSpeechResult(SpeechRecognitionResult result) {
+    setState(() {
+      _wordSpoken = result.recognizedWords;
+    });
+
+    if (result.finalResult) {
+      _stopListening();
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: Text('Listening...'),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            _speechToText.isListening
+                ? '$_wordSpoken'
+                : _speechEnabled
+                    ? 'Tap the microphone to start listening...'
+                    : 'Speech not available',
+          ),
+          Expanded(
+            child: Container(child: Text(_wordSpoken)),
+          ),
+        ],
+      ),
+      actions: [
+        IconButton(
+          icon: Icon(_speechToText.isNotListening ? Icons.mic_off : Icons.mic),
+          onPressed:
+              _speechToText.isNotListening ? _startListening : _stopListening,
+          tooltip: "Listen",
+        ),
+      ],
+    );
   }
 }
