@@ -30,24 +30,21 @@ class SongItem extends StatelessWidget {
               height: 6,
             ),
             Container(
-              width: 210,
+              width: 100,
               child: Text(
                 song.songName,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
               ),
             ),
-             SizedBox(
-              height: 2,
+            Container(
+              width: 100,
+              child: Text(
+                song.artistName,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(fontSize: 16, color: Colors.grey.shade500),
+              ),
             ),
-             Container(
-                  width: 210,
-                  child: Text(
-                    song.artistName,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
-                  ),
-                ),
           ],
         ),
       ),

@@ -86,8 +86,8 @@ class _HomeDrawerState extends State<HomeDrawer> {
       ),
       DrawerList(
         index: DrawerIndex.Share,
-        labelName: 'Rate the app',
-        icon: Icon(Icons.share),
+        labelName: 'Instruments',
+        icon: Icon(Icons.piano),
       ),
       DrawerList(
         index: DrawerIndex.About,

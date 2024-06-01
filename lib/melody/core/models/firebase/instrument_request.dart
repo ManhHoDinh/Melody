@@ -6,15 +6,14 @@ import 'package:melody/melody/core/models/instrumentModel/instrumentModel.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class InstrumentRequest {
-  static Stream<InstrumentModel> search(String searchValue) => FirebaseFirestore
-      .instance
-      .collection('Instruments')
-      .snapshots()
-      .map((event) => event.docs
-          .map((e) => InstrumentModel.fromJson(e.data()))
-          .where((instrument) =>
-              instrument.name.toLowerCase().contains(searchValue.toLowerCase()))
-          .toList()[0]);
+  static Stream<List<InstrumentModel>> search(String searchValue) =>
+      FirebaseFirestore.instance.collection('Instruments').snapshots().map(
+          (event) => event.docs
+              .map((e) => InstrumentModel.fromJson(e.data()))
+              .where((instrument) => instrument.name
+                  .toLowerCase()
+                  .contains(searchValue.toLowerCase()))
+              .toList());
   static Future<String> getDescription(String id) async {
     DocumentSnapshot<Map<String, dynamic>> doc = await FirebaseFirestore
         .instance

@@ -14,9 +14,16 @@ class EventItem extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all(16),
       decoration: BoxDecoration(
+          color: Colors.white,
           borderRadius: BorderRadius.circular(16),
           boxShadow: [
-            BoxShadow(color: Color(0xff412C3A), spreadRadius: 2, blurRadius: 2)
+            BoxShadow(
+              color: Colors.grey
+                  .withOpacity(0.5), // Change the color of the shadow
+              spreadRadius: 5,
+              blurRadius: 7,
+              offset: Offset(0, 3),
+            )
           ]),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -29,21 +36,21 @@ class EventItem extends StatelessWidget {
                 image: DecorationImage(
                     image: NetworkImage(event.image), fit: BoxFit.cover)),
           ),
-         Expanded(
+          Flexible(
             child: Container(
-              margin: EdgeInsets.only(left: 20),
+              padding: EdgeInsets.only(left: 20),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     format.format(DateTime.parse(event.startAt)),
-                    style: TextStyle(color: Colors.white),
+                    style: TextStyle(color: Colors.black),
                   ),
                   Text(
                     event.name,
                     style: TextStyle(
-                        color: Colors.white,
+                        color: Colors.black,
                         fontSize: 18,
                         fontWeight: FontWeight.w700),
                   ),
@@ -56,14 +63,14 @@ class EventItem extends StatelessWidget {
                       ),
                       Text(
                         event.location,
-                        style: TextStyle(color: Colors.white, fontSize: 14),
+                        style: TextStyle(color: Colors.black, fontSize: 14),
                       ),
                     ],
                   )
                 ],
               ),
             ),
-          ),
+          )
         ],
       ),
     );

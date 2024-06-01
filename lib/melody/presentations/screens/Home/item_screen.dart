@@ -11,31 +11,36 @@ class MusicSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              title,
-              style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black),
-            ),
-            TextButton(
-              onPressed: viewMoreAction ?? () {},
-              child: Text(
-                'View More',
-                style: TextStyle(color: Colors.blue),
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 10),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                title,
+                style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black),
               ),
-            ),
-          ],
-        ),
-        SizedBox(height: 0),
-      ],
+              viewMoreAction != null
+                  ? TextButton(
+                      onPressed: viewMoreAction ?? () {},
+                      child: Text(
+                        'View More',
+                        style: TextStyle(color: Colors.blue),
+                      ),
+                    )
+                  : Container()
+            ],
+          ),
+          SizedBox(height: 0),
+        ],
+      ),
     );
   }
 }

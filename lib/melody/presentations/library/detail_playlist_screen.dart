@@ -40,8 +40,22 @@ class _DetailPlaylistScreenState extends State<DetailPlaylistScreen> {
     songController.updateSongOfPlaylist(widget.playlist.id);
     print(songController.songOfPlaylist);
     return Scaffold(
-      appBar: AppbarWidget(
-        'Playlist',
+      appBar: AppBar(
+        title: RichText(
+          text: const TextSpan(
+            text: 'Play',
+            style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: Color(0xff6D0B14)),
+            children: <TextSpan>[
+              TextSpan(
+                text: 'lists',
+                style: TextStyle(fontSize: 20, color: Color(0xff4059F1)),
+              ),
+            ],
+          ),
+        ),
       ),
       body: FutureBuilder<Playlist>(
           future: PlaylistRequest.getById(widget.playlist.id),
@@ -112,7 +126,11 @@ class _DetailPlaylistScreenState extends State<DetailPlaylistScreen> {
                             Column(
                               children: [
                                 IconButton(
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      PlaylistRequest.deletePlaylist(
+                                          widget.playlist.id);
+                                      Get.back();
+                                    },
                                     icon: Icon(
                                       Icons.delete,
                                       size: 30,

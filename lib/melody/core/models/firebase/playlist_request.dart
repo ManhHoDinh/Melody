@@ -110,4 +110,8 @@ class PlaylistRequest {
         .doc(playlist.id)
         .update({"songIds": songs});
   }
+
+  static Future<void> deletePlaylist(String playlistId) async {
+    await FirebaseHelper.playlistCollection.doc(playlistId).delete();
+  }
 }

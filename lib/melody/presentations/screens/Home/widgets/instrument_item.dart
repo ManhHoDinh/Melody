@@ -10,11 +10,9 @@ class InstrumentItem extends StatelessWidget {
   final InstrumentModel instrument;
   const InstrumentItem({super.key, required this.instrument});
 
-  @override
   Widget build(BuildContext context) {
     return Container(
       child: Column(
-        // mainAxisSize: MainAxisSize.max,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Expanded(
@@ -22,22 +20,34 @@ class InstrumentItem extends StatelessWidget {
               width: 110,
               height: 110,
               decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  image: DecorationImage(
-                      fit: BoxFit.cover, image: AssetImage(instrument.image))),
+                borderRadius: BorderRadius.circular(10),
+                image: DecorationImage(
+                  fit: BoxFit.cover,
+                  image: NetworkImage(instrument.image),
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.5),
+                    spreadRadius: 5,
+                    blurRadius: 7,
+                    offset: Offset(0, 3), // changes position of shadow
+                  ),
+                ],
+              ),
             ),
           ),
           SizedBox(
             height: 6,
           ),
           Align(
-            alignment: Alignment.topLeft,
+            alignment: Alignment.center,
             child: Text(
               instrument.name,
               style: TextStyle(
-                  fontWeight: FontWeight.w600,
-                  fontSize: 14,
-                  color: Colors.black),
+                fontWeight: FontWeight.w600,
+                fontSize: 14,
+                color: Colors.black,
+              ),
             ),
           ),
         ],

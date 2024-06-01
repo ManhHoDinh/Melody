@@ -25,7 +25,6 @@ class _AllEventScreenState extends State<AllEventScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(gradient: Gradients.defaultGradientBackground),
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         backgroundColor: Colors.transparent,
@@ -60,11 +59,14 @@ class _AllEventScreenState extends State<AllEventScreen> {
                   });
                 },
                 controller: searchController,
-                style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
+                style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w400,
+                    color: Colors.white),
                 decoration: InputDecoration(
                     filled: true,
                     hintStyle: TextStyle(color: Color(0xffFFFFFF)),
-                    fillColor: Color(0xff656565),
+                    fillColor: ColorPalette.primaryColor,
                     border: OutlineInputBorder(
                         borderSide: BorderSide.none,
                         borderRadius: BorderRadius.circular(20)),
