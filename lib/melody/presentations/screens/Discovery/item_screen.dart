@@ -22,15 +22,15 @@ class MusicSection extends StatelessWidget {
                   fontSize: 20,
                   fontWeight: FontWeight.bold,),
             ),
-            TextButton(
-              onPressed: () {
-                // Implement your logic to view more
-              },
-              child: Text(
-                'View More',
-                style: TextStyle(color: Colors.blue),
-              ),
-            ),
+            // TextButton(
+            //   onPressed: () {
+            //     // Implement your logic to view more
+            //   },
+            //   child: Text(
+            //     'View More',
+            //     style: TextStyle(color: Colors.blue),
+            //   ),
+            // ),
           ],
         ),
         SizedBox(height: 10),
