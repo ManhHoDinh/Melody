@@ -10,6 +10,7 @@ import 'package:melody/melody/core/helper/assets_helper.dart';
 import 'package:melody/melody/core/helper/text_styles.dart';
 import 'package:melody/melody/core/models/composer/composer.dart';
 import 'package:melody/melody/core/models/event/event.dart';
+import 'package:melody/melody/core/models/firebase/artist_request.dart';
 import 'package:melody/melody/core/models/firebase/composer_request.dart';
 import 'package:melody/melody/core/models/firebase/event_request.dart';
 import 'package:melody/melody/core/models/firebase/instrument_request.dart';
@@ -19,12 +20,14 @@ import 'package:get/get.dart';
 import 'package:melody/melody/core/models/perfomer/perfomer.dart';
 import 'package:melody/melody/core/models/song/song.dart';
 import 'package:melody/melody/core/models/user/user.dart';
+import 'package:melody/melody/presentations/routes/app_router.dart';
 import 'package:melody/melody/presentations/screens/Home/item_screen.dart';
 import 'package:melody/melody/presentations/screens/Discovery/discovery_screen.dart';
 import 'package:melody/melody/presentations/screens/Home/widgets/composer_item.dart';
 import 'package:melody/melody/presentations/screens/Home/widgets/event_item.dart';
 import 'package:melody/melody/presentations/screens/Home/widgets/instrument_item.dart';
 import 'package:melody/melody/presentations/screens/Home/widgets/perfomer_item.dart';
+import 'package:melody/melody/presentations/screens/artist/all_artist.dart';
 import 'package:melody/melody/presentations/screens/event/all_event_screen.dart';
 import 'package:melody/melody/presentations/screens/instrument/detail_instrument_screen.dart';
 import 'package:melody/melody/presentations/screens/playing/widgets/mini_playback.dart';
@@ -38,8 +41,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:melody/melody/presentations/screens/music_recognition/music_recognition_screen.dart';
 import 'package:speech_to_text/speech_recognition_result.dart';
 import 'package:speech_to_text/speech_to_text.dart';
+import '../../../core/models/artist/artist.dart';
 import '../../../core/models/instrumentModel/instrumentModel.dart';
 import '../../../core/models/music/music.dart';
+import '../artist/artist_page.dart';
 import 'widgets/music_item.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -394,27 +399,55 @@ class _HomeScreenState extends State<HomeScreen>
                               );
                           }),
                       SizedBox(height: 7),
-                      MusicSection(
-                        title: 'Artist',
-                        albums: albums,
-                      ),
-                      GridView.builder(
-                        physics: NeverScrollableScrollPhysics(),
-                        shrinkWrap: true,
-                        itemCount: perfomer.length,
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 3,
-                          crossAxisSpacing: 10,
-                          mainAxisSpacing: 10,
-                          childAspectRatio: 3 / 3,
-                        ),
-                        itemBuilder: (context, index) {
-                          return PerfomerItem.PerformerItem(
-                            perfomer: perfomer[index],
-                          );
-                        },
-                      ),
+                      StreamBuilder<List<Artist>>(
+                          stream: ArtistRequest.search(searchValue),
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              return Center(
+                                child: CircularProgressIndicator(),
+                              );
+                            } else if (snapshot.hasError) {
+                              return Center(
+                                child: Text('Error loading composer list'),
+                              );
+                            } else
+                              // ignore: curly_braces_in_flow_control_structures
+                              return Column(
+                                children: [
+                                  MusicSection(
+                                    title: 'Artist',
+                                    albums: albums,
+                                    viewMoreAction: () {
+                                      Get.to(() => AllArtistScreen());
+                                    },
+                                  ),
+                                  GridView.builder(
+                                    shrinkWrap: true,
+                                    physics: NeverScrollableScrollPhysics(),
+                                    itemCount: snapshot.data!.length>3?3:snapshot.data!.length,
+                                    gridDelegate:
+                                        const SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisCount: 3,
+                                      crossAxisSpacing: 10,
+                                      mainAxisSpacing: 10,
+                                      childAspectRatio: 5 / 6,
+                                    ),
+                                    itemBuilder: (context, index) {
+                                      return GestureDetector(
+                                          onTap: () {
+                                            Get.toNamed(Routes.artistPage,
+                                                arguments: snapshot
+                                                    .data![index].artistId);
+                                          },
+                                          child: PerfomerItem.PerformerItem(
+                                            perfomer: snapshot.data![index],
+                                          ));
+                                    },
+                                  ),
+                                ],
+                              );
+                          }),
                       MusicSection(
                         title: 'Events',
                         albums: albums,
@@ -480,8 +513,6 @@ class _HomeScreenState extends State<HomeScreen>
         .toList();
   }
 
-  
-
   // void addToRecentSearch(Song song) {
   //   setState(() {
   //     recentSongs.add(song);
@@ -527,19 +558,23 @@ class _HomeScreenState extends State<HomeScreen>
     DocumentSnapshot userDoc =
         await FirebaseFirestore.instance.collection('Users').doc(userId).get();
     UserModel user = UserModel.fromJson(userDoc.data() as Map<String, dynamic>);
+    List<Song> recentSongLists = [];
 
     for (String songId in user.songIds) {
       Song song = await getSongById(songId);
-      setState(() {
-        recentSongs.add(song);
-      });
+      recentSongLists.add(song);
     }
-    recentSongs.sort((a, b) => a.times[0].compareTo(b.times[0]));
+    setState(() {
+      recentSongs = recentSongLists;
+    });
+    // if (recentSongs.isNotEmpty)
+    //   recentSongs.sort((a, b) => a.times[0].compareTo(b.times[0]));
   }
 
   List<Event> searchEvents(List<Event> events, String value) {
     return events.where((element) => element.name.contains(value)).toList();
   }
+
   List<Music> searchAlbums(List<Music> albums, String value) {
     return albums
         .where((element) =>
@@ -547,10 +582,14 @@ class _HomeScreenState extends State<HomeScreen>
             element.artist.toLowerCase().contains(value.toLowerCase()))
         .toList();
   }
-List<Song> searchSong(List<Song> song, String value) {
-    return song.where((element) =>
-        element.songName.toLowerCase().contains(value.toLowerCase())).toList();
+
+  List<Song> searchSong(List<Song> song, String value) {
+    return song
+        .where((element) =>
+            element.songName.toLowerCase().contains(value.toLowerCase()))
+        .toList();
   }
+
   List<Perfomer> searchPerfomer(List<Perfomer> perfomer, String value) {
     return perfomer
         .where((element) =>
@@ -596,7 +635,6 @@ class _ListeningDialogState extends State<ListeningDialog> {
     }
     print("_wordSpoken");
     Navigator.pop(context, _wordSpoken);
-    setState(() {});
   }
 
   void _onSpeechResult(SpeechRecognitionResult result) {
@@ -623,9 +661,7 @@ class _ListeningDialogState extends State<ListeningDialog> {
                     ? 'Tap the microphone to start listening...'
                     : 'Speech not available',
           ),
-          Expanded(
-            child: Container(child: Text(_wordSpoken)),
-          ),
+          Container(child: Text(_wordSpoken)),
         ],
       ),
       actions: [

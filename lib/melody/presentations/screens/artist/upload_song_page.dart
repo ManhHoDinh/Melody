@@ -251,8 +251,13 @@ class _UploadSongPageState extends State<UploadSongPage> {
                           final user = mAuth.currentUser;
                           if (user != null) {
                             try {
-                              UploadTask songUploadTask =
-                                  songRef.putFile(choosedSong!);
+                              UploadTask songUploadTask = songRef.putFile(
+                                choosedSong!,
+                                SettableMetadata(
+                                  contentType:
+                                      'audio/mpeg', // Changed to 'audio/mpeg' for mp3 files
+                                ),
+                              );
                               await Future.wait([songUploadTask]);
                               songDownloadUrl = await songRef.getDownloadURL();
 
@@ -263,7 +268,11 @@ class _UploadSongPageState extends State<UploadSongPage> {
                                     .ref()
                                     .child("song_artworks/$artworkFile");
                                 UploadTask artworkUploadTask =
-                                    artworkRef.putFile(choosedImage!);
+                                    artworkRef.putFile(
+                                        choosedImage!,
+                                        SettableMetadata(
+                                          contentType: 'image/jpeg',
+                                        ));
                                 await Future.wait([artworkUploadTask]);
                                 artworkDownloadUrl =
                                     await artworkRef.getDownloadURL();

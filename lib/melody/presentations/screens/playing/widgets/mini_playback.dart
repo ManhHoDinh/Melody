@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:melody/melody/core/helper/image_helper.dart';
 import 'package:provider/provider.dart';
 import 'package:melody/melody/presentations/screens/playing/playlist_provider.dart';
 
@@ -31,7 +32,7 @@ class MiniPlaybackBar extends StatelessWidget {
               children: [
                 ClipRRect(
                   borderRadius: BorderRadius.circular(8),
-                  child: Image.network(
+                  child: ImageHelper.loadFromNetwork(
                     currentSong.songImagePath,
                     height: 50,
                     width: 50,

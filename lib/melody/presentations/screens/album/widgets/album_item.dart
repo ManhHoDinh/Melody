@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'package:melody/melody/core/helper/image_helper.dart';
 import 'package:melody/melody/core/models/album/album.dart';
 import 'package:melody/melody/core/models/firebase/album_request.dart';
 import 'package:melody/melody/core/models/user/user.dart';
@@ -25,17 +26,13 @@ class AlbumItem extends StatelessWidget {
           mainAxisSize: MainAxisSize.max,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Expanded(
-              child: Container(
+            Container(
                 width: double.infinity,
-                height: 60,
-                decoration: BoxDecoration(
+                height: 80,
+                child: ClipRRect(
                     borderRadius: BorderRadius.circular(10),
-                    image: DecorationImage(
-                        fit: BoxFit.fitWidth,
-                        image: NetworkImage(album.image))),
-              ),
-            ),
+                    child: ImageHelper.loadFromNetwork(album.image,
+                        fit: BoxFit.fitWidth))),
             SizedBox(
               height: 10,
             ),

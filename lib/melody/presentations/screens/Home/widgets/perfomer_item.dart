@@ -5,8 +5,10 @@ import 'package:melody/melody/core/models/composer/composer.dart';
 import 'package:melody/melody/core/models/music/music.dart';
 import 'package:melody/melody/core/models/perfomer/perfomer.dart';
 
+import '../../../../core/models/artist/artist.dart';
+
 class PerfomerItem extends StatelessWidget {
-  final Perfomer perfomer;
+  final Artist perfomer;
   const PerfomerItem.PerformerItem({super.key, required this.perfomer});
 
   @override
@@ -25,7 +27,7 @@ class PerfomerItem extends StatelessWidget {
                 shape: BoxShape.circle,
                 image: DecorationImage(
                   fit: BoxFit.cover,
-                  image: AssetImage(perfomer.image),
+                  image: NetworkImage(perfomer.avatar),
                 ),
               ),
             ),
@@ -36,7 +38,7 @@ class PerfomerItem extends StatelessWidget {
           Align(
             alignment: Alignment.center,
             child: Text(
-              perfomer.name,
+              perfomer.artistName,
               style: TextStyle(
                   fontWeight: FontWeight.w600,
                   fontSize: 14,

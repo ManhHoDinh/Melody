@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -27,7 +28,7 @@ class ArtistPage extends StatefulWidget {
 
 class _ArtistPageState extends State<ArtistPage> {
   late PlaylistProvider playlistProvider;
-  String artistId = "0UBAPBKaLYeFRNvpywpHqPJLSlG2";
+  String artistId = FirebaseAuth.instance.currentUser!.uid;
 
   List<Song>? songList;
 
@@ -35,17 +36,20 @@ class _ArtistPageState extends State<ArtistPage> {
   void initState() {
     super.initState();
     playlistProvider = Provider.of<PlaylistProvider>(context, listen: false);
+    if(Get.arguments != null){
+      artistId = Get.arguments;
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text('A R T I S T'),
-          centerTitle: true,
-        ),
-        body: Column(
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('A R T I S T'),
+        centerTitle: true,
+      ),
+      body: SafeArea(
+        child: Column(
           children: [
             Expanded(
               child: SingleChildScrollView(

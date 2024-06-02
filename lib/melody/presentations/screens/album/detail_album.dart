@@ -92,15 +92,21 @@ class _AlbumDetailScreenState extends State<AlbumDetailScreen> {
                                         CrossAxisAlignment.start,
                                     mainAxisSize: MainAxisSize.max,
                                     children: [
-                                      Text(widget.album.name),
-                                      Text(widget.album.artist_id),
+                                      Text(widget.album.name,
+                                          style: TextStyle(
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.bold)),
+                                      Text(widget.album.description,
+                                          style: TextStyle(
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.w500)),
                                       Row(
                                         children: [
-                                          Icon(Icons.star),
-                                          Icon(Icons.star),
-                                          Icon(Icons.star),
-                                          Icon(Icons.star),
-                                          Icon(Icons.star),
+                                          Icon(Icons.star, color: Colors.amber),
+                                          Icon(Icons.star, color: Colors.amber),
+                                          Icon(Icons.star, color: Colors.amber),
+                                          Icon(Icons.star, color: Colors.amber),
+                                          Icon(Icons.star, color: Colors.amber),
                                         ],
                                       )
                                     ]),

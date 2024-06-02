@@ -101,7 +101,7 @@ class _BottomHomeScreenState extends State<BottomHomeScreen>
                 }
                 setState(() {
                   tabBody =
-                      DiscoveryScreen(animationController: animationController);
+                      AllAlbumScreen(animationController: animationController);
                 });
               });
             } else if (index == 2) {
@@ -110,20 +110,10 @@ class _BottomHomeScreenState extends State<BottomHomeScreen>
                   return;
                 }
                 setState(() {
-                  tabBody =
-                      AllAlbumScreen(animationController: animationController);
-                });
-              });
-            } else if (index == 3) {
-              animationController?.reverse().then<dynamic>((data) {
-                if (!mounted) {
-                  return;
-                }
-                setState(() {
                   tabBody = AllPlaylistScreen();
                 });
               });
-            } else if (index == 4) {
+            } else if (index == 3) {
               animationController?.reverse().then<dynamic>((data) {
                 if (!mounted) {
                   return;

@@ -71,13 +71,12 @@ class _DetailPlaylistScreenState extends State<DetailPlaylistScreen> {
                           Container(
                               width: 120,
                               height: 120,
-                              decoration: BoxDecoration(
+                              child: ClipRRect(
                                 borderRadius: BorderRadius.circular(10),
-                                image: DecorationImage(
-                                    fit: BoxFit.cover,
-                                    image: NetworkImage(
-                                      snapshot.data!.image,
-                                    )),
+                                child: Image.network(
+                                  snapshot.data!.image,
+                                  fit: BoxFit.cover,
+                                ),
                               )),
                           Padding(
                             padding: const EdgeInsets.only(left: 20),

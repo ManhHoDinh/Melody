@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:melody/melody/core/constants/color_palatte.dart';
+import 'package:melody/melody/core/helper/image_helper.dart';
 import 'package:melody/melody/core/models/event/event.dart';
 import 'package:intl/intl.dart';
 
@@ -31,10 +32,12 @@ class EventItem extends StatelessWidget {
           Container(
             width: 100,
             height: 100,
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                image: DecorationImage(
-                    image: NetworkImage(event.image), fit: BoxFit.cover)),
+            child: ClipRRect(
+                borderRadius: BorderRadius.circular(10),
+                child: ImageHelper.loadFromNetwork(
+                  event.image,
+                  fit: BoxFit.cover,
+                )),
           ),
           Flexible(
             child: Container(

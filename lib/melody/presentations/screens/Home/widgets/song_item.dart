@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:melody/melody/core/helper/image_helper.dart';
 import 'package:melody/melody/core/models/music/music.dart';
 import 'package:melody/melody/core/models/song/song.dart';
 
@@ -19,11 +20,10 @@ class SongItem extends StatelessWidget {
               child: Container(
                 width: 100,
                 height: 100,
-                decoration: BoxDecoration(
+                child: ClipRRect(
                     borderRadius: BorderRadius.circular(10),
-                    image: DecorationImage(
-                        fit: BoxFit.cover,
-                        image: NetworkImage(song.songImagePath))),
+                    child: ImageHelper.loadFromNetwork(song.songImagePath,
+                        fit: BoxFit.cover)),
               ),
             ),
             SizedBox(

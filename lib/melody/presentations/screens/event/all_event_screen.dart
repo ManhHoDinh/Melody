@@ -27,9 +27,7 @@ class _AllEventScreenState extends State<AllEventScreen> {
     return Container(
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        backgroundColor: Colors.transparent,
         appBar: AppBar(
-          backgroundColor: Colors.transparent,
           title: Text(
             'All Events',
             style: TextStyle(fontSize: 20).whiteTextColor,

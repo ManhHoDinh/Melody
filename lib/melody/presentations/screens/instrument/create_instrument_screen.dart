@@ -126,25 +126,25 @@ class _CreateInstrumentScreenState extends State<CreateInstrumentScreen> {
                 textAlign: TextAlign.start,
                 style: TextStyle(fontSize: 18),
               ),
-              QuillToolbar.simple(
-                configurations: QuillSimpleToolbarConfigurations(
-                  controller: _controller,
-                  sharedConfigurations: const QuillSharedConfigurations(
-                    locale: Locale('vi'),
-                  ),
-                ),
-              ),
-              Container(
-                height: 350,
-                child: QuillEditor.basic(
-                  configurations: QuillEditorConfigurations(
-                    controller: _controller,
-                    sharedConfigurations: const QuillSharedConfigurations(
-                      locale: Locale('vi'),
-                    ),
-                  ),
-                ),
-              ),
+              // QuillToolbar.simple(
+              //   configurations: QuillSimpleToolbarConfigurations(
+              //     controller: _controller,
+              //     sharedConfigurations: const QuillSharedConfigurations(
+              //       locale: Locale('vi'),
+              //     ),
+              //   ),
+              // ),
+              // Container(
+              //   height: 350,
+              //   child: QuillEditor.basic(
+              //     configurations: QuillEditorConfigurations(
+              //       controller: _controller,
+              //       sharedConfigurations: const QuillSharedConfigurations(
+              //         locale: Locale('vi'),
+              //       ),
+              //     ),
+              //   ),
+              // ),
               SizedBox(
                 height: 20,
               ),

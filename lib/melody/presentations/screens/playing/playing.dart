@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:melody/melody/core/helper/image_helper.dart';
 import 'package:melody/melody/core/models/firebase/song_request.dart';
 import 'package:melody/melody/presentations/screens/playing/playlist_provider.dart';
 import 'package:melody/melody/presentations/screens/playing/widgets/neu_box.dart';
@@ -73,7 +74,7 @@ class Playing extends StatelessWidget {
                         // image
                         ClipRRect(
                           borderRadius: BorderRadius.circular(8),
-                          child: Image.network(
+                          child: ImageHelper.loadFromNetwork(
                             currentSong.songImagePath,
                             height: 320,
                             width: 320,
