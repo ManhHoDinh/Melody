@@ -10,43 +10,39 @@ class SongItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Container(
-        child: Column(
-          mainAxisSize: MainAxisSize.max,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Expanded(
-              child: Container(
-                width: 100,
-                height: 100,
-                child: ClipRRect(
-                    borderRadius: BorderRadius.circular(10),
-                    child: ImageHelper.loadFromNetwork(song.songImagePath,
-                        fit: BoxFit.cover)),
-              ),
+    return Container(
+      child: Column(
+        mainAxisSize: MainAxisSize.max,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            width: 80,
+            height: 80,
+            child: ClipRRect(
+                borderRadius: BorderRadius.circular(10),
+                child: ImageHelper.loadFromNetwork(song.songImagePath,
+                    fit: BoxFit.cover)),
+          ),
+          SizedBox(
+            height: 6,
+          ),
+          Container(
+            width: 100,
+            child: Text(
+              song.songName,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
             ),
-            SizedBox(
-              height: 6,
+          ),
+          Container(
+            width: 100,
+            child: Text(
+              song.artistName,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(fontSize: 16, color: Colors.grey.shade500),
             ),
-            Container(
-              width: 100,
-              child: Text(
-                song.songName,
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
-              ),
-            ),
-            Container(
-              width: 100,
-              child: Text(
-                song.artistName,
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(fontSize: 16, color: Colors.grey.shade500),
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
