@@ -27,6 +27,7 @@ mixin _$Song {
   String get songImagePath => throw _privateConstructorUsedError;
   @JsonKey(name: "times", fromJson: _sendAtFromJson, toJson: _sendAtToJson)
   List<DateTime> get times => throw _privateConstructorUsedError;
+  List<String> get commentsIds => throw _privateConstructorUsedError;
   String get audioPath => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -47,6 +48,7 @@ abstract class $SongCopyWith<$Res> {
       String songImagePath,
       @JsonKey(name: "times", fromJson: _sendAtFromJson, toJson: _sendAtToJson)
       List<DateTime> times,
+      List<String> commentsIds,
       String audioPath});
 }
 
@@ -69,6 +71,7 @@ class _$SongCopyWithImpl<$Res, $Val extends Song>
     Object? artistName = null,
     Object? songImagePath = null,
     Object? times = null,
+    Object? commentsIds = null,
     Object? audioPath = null,
   }) {
     return _then(_value.copyWith(
@@ -96,6 +99,10 @@ class _$SongCopyWithImpl<$Res, $Val extends Song>
           ? _value.times
           : times // ignore: cast_nullable_to_non_nullable
               as List<DateTime>,
+      commentsIds: null == commentsIds
+          ? _value.commentsIds
+          : commentsIds // ignore: cast_nullable_to_non_nullable
+              as List<String>,
       audioPath: null == audioPath
           ? _value.audioPath
           : audioPath // ignore: cast_nullable_to_non_nullable
@@ -119,6 +126,7 @@ abstract class _$$SongImplCopyWith<$Res> implements $SongCopyWith<$Res> {
       String songImagePath,
       @JsonKey(name: "times", fromJson: _sendAtFromJson, toJson: _sendAtToJson)
       List<DateTime> times,
+      List<String> commentsIds,
       String audioPath});
 }
 
@@ -138,6 +146,7 @@ class __$$SongImplCopyWithImpl<$Res>
     Object? artistName = null,
     Object? songImagePath = null,
     Object? times = null,
+    Object? commentsIds = null,
     Object? audioPath = null,
   }) {
     return _then(_$SongImpl(
@@ -165,6 +174,10 @@ class __$$SongImplCopyWithImpl<$Res>
           ? _value._times
           : times // ignore: cast_nullable_to_non_nullable
               as List<DateTime>,
+      commentsIds: null == commentsIds
+          ? _value._commentsIds
+          : commentsIds // ignore: cast_nullable_to_non_nullable
+              as List<String>,
       audioPath: null == audioPath
           ? _value.audioPath
           : audioPath // ignore: cast_nullable_to_non_nullable
@@ -184,8 +197,10 @@ class _$SongImpl implements _Song {
       this.songImagePath = "",
       @JsonKey(name: "times", fromJson: _sendAtFromJson, toJson: _sendAtToJson)
       final List<DateTime> times = const [],
+      final List<String> commentsIds = const [],
       this.audioPath = ""})
-      : _times = times;
+      : _times = times,
+        _commentsIds = commentsIds;
 
   factory _$SongImpl.fromJson(Map<String, dynamic> json) =>
       _$$SongImplFromJson(json);
@@ -213,13 +228,22 @@ class _$SongImpl implements _Song {
     return EqualUnmodifiableListView(_times);
   }
 
+  final List<String> _commentsIds;
+  @override
+  @JsonKey()
+  List<String> get commentsIds {
+    if (_commentsIds is EqualUnmodifiableListView) return _commentsIds;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_commentsIds);
+  }
+
   @override
   @JsonKey()
   final String audioPath;
 
   @override
   String toString() {
-    return 'Song(songId: $songId, artistId: $artistId, songName: $songName, artistName: $artistName, songImagePath: $songImagePath, times: $times, audioPath: $audioPath)';
+    return 'Song(songId: $songId, artistId: $artistId, songName: $songName, artistName: $artistName, songImagePath: $songImagePath, times: $times, commentsIds: $commentsIds, audioPath: $audioPath)';
   }
 
   @override
@@ -237,6 +261,8 @@ class _$SongImpl implements _Song {
             (identical(other.songImagePath, songImagePath) ||
                 other.songImagePath == songImagePath) &&
             const DeepCollectionEquality().equals(other._times, _times) &&
+            const DeepCollectionEquality()
+                .equals(other._commentsIds, _commentsIds) &&
             (identical(other.audioPath, audioPath) ||
                 other.audioPath == audioPath));
   }
@@ -251,6 +277,7 @@ class _$SongImpl implements _Song {
       artistName,
       songImagePath,
       const DeepCollectionEquality().hash(_times),
+      const DeepCollectionEquality().hash(_commentsIds),
       audioPath);
 
   @JsonKey(ignore: true)
@@ -276,6 +303,7 @@ abstract class _Song implements Song {
       final String songImagePath,
       @JsonKey(name: "times", fromJson: _sendAtFromJson, toJson: _sendAtToJson)
       final List<DateTime> times,
+      final List<String> commentsIds,
       final String audioPath}) = _$SongImpl;
 
   factory _Song.fromJson(Map<String, dynamic> json) = _$SongImpl.fromJson;
@@ -293,6 +321,8 @@ abstract class _Song implements Song {
   @override
   @JsonKey(name: "times", fromJson: _sendAtFromJson, toJson: _sendAtToJson)
   List<DateTime> get times;
+  @override
+  List<String> get commentsIds;
   @override
   String get audioPath;
   @override

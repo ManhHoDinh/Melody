@@ -480,8 +480,6 @@ class _HomeScreenState extends State<HomeScreen>
         .toList();
   }
 
-  
-
   // void addToRecentSearch(Song song) {
   //   setState(() {
   //     recentSongs.add(song);
@@ -509,6 +507,23 @@ class _HomeScreenState extends State<HomeScreen>
     }
   }
 
+  void updateSongTimestamp(String songId) async {
+    String userId = FirebaseAuth.instance.currentUser!.uid;
+
+    // Get the current timestamp
+    Timestamp now = Timestamp.now();
+
+    // Update the song's timestamp in the database
+    await FirebaseFirestore.instance.collection('Songs').doc(songId).update({
+      'times': FieldValue.arrayUnion([now]),
+    });
+
+    // Update the user's songIds in the database
+    await FirebaseFirestore.instance.collection('Users').doc(userId).update({
+      'songIds': FieldValue.arrayUnion([songId]),
+    });
+  }
+
   void addSongIdToUser(String songId) async {
     String userId = FirebaseAuth.instance.currentUser!.uid;
     FirebaseFirestore.instance.collection('Users').doc(userId).update({
@@ -534,12 +549,15 @@ class _HomeScreenState extends State<HomeScreen>
         recentSongs.add(song);
       });
     }
-    recentSongs.sort((a, b) => a.times[0].compareTo(b.times[0]));
+    setState(() {
+      recentSongs.sort((a, b) => b.times.last.compareTo(a.times.last));
+    });
   }
 
   List<Event> searchEvents(List<Event> events, String value) {
     return events.where((element) => element.name.contains(value)).toList();
   }
+
   List<Music> searchAlbums(List<Music> albums, String value) {
     return albums
         .where((element) =>
@@ -547,10 +565,14 @@ class _HomeScreenState extends State<HomeScreen>
             element.artist.toLowerCase().contains(value.toLowerCase()))
         .toList();
   }
-List<Song> searchSong(List<Song> song, String value) {
-    return song.where((element) =>
-        element.songName.toLowerCase().contains(value.toLowerCase())).toList();
+
+  List<Song> searchSong(List<Song> song, String value) {
+    return song
+        .where((element) =>
+            element.songName.toLowerCase().contains(value.toLowerCase()))
+        .toList();
   }
+
   List<Perfomer> searchPerfomer(List<Perfomer> perfomer, String value) {
     return perfomer
         .where((element) =>
