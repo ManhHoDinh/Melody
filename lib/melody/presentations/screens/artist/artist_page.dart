@@ -215,7 +215,9 @@ class _ArtistPageState extends State<ArtistPage> {
                 ),
               ),
             ),
-            MiniPlaybackBar()
+            Padding(
+              padding: EdgeInsets.only(bottom: 70), child: MiniPlaybackBar()),
+        
           ],
         ),
       ),

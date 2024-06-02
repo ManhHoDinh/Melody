@@ -2,10 +2,9 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:melody/melody/presentations/bottom_navigation_view/tabIconData.dart';
 
-import '../../../main.dart';
 import '../../core/constants/color_palatte.dart';
 import '../../core/helper/image_helper.dart';
-import '../../main.dart';
+
 
 class WindouBottomBarView extends StatefulWidget {
   const WindouBottomBarView(

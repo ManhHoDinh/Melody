@@ -87,11 +87,17 @@ class _NavigationHomeState extends State<NavigationHome> {
             screenView = UploadComposerPage();
           });
           break;
-        case DrawerIndex.Invite:
+        case DrawerIndex.Help:
           setState(() {
-            screenView = InviteFriend();
+            screenView = HelpScreen();
           });
           break;
+        case DrawerIndex.Feedback:
+            setState(() {
+            screenView = FeedbackScreen();
+          });
+          break;
+        
         case DrawerIndex.Share:
           setState(() {
             screenView = CreateInstrumentScreen();
