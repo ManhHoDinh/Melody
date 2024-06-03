@@ -26,7 +26,8 @@ Welcome to Melody App, the ultimate destination for classical music enthusiasts.
 * Search songs by 
 
   ## Login/ Signup page
-  ![image](https://github.com/ManhHoDinh/Melody/assets/105732042/84423779-992c-4242-8d4f-5ecb0f83b548)
+  ![Uploading image.png…]()
+
 
 
   ## 🕵️ Home page
