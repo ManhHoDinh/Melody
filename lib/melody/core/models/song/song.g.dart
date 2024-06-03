@@ -15,6 +15,10 @@ _$SongImpl _$$SongImplFromJson(Map<String, dynamic> json) => _$SongImpl(
       times: json['times'] == null
           ? const []
           : _sendAtFromJson(json['times'] as List),
+      commentsIds: (json['commentsIds'] as List<dynamic>?)
+              ?.map((e) => e as String)
+              .toList() ??
+          const [],
       audioPath: json['audioPath'] as String? ?? "",
     );
 
@@ -26,5 +30,6 @@ Map<String, dynamic> _$$SongImplToJson(_$SongImpl instance) =>
       'artistName': instance.artistName,
       'songImagePath': instance.songImagePath,
       'times': _sendAtToJson(instance.times),
+      'commentsIds': instance.commentsIds,
       'audioPath': instance.audioPath,
     };
