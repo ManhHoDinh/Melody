@@ -25,7 +25,9 @@ class Song with _$Song {
       @JsonKey(name: "times", fromJson: _sendAtFromJson, toJson: _sendAtToJson)
       @Default([])
       List<DateTime> times,
+      @Default([]) List<String> commentsIds,
       @Default("") String audioPath}) = _Song;
+      
 
   factory Song.fromJson(Map<String, dynamic> json) => _$SongFromJson(json);
 }

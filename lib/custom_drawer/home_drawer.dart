@@ -49,8 +49,6 @@ class _HomeDrawerState extends State<HomeDrawer> {
         icon: Icon(Icons.mic),
       ),
     ];
-    print(AuthServices.CurrentUser);
-    print(AuthServices.CurrentUserIsManager());
     if (AuthServices.CurrentUserIsManager()) {
       drawerList!.addAll([
         DrawerList(
@@ -80,19 +78,20 @@ class _HomeDrawerState extends State<HomeDrawer> {
     }
     drawerList!.addAll([
       DrawerList(
-        index: DrawerIndex.Invite,
-        labelName: 'Invite Friend',
-        icon: Icon(Icons.group),
-      ),
-      DrawerList(
         index: DrawerIndex.Share,
         labelName: 'Instruments',
         icon: Icon(Icons.piano),
       ),
       DrawerList(
-        index: DrawerIndex.About,
-        labelName: 'About Us',
-        icon: Icon(Icons.info),
+        index: DrawerIndex.Help,
+        labelName: 'Help',
+        isAssetsImage: true,
+        imageName: 'assets/images/supportIcon.png',
+      ),
+      DrawerList(
+        index: DrawerIndex.Feedback,
+        labelName: 'FeedBack',
+        icon: Icon(Icons.help),
       ),
     ]);
   }
@@ -342,7 +341,9 @@ enum DrawerIndex {
   Invite,
   Testing,
   Statistic,
-  UploadComposer
+  UploadComposer,
+  Help,
+  Feedback
 }
 
 class DrawerList {
