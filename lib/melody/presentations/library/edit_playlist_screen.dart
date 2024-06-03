@@ -6,6 +6,7 @@ import 'package:flutter/widgets.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:melody/melody/controller/playlist_controller.dart';
 import 'package:melody/melody/core/constants/color_palatte.dart';
 import 'package:melody/melody/core/helper/firebase_helper.dart';
 import 'package:melody/melody/core/models/firebase/playlist_request.dart';
@@ -24,6 +25,7 @@ class EditPlaylistScreen extends StatefulWidget {
 class _EditPlaylistScreenState extends State<EditPlaylistScreen> {
   TextEditingController nameController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
+  PlaylistController playlistController = Get.find();
   String id = Get.arguments;
   File? _image;
   final picker = ImagePicker();
@@ -159,37 +161,41 @@ class _EditPlaylistScreenState extends State<EditPlaylistScreen> {
                                     msg: "Please enter playlist name!");
                                 return;
                               }
-                              if (descriptionController.text.isEmpty) {
-                                Fluttertoast.showToast(
-                                    msg: "Please enter playlist description!");
-                                return;
+                              var imageUrl;
+                              Map<String, dynamic> data;
+                              if (_image != null) {
+                                final imageFile = path.basename(_image!.path);
+                                final imageRef = FirebaseStorage.instance
+                                    .ref()
+                                    .child("images/$imageFile");
+                                UploadTask artworkUploadTask = imageRef.putFile(
+                                    _image!,
+                                    SettableMetadata(
+                                      contentType: 'image/jpeg',
+                                    ));
+                                await Future.wait([artworkUploadTask]);
+                                imageUrl = await imageRef.getDownloadURL();
+                                data = {
+                                  "name": nameController.value.text,
+                                  "description":
+                                      descriptionController.value.text,
+                                  "image": imageUrl
+                                };
+                              } else {
+                                data = {
+                                  "name": nameController.value.text,
+                                  "description":
+                                      descriptionController.value.text,
+                                };
                               }
 
-                              if (_image == null) {
-                                Fluttertoast.showToast(
-                                    msg: "Please upload playlist image!");
-                                return;
-                              }
-                              final imageFile = path.basename(_image!.path);
-                              final imageRef = FirebaseStorage.instance
-                                  .ref()
-                                  .child("images/$imageFile");
-                              UploadTask artworkUploadTask = imageRef.putFile(
-                                  _image!,
-                                  SettableMetadata(
-                                    contentType: 'image/jpeg',
-                                  ));
-                              await Future.wait([artworkUploadTask]);
-                              String imageUrl = await imageRef.getDownloadURL();
                               var playlist =
                                   FirebaseHelper.playlistCollection.doc(id);
-                              Map<String, dynamic> data = {
-                                "name": nameController.value.text,
-                                "description": descriptionController.value.text,
-                                "image": imageUrl
-                              };
+
                               playlist.update(data).then((value) {
                                 print('Document updated successfully');
+                                playlistController.getPlaylist();
+                                Get.back();
                               }).catchError((error) {
                                 print('Failed to update document: $error');
                               });
