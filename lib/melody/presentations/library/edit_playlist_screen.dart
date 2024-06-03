@@ -3,13 +3,17 @@ import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:melody/melody/controller/playlist_controller.dart';
 import 'package:melody/melody/core/constants/color_palatte.dart';
 import 'package:melody/melody/core/helper/firebase_helper.dart';
 import 'package:melody/melody/core/models/firebase/playlist_request.dart';
 import 'package:melody/melody/core/models/playlist/playlist.dart';
 import 'package:melody/melody/presentations/widgets/appbar_widget.dart';
+import 'package:file_picker/file_picker.dart';
+import 'package:path/path.dart' as path;
 
 class EditPlaylistScreen extends StatefulWidget {
   const EditPlaylistScreen({super.key});
@@ -21,6 +25,7 @@ class EditPlaylistScreen extends StatefulWidget {
 class _EditPlaylistScreenState extends State<EditPlaylistScreen> {
   TextEditingController nameController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
+  PlaylistController playlistController = Get.find();
   String id = Get.arguments;
   File? _image;
   final picker = ImagePicker();
@@ -123,10 +128,7 @@ class _EditPlaylistScreenState extends State<EditPlaylistScreen> {
                         child: Text('Tap to change playlist cover'),
                       ),
                       GestureDetector(
-                        onTap: () async {
-                          await getImage();
-                          await uploadImageToFirebase();
-                        },
+                        onTap: getImage,
                         child: Center(
                           child: _image == null
                               ? Container(
@@ -154,15 +156,46 @@ class _EditPlaylistScreenState extends State<EditPlaylistScreen> {
                       Center(
                         child: ElevatedButton(
                             onPressed: () async {
+                              if (nameController.text.isEmpty) {
+                                Fluttertoast.showToast(
+                                    msg: "Please enter playlist name!");
+                                return;
+                              }
+                              var imageUrl;
+                              Map<String, dynamic> data;
+                              if (_image != null) {
+                                final imageFile = path.basename(_image!.path);
+                                final imageRef = FirebaseStorage.instance
+                                    .ref()
+                                    .child("images/$imageFile");
+                                UploadTask artworkUploadTask = imageRef.putFile(
+                                    _image!,
+                                    SettableMetadata(
+                                      contentType: 'image/jpeg',
+                                    ));
+                                await Future.wait([artworkUploadTask]);
+                                imageUrl = await imageRef.getDownloadURL();
+                                data = {
+                                  "name": nameController.value.text,
+                                  "description":
+                                      descriptionController.value.text,
+                                  "image": imageUrl
+                                };
+                              } else {
+                                data = {
+                                  "name": nameController.value.text,
+                                  "description":
+                                      descriptionController.value.text,
+                                };
+                              }
+
                               var playlist =
                                   FirebaseHelper.playlistCollection.doc(id);
-                              Map<String, dynamic> data = {
-                                "name": nameController.value.text,
-                                "description": descriptionController.value.text,
-                                "image": imageUrl
-                              };
+
                               playlist.update(data).then((value) {
                                 print('Document updated successfully');
+                                playlistController.getPlaylist();
+                                Get.back();
                               }).catchError((error) {
                                 print('Failed to update document: $error');
                               });
@@ -189,14 +222,17 @@ class _EditPlaylistScreenState extends State<EditPlaylistScreen> {
   }
 
   Future getImage() async {
-    final XFile? pickedFile =
-        await picker.pickImage(source: ImageSource.gallery);
+    final result = await FilePicker.platform
+        .pickFiles(type: FileType.custom, allowedExtensions: [
+      'jpg',
+      'png',
+      'jpeg',
+      'webp',
+    ]);
+    if (result == null) return;
+
     setState(() {
-      if (pickedFile != null) {
-        _image = File(pickedFile.path);
-      } else {
-        print('No image selected.');
-      }
+      _image = File(result.files.single.path!);
     });
   }
 

@@ -425,7 +425,9 @@ class _HomeScreenState extends State<HomeScreen>
                                   GridView.builder(
                                     shrinkWrap: true,
                                     physics: NeverScrollableScrollPhysics(),
-                                    itemCount: snapshot.data!.length>3?3:snapshot.data!.length,
+                                    itemCount: snapshot.data!.length > 3
+                                        ? 3
+                                        : snapshot.data!.length,
                                     gridDelegate:
                                         const SliverGridDelegateWithFixedCrossAxisCount(
                                       crossAxisCount: 3,
@@ -538,6 +540,23 @@ class _HomeScreenState extends State<HomeScreen>
       Navigator.of(context).pushNamed(Playing.routeName);
       recentSearches.add(copiedSongList[index] as String);
     }
+  }
+
+  void updateSongTimestamp(String songId) async {
+    String userId = FirebaseAuth.instance.currentUser!.uid;
+
+    // Get the current timestamp
+    Timestamp now = Timestamp.now();
+
+    // Update the song's timestamp in the database
+    await FirebaseFirestore.instance.collection('Songs').doc(songId).update({
+      'times': FieldValue.arrayUnion([now]),
+    });
+
+    // Update the user's songIds in the database
+    await FirebaseFirestore.instance.collection('Users').doc(userId).update({
+      'songIds': FieldValue.arrayUnion([songId]),
+    });
   }
 
   void addSongIdToUser(String songId) async {
