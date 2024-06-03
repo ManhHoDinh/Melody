@@ -23,9 +23,27 @@ Welcome to Melody App, the ultimate destination for classical music enthusiasts.
 * Playlist Management: Maintenance management and repair assignment
 * Song recognition: based on the melody, you can guess the information of the song
 * Statistics function: statistics on the number of listens and downloads of songs
-* Search songs by voice
+* Search songs by 
+
+  ## Login/ Signup page
+  ![image](https://github.com/ManhHoDinh/Melody/assets/105732042/84423779-992c-4242-8d4f-5ecb0f83b548)
+
 
   ## 🕵️ Home page
+  ![image](https://github.com/ManhHoDinh/Melody/assets/105732042/26ca7117-ae5d-43b2-b188-d520f75765a9)
+
+  ## Detail music page
+  ![image](https://github.com/ManhHoDinh/Melody/assets/105732042/bd09bc62-190e-481d-9f25-2becda6aaf94)
+
+  ## Album page
+![image](https://github.com/ManhHoDinh/Melody/assets/105732042/1a67e1ca-8cf2-4615-93e5-6df2d3bdfb70)
+
+  ##  Playlist page
+  ![image](https://github.com/ManhHoDinh/Melody/assets/105732042/0647dcf6-f4fb-4b27-bf39-1040796146f7)
+
+
+
+
 
   ## Install
 
