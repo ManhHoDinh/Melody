@@ -10,6 +10,6 @@ Instructor: Nguyễn Thị Thanh Trúc
 
 
 ## Technologies Used:
-* FrontEnd: Flutter![Google-flutter-logo svg](https://github.com/ManhHoDinh/Melody/assets/105732042/e25fe783-b25d-4063-b6b8-22fd8269247f)
+* FrontEnd: Flutter <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Google-flutter-logo.svg/2560px-Google-flutter-logo.svg.png" alt="Image description" width="200"/>
 
 * BackEnd: Firebase![download](https://github.com/ManhHoDinh/Melody/assets/105732042/b003e7bd-08ee-4dba-9be1-ac165facf368)
