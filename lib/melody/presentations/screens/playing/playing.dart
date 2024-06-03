@@ -12,6 +12,8 @@ import 'package:melody/melody/presentations/screens/playing/widgets/neu_box.dart
 import 'package:melody/melody/presentations/screens/queue/queue.dart';
 import 'package:provider/provider.dart';
 
+import '../../../core/helper/image_helper.dart';
+
 final commentController = TextEditingController();
 
 class Playing extends StatelessWidget {
@@ -67,25 +69,25 @@ class Playing extends StatelessWidget {
                 ],
               ),
 
-              const SizedBox(
-                height: 25,
-              ),
-              // song artwork
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                child: NeuBox(
-                    child: Column(
-                  children: [
-                    // image
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(8),
-                      child: Image.network(
-                        currentSong.songImagePath,
-                        height: 320,
-                        width: 320,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
+                  const SizedBox(
+                    height: 25,
+                  ),
+                  // song artwork
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                    child: NeuBox(
+                        child: Column(
+                      children: [
+                        // image
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(8),
+                          child: ImageHelper.loadFromNetwork(
+                            currentSong.songImagePath,
+                            height: 320,
+                            width: 320,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
 
                     // song and artist name and fav icon
                     Padding(

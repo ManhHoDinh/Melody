@@ -52,6 +52,11 @@ class _HomeDrawerState extends State<HomeDrawer> {
     if (AuthServices.CurrentUserIsManager()) {
       drawerList!.addAll([
         DrawerList(
+          index: DrawerIndex.Share,
+          labelName: 'Instruments',
+          icon: Icon(Icons.piano),
+        ),
+        DrawerList(
           index: DrawerIndex.Statistic,
           labelName: 'Statistic Music',
           icon: Icon(Icons.report),
@@ -77,11 +82,6 @@ class _HomeDrawerState extends State<HomeDrawer> {
       ));
     }
     drawerList!.addAll([
-      DrawerList(
-        index: DrawerIndex.Share,
-        labelName: 'Instruments',
-        icon: Icon(Icons.piano),
-      ),
       DrawerList(
         index: DrawerIndex.Help,
         labelName: 'Help',
@@ -144,7 +144,17 @@ class _HomeDrawerState extends State<HomeDrawer> {
                             child: ClipRRect(
                               borderRadius:
                                   const BorderRadius.all(Radius.circular(60.0)),
-                              child: Image.asset('assets/images/userImage.png'),
+                              child: FirebaseAuth.instance.currentUser != null
+                                  ? Image.network(
+                                      FirebaseAuth
+                                              .instance.currentUser!.photoURL ??
+                                          'https://firebasestorage.googleapis.com/v0/b/melody-bf3aa.appspot.com/o/images%2Fdefault-avatar.jpg?alt=media&token=11836316-b00f-481c-932c-1c741cc681ef',
+                                      height: 120,
+                                      width: 120,
+                                      fit: BoxFit.cover,
+                                    )
+                                  : Image.network(
+                                      'https://firebasestorage.googleapis.com/v0/b/melody-bf3aa.appspot.com/o/images%2Fdefault-avatar.jpg?alt=media&token=11836316-b00f-481c-932c-1c741cc681ef'),
                             ),
                           ),
                         ),
@@ -154,12 +164,15 @@ class _HomeDrawerState extends State<HomeDrawer> {
                   Padding(
                     padding: const EdgeInsets.only(top: 8, left: 4),
                     child: Text(
-                      'Chris Hemsworth',
+                      FirebaseAuth.instance.currentUser!.photoURL != null
+                          ? FirebaseAuth.instance.currentUser!.displayName!
+                          : 'Guest',
                       style: TextStyle(
                         fontWeight: FontWeight.w600,
                         color: isLightMode ? AppTheme.grey : AppTheme.white,
                         fontSize: 18,
                       ),
+                      textAlign: TextAlign.center,
                     ),
                   ),
                 ],

@@ -47,17 +47,7 @@ class AuthServices {
       DocumentReference doc =
           FirebaseFirestore.instance.collection("Users").doc(uid);
 
-      await doc
-          .set(user.toJson())
-          .whenComplete(() => showDialog(
-              context: buildContext,
-              builder: (context) {
-                return DialogOverlay(
-                  isSuccess: true,
-                  task: 'Create User',
-                );
-              }))
-          .whenComplete(() async {
+      await doc.set(user.toJson()).whenComplete(() async {
         await UpdateCurrentUser();
         Navigator.of(buildContext).pop();
       });
@@ -92,7 +82,6 @@ class AuthServices {
                 })
             .whenComplete(() => Navigator.of(context).pushNamedAndRemoveUntil(
                 NavigationHome.routeName, (route) => false));
-                
       }
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
@@ -148,20 +137,39 @@ class AuthServices {
           accessToken: googleAuth.accessToken,
           idToken: googleAuth.idToken,
         );
+        var credentialWithGoogle =
+            await FirebaseAuth.instance.signInWithCredential(credential);
 
         await FirebaseAuth.instance.signInWithCredential(credential);
 
         if (FirebaseAuth.instance.currentUser != null) {
-          await showDialog(
-            context: context,
-            builder: (context) {
-              return DialogOverlay(
-                isSuccess: true,
-                task: 'login',
-              );
-            },
-          ).whenComplete(() => Navigator.of(context).pushNamedAndRemoveUntil(
-              NavigationHome.routeName, (route) => false));
+          await FirebaseAuth.instance.currentUser?.reload();
+          String uid = credentialWithGoogle.user?.uid ?? "";
+          List<String> initPlaylists = await PlaylistRequest.initPlaylist(uid);
+          print(initPlaylists);
+          UserModel user = UserModel(
+              Id: uid,
+              Name: FirebaseAuth.instance.currentUser!.displayName ?? "",
+              Email: FirebaseAuth.instance.currentUser!.email ?? "",
+              position: 'User',
+              playlistIds: initPlaylists);
+          Artist userArtistInfo = Artist(
+              artistId: uid,
+              artistName: FirebaseAuth.instance.currentUser!.displayName ?? "",
+              bio: "",
+              avatar: FirebaseAuth.instance.currentUser!.photoURL ??
+                  "https://firebasestorage.googleapis.com/v0/b/melody-bf3aa.appspot.com/o/images%2Fdefault-avatar.jpg?alt=media&token=11836316-b00f-481c-932c-1c741cc681ef");
+
+          DocumentReference artist =
+              FirebaseFirestore.instance.collection("Artists").doc(uid);
+          await artist.set(userArtistInfo.toJson());
+          DocumentReference doc =
+              FirebaseFirestore.instance.collection("Users").doc(uid);
+
+          await doc.set(user.toJson()).whenComplete(() async {
+            Navigator.of(context).pushNamedAndRemoveUntil(
+                NavigationHome.routeName, (route) => false);
+          });
         }
       }
     } on FirebaseAuthException catch (e) {

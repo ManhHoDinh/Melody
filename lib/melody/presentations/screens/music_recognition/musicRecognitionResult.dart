@@ -98,29 +98,34 @@ class _MusicRecognitionResultScreenState
                       if (snapshot.data != null) {
                         try {
                           songResult = snapshot.data!.firstWhere((element) {
-                            print(element.songName);
-                            print(musicRecognitionResponse!.result!.title);
-                            print(element.songName ==
-                                musicRecognitionResponse!.result!.title);
-                            return element.songName ==
-                                musicRecognitionResponse!.result!.title;
+                            if (musicRecognitionResponse!.result!.title != null) {
+                              return element.songName.contains(
+                                      musicRecognitionResponse!
+                                          .result!.title!) ||
+                                  musicRecognitionResponse!.result!.title!
+                                      .contains(element.songName);
+                            }
+                            return false;
                           });
                         } catch (e) {
                           print('Song not found');
                         }
                       }
                       return songResult != null
-                          ? SongItem(
-                              song: songResult!,
-                              onTap: () {
-                                _onSongTap();
-                              },
-                            )
+                          ? Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: SongItem(
+                                song: songResult!,
+                                onTap: () {
+                                  _onSongTap();
+                                },
+                              ),
+                          )
                           : Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                    'Title: ${musicRecognitionResponse!.result?.title}'),
+                                    'Title: ${musicRecognitionResponse!.result?.title ?? ""}'),
                                 Text(
                                     'Artist: ${musicRecognitionResponse!.result?.artist}'),
                                 Text(

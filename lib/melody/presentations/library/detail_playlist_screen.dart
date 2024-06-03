@@ -60,6 +60,7 @@ class _DetailPlaylistScreenState extends State<DetailPlaylistScreen> {
             ),
           ),
         ),
+
         body: Obx(() {
           Playlist detailPlaylist = playlistController.playlists
               .firstWhere((element) => element.id == widget.playlist.id);

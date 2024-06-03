@@ -5,7 +5,6 @@ import 'package:melody/melody/presentations/bottom_navigation_view/tabIconData.d
 import '../../core/constants/color_palatte.dart';
 import '../../core/helper/image_helper.dart';
 
-
 class WindouBottomBarView extends StatefulWidget {
   const WindouBottomBarView(
       {Key? key, this.tabIconsList, this.changeIndex, this.addClick})
@@ -87,15 +86,6 @@ class _BottomBarViewState extends State<WindouBottomBarView>
                                     setRemoveAllSelection(
                                         widget.tabIconsList?[3]);
                                     widget.changeIndex!(3);
-                                  }),
-                            ),
-                            Expanded(
-                              child: TabIcons(
-                                  tabIconData: widget.tabIconsList?[4],
-                                  removeAllSelect: () {
-                                    setRemoveAllSelection(
-                                        widget.tabIconsList?[4]);
-                                    widget.changeIndex!(4);
                                   }),
                             ),
                           ],

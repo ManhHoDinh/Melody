@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:melody/melody/core/models/music/music.dart';
-import 'widgets/music_item.dart';
 
 class MusicSection extends StatelessWidget {
   final String title;

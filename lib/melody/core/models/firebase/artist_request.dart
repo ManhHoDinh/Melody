@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:melody/melody/core/models/artist/artist.dart';
 
 class ArtistRequest {
@@ -9,7 +8,13 @@ class ArtistRequest {
     Artist artist = Artist.fromJson(doc.data()!);
     return Future.value(artist);
   }
-
+static Stream<List<Artist>> search(String searchValue) =>
+      FirebaseFirestore.instance.collection('Artists').snapshots().map((event) =>
+          event.docs
+              .map((e) => Artist.fromJson(e.data()))
+              .where((event) =>
+                  event.artistName.toLowerCase().contains(searchValue.toLowerCase()))
+              .toList());
   static Stream<Artist?> getStreamById(String id) {
     return FirebaseFirestore.instance
         .collection('Artists')

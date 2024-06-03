@@ -5,8 +5,11 @@ import 'package:melody/melody/core/models/composer/composer.dart';
 import 'package:melody/melody/core/models/music/music.dart';
 import 'package:melody/melody/core/models/perfomer/perfomer.dart';
 
+import '../../../../core/helper/image_helper.dart';
+import '../../../../core/models/artist/artist.dart';
+
 class PerfomerItem extends StatelessWidget {
-  final Perfomer perfomer;
+  final Artist perfomer;
   const PerfomerItem.PerformerItem({super.key, required this.perfomer});
 
   @override
@@ -14,34 +17,22 @@ class PerfomerItem extends StatelessWidget {
     return Container(
       child: Column(
         // mainAxisSize: MainAxisSize.max,
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+
         children: [
-          Align(
-            alignment: Alignment.center,
-            child: Container(
+          ImageHelper.loadFromNetwork(perfomer.avatar,
               width: 70,
               height: 70,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                image: DecorationImage(
-                  fit: BoxFit.cover,
-                  image: AssetImage(perfomer.image),
-                ),
-              ),
-            ),
-          ),
+              fit: BoxFit.cover,
+              radius: BorderRadius.circular(50)),
           SizedBox(
-            height: 6,
+            height: 20,
           ),
-          Align(
-            alignment: Alignment.center,
-            child: Text(
-              perfomer.name,
-              style: TextStyle(
-                  fontWeight: FontWeight.w600,
-                  fontSize: 14,
-                  color: Colors.black),
-            ),
+          Text(
+            perfomer.artistName,
+            style: TextStyle(
+                fontWeight: FontWeight.w600, fontSize: 14, color: Colors.black),
           ),
         ],
       ),

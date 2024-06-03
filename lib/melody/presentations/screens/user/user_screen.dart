@@ -27,8 +27,7 @@ class _UserScreenState extends State<UserScreen> {
             child: ElevatedButton(
               onPressed: () {
                 // Pass userId to get to specific artist profile
-                Get.toNamed("/artistPage",
-                    arguments: "0UBAPBKaLYeFRNvpywpHqPJLSlG2");
+                Get.toNamed("/artistPage");
               },
               child: Text('Go to Artist Page'),
             ),

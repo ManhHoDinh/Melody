@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:melody/melody/core/helper/image_helper.dart';
 import 'package:melody/melody/core/models/playlist/playlist.dart';
 
 class PlaylistItem extends StatelessWidget {
@@ -10,9 +11,10 @@ class PlaylistItem extends StatelessWidget {
   Widget build(BuildContext context) {
     print(playlist.image);
     return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
+
       children: [
-        Image.network(
+        ImageHelper.loadFromNetwork(
           playlist.image,
           width: 60,
           height: 60,
@@ -20,13 +22,9 @@ class PlaylistItem extends StatelessWidget {
         ),
         Padding(
           padding: const EdgeInsets.only(left: 10),
-          child: Column(
-            children: [
-              Text(
-                playlist.name,
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-              ),
-            ],
+          child: Text(
+            playlist.name,
+            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
           ),
         )
       ],

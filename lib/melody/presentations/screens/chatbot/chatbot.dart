@@ -26,11 +26,11 @@ Future<String> getResponseFromCozeAPI(String userMessage) async {
       'Content-Type': 'application/json',
       'Accept': '*/*',
       'Authorization':
-          'Bearer pat_ymKg3LAhCwVBY4aMIUfeTjEYmcWf1WiMMBwUM58hltGmZH5oaWRO0CyNgmBwuH6w',
+          'Bearer pat_IKoo5BN8jTVO79DBEsKiyaBpVexAC2eDl13v3FS7V3PIQuMO8PHbExQvjnMTtRgC',
     },
     body: jsonEncode({
       'conversation_id': '123',
-      'bot_id': '7357549513332752392',
+      'bot_id': '7376132627646283783',
       'user': '123333333',
       'query': userMessage,
       'stream': false,
